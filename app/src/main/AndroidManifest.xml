@@ -36,16 +36,20 @@
             android:exported="false"/>
         <activity
             android:name=".view.medical.Todo.TodoReadActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Inoc.InoculationReadActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Medicine.MedicineReadActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Clinic.ClinicReadActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Todo.TodoWriteActivity"
             android:exported="false"/>
@@ -57,6 +61,18 @@
             android:exported="false"/>
         <activity
             android:name=".view.medical.Clinic.ClinicWriteActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.medical.Todo.TodoUpdateActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.medical.Inoc.InoculationUpdateActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.medical.Medicine.MedicineUpdateActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.medical.Clinic.ClinicUpdateActivity"
             android:exported="false"/>
 
     </application>
