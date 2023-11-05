@@ -54,6 +54,8 @@ class CalendarActivity : AppCompatActivity() {
             val selectedItem = adapter.getItem(position) // 클릭한 항목 가져오기
             showAlertDialog(selectedItem)
         }
+        //탭 클릭시 화면 전환을 위한 함수입니다. 지우지 말아주세요!
+        bottomTabClick(binding.bottomTapBarOuter, this)
 
     }
     private fun showAlertDialog(itemText: String?) {
