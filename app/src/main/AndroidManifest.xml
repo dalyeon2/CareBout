@@ -30,6 +30,10 @@
             android:windowSoftInputMode="adjustPan"
             android:exported="false"/>
         <activity
+            android:name=".view.community.StoryActivity"
+            android:label=""
+            android:exported="false"/>
+        <activity
             android:name=".view.medical.MedicalActivity"
             android:exported="false"/>
         <activity
