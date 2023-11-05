@@ -10,35 +10,31 @@ import com.example.carebout.view.medical.MedicalActivity
 
 fun bottomTabClick(btmBinding: BottomTapBinding, nowActivity: Activity){
     btmBinding.goToHome.setOnClickListener {
-        nowActivity.startActivity(
-            Intent(
-                nowActivity, HomeActivity::class.java
-            )
-        )
+        val intent = Intent(nowActivity, HomeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        nowActivity.startActivity(intent)
+        nowActivity.overridePendingTransition(0,0)
         nowActivity.finish()
     }
     btmBinding.goToCalendar.setOnClickListener {
-        nowActivity.startActivity(
-            Intent(
-                nowActivity, CalendarActivity::class.java
-            )
-        )
+        val intent = Intent(nowActivity, CalendarActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        nowActivity.startActivity(intent)
+        nowActivity.overridePendingTransition(0,0)
         nowActivity.finish()
     }
     btmBinding.goToCommunity.setOnClickListener {
-        nowActivity.startActivity(
-            Intent(
-                nowActivity, CommunityActivity::class.java
-            )
-        )
+        val intent = Intent(nowActivity, CommunityActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        nowActivity.startActivity(intent)
+        nowActivity.overridePendingTransition(0,0)
         nowActivity.finish()
     }
     btmBinding.goToMedical.setOnClickListener {
-        nowActivity.startActivity(
-            Intent(
-                nowActivity, MedicalActivity::class.java
-            )
-        )
+        val intent = Intent(nowActivity, MedicalActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        nowActivity.startActivity(intent)
+        nowActivity.overridePendingTransition(0,0)
         nowActivity.finish()
     }
 }
