@@ -5,13 +5,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Clinic.ClinicReadActivity"
+    tools:context=".view.medical.Clinic.ClinicReadActivity"
     android:id="@+id/parent_layout">
+
+    <HorizontalScrollView
+        android:id="@+id/tag_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ToggleButton
+                android:id="@+id/toggleButton6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/togglebtn_check"
+                android:text="정기"
+                android:textOff="정기"
+                android:textOn="정기" />
+
+            <ToggleButton
+                android:id="@+id/toggleButton1"
+                android:layout_width="80dp"
+                android:layout_height="48dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/togglebtn_check"
+                android:text="혈액"
+                android:textOff="혈액"
+                android:textOn="혈액" />
+
+
+            <ToggleButton
+                android:id="@+id/toggleButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/togglebtn_check"
+                android:text="X-ray"
+                android:textOff="X-ray"
+                android:textOn="X-ray" />
+
+
+            <ToggleButton
+                android:id="@+id/toggleButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/togglebtn_check"
+                android:text="초음파"
+                android:textOff="초음파"
+                android:textOn="초음파" />
+
+            <ToggleButton
+                android:id="@+id/toggleButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/togglebtn_check"
+                android:text="CT"
+                android:textOff="CT"
+                android:textOn="CT" />
+
+
+            <ToggleButton
+                android:id="@+id/toggleButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/togglebtn_check"
+                android:text="MRI"
+                android:textOff="MRI"
+                android:textOn="MRI" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <LinearLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tag_layout"
+
         android:gravity="center_vertical"
         android:padding="20dp">
 
