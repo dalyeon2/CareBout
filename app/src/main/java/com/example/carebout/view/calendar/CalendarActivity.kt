@@ -1,6 +1,7 @@
 package com.example.carebout.view.calendar
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import android.widget.*
@@ -21,14 +22,9 @@ class CalendarActivity : AppCompatActivity() {
     var userID: String = "userID"
 
     lateinit var binding: ActivityCalendarBinding
-
     lateinit var calendarView: MaterialCalendarView
-    lateinit var saveBtn: Button
-    lateinit var editBtn: Button
-    lateinit var delBtn: Button
-    lateinit var contextEditText: EditText
     lateinit var listView: ListView
-    val data = mutableMapOf<String, MutableList<String>>() // 데이터 목록
+    val data = mutableMapOf<CalendarDay, MutableList<String>>()
     val adapter: ArrayAdapter<String> by lazy { ArrayAdapter(this, android.R.layout.simple_list_item_1) }
 
     @SuppressLint("ResourceAsColor")
@@ -41,133 +37,80 @@ class CalendarActivity : AppCompatActivity() {
         listView.adapter = adapter
 
         calendarView = findViewById(R.id.calendarView)
-        saveBtn = findViewById(R.id.save_Btn)
-        editBtn = findViewById(R.id.cha_Btn)
-        delBtn = findViewById(R.id.can_Btn)
-        contextEditText = findViewById(R.id.contextEditText)
 
         calendarView.addDecorator(SundayDecorator()) // 일요일은 빨간색
         calendarView.addDecorator(SaturdayDecorator()) // 토요일은 파란색
 
-        registerForContextMenu(listView)
-        listView.setOnItemClickListener { parent, view, position, id ->
-            val popupMenu = PopupMenu(this, view, Gravity.RIGHT)
-            popupMenu.menuInflater.inflate(R.menu.context_menu, popupMenu.menu)
-
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.edit_item -> {
-                        val selectedPosition = position
-                        val adapter = listView.adapter as ArrayAdapter<String>
-                        val selectedItem = adapter.getItem(selectedPosition)
-
-                        if (selectedItem != null) {
-                            val editDialog = AlertDialog.Builder(this)
-                            val editView = EditText(this)
-                            editView.setText(selectedItem)
-                            editDialog.setView(editView)
-                            editDialog.setPositiveButton("저장") { dialog, which ->
-                                // 수정한 내용을 가져와서 데이터를 업데이트
-                                val editedText = editView.text.toString()
-                                adapter.remove(selectedItem)
-                                adapter.insert(editedText, selectedPosition)
-                                adapter.notifyDataSetChanged()
-
-                                editBtn.visibility = View.VISIBLE
-                                delBtn.visibility = View.VISIBLE
-                                // 여기에서 수정된 내용을 저장하거나 데이터베이스를 업데이트하는 등의 추가 작업을 수행할 수 있습니다.
-                            }
-                            editDialog.setNegativeButton("취소", null)
-                            editDialog.show()
-                        }
-                        return@setOnMenuItemClickListener true
-                    }
-                    R.id.delete_item -> {
-                        val selectedPosition = position
-
-                        // 어댑터에서 선택한 위치의 항목을 가져옵니다.
-                        val adapter = listView.adapter as ArrayAdapter<String> // 데이터 유형을 명시적으로 지정
-                        val selectedItem = adapter.getItem(selectedPosition)
-
-                        if (selectedItem != null) {
-                            adapter.remove(selectedItem)
-
-                            adapter.notifyDataSetChanged()
-                            return@setOnMenuItemClickListener true
-                        } else {
-                            return@setOnMenuItemClickListener false
-                        }
-                    }
-                    else -> return@setOnMenuItemClickListener false
-                }
-            }
-
-            popupMenu.show()
+        val button = findViewById<Button>(R.id.addplan)
+        button.setOnClickListener {
+            showAddEventDialog()
         }
-
         calendarView.setOnDateChangedListener { widget, date, selected ->
-            updateListView(date)
-            saveBtn.visibility = View.VISIBLE
-            contextEditText.visibility = View.VISIBLE
-            contextEditText.setText("")
+            if (selected) {
+                updateListView(date)
+            }
         }
-
-        saveBtn.setOnClickListener {
-            val text = contextEditText.text.toString()
-            val currentDate = calendarView.selectedDate
-            saveDiary(currentDate, text)
-            updateListView(currentDate)
-            contextEditText.visibility = View.VISIBLE
-            saveBtn.visibility = View.VISIBLE
-            listView.visibility = View.VISIBLE
-            contextEditText.setText("")
+        listView.setOnItemClickListener { parent, view, position, id ->
+            val selectedItem = adapter.getItem(position) // 클릭한 항목 가져오기
+            showAlertDialog(selectedItem)
         }
-        // bottomTap 클릭시 intent를 위한 함수
+        //탭 클릭시 화면 전환을 위한 함수입니다. 지우지 말아주세요!
         bottomTabClick(binding.bottomTapBarOuter, this)
-    }
 
-    private fun updateListView(date: CalendarDay) {
+    }
+    private fun showAlertDialog(itemText: String?) {
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setTitle("일정 삭제")
+            .setMessage(itemText)
+            .setPositiveButton("삭제") { dialog, which ->
+                val selectedDate = calendarView.selectedDate // 선택한 날짜 가져오기
+                val events = data[selectedDate] ?: mutableListOf()
+                events.remove(itemText) // 해당 날짜의 항목에서 제거
+                data[selectedDate] = events // 항목을 제거한 데이터로 업데이트
+                adapter.remove(itemText) // ListView에서 해당 항목 삭제
+                adapter.notifyDataSetChanged() // ListView 업데이트
+                dialog.dismiss() // AlertDialog 닫기
+            }
+            .setNegativeButton("취소") { dialog, which ->
+                dialog.dismiss() // AlertDialog 닫기
+            }
+            .create()
+            .show()
+    }
+    private fun updateListView(selectedDate: CalendarDay) {
+        val events = data[selectedDate] ?: mutableListOf()
         adapter.clear()
-        val strList = loadDiary(date)
-        adapter.addAll(strList)
+        adapter.addAll(events)
         adapter.notifyDataSetChanged()
     }
-
-    private fun saveDiary(date: CalendarDay, text: String) {
-        val fname = "${userID}_${date.year}_${date.month}_${date.day}.txt"
-        val fileOutputStream: FileOutputStream
-        try {
-            fileOutputStream = openFileOutput(fname, MODE_APPEND)
-            val entry = text + "\n"
-            fileOutputStream.write(entry.toByteArray())
-            fileOutputStream.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun loadDiary(date: CalendarDay): MutableList<String> {
-        val fname = "${userID}_${date.year}_${date.month}_${date.day}.txt"
-        val fileInputStream: FileInputStream
-        val strList = mutableListOf<String>()
-
-        try {
-            fileInputStream = openFileInput(fname)
-            val scanner = Scanner(fileInputStream)
-            while (scanner.hasNextLine()) {
-                val line = scanner.nextLine()
-                strList.add(line)
+    private fun showAddEventDialog() {
+        val et = EditText(this)
+        et.gravity = Gravity.CENTER
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setTitle("일정추가")
+            .setView(et)
+            .setCancelable(false)
+            .setPositiveButton("확인") { _, _ ->
+                val selectedDate = calendarView.selectedDate // 선택한 날짜 가져오기
+                val eventText = et.text.toString()
+                val events = data[selectedDate] ?: mutableListOf()
+                events.add(eventText) // 해당 날짜에 이벤트 추가
+                data[selectedDate] = events
+                adapter.clear()
+                data.entries.forEach { entry ->
+                    if (calendarView.selectedDate == entry.key) {
+                        adapter.addAll(entry.value)
+                    }
+                }
+                adapter.notifyDataSetChanged() // ListView 업데이트
+                Toast.makeText(this, "저장되었습니다!", Toast.LENGTH_SHORT).show()
             }
-            fileInputStream.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        return strList
-    }
-    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.context_menu, menu)
+            .setNegativeButton("취소") { _, _ ->
+                Toast.makeText(this, "취소했습니다!", Toast.LENGTH_SHORT).show()
+            }
+            .create()
+            .show()
     }
 }
