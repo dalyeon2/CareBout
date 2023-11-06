@@ -5,7 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [DailyTodo::class, Medicine::class, Clinic::class, Inoculation::class], version = 2)
+@Database(entities = [DailyTodo::class, Medicine::class, Clinic::class, Inoculation::class]
+    , version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getTodoDao() : TodoDao
     abstract fun getMedicineDao() : MedicineDao
