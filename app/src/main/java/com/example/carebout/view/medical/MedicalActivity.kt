@@ -162,18 +162,22 @@ class MedicalActivity : AppCompatActivity() {
         when (view.id) {
             R.id.menu_item_1 -> {
                 val intent = Intent(this, ClinicWriteActivity::class.java)
+                toggleFab() // 메뉴 팝업 창을 닫습니다.
                 startActivity(intent)
             }
             R.id.menu_item_2 -> {
                 val intent = Intent(this, MedicineWriteActivity::class.java)
+                toggleFab() // 메뉴 팝업 창을 닫습니다.
                 startActivity(intent)
             }
             R.id.menu_item_3 -> {
                 val intent = Intent(this, InoculationWriteActivity::class.java)
+                toggleFab() // 메뉴 팝업 창을 닫습니다.
                 startActivity(intent)
             }
             R.id.menu_item_4 -> {
                 val intent = Intent(this, TodoWriteActivity::class.java)
+                toggleFab() // 메뉴 팝업 창을 닫습니다.
                 startActivity(intent)
             }
         }
