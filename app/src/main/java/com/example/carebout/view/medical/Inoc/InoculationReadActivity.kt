@@ -35,6 +35,8 @@ class InoculationReadActivity : AppCompatActivity() {
         val insertBtn: FloatingActionButton = findViewById(R.id.insert_btn)
         insertBtn.setOnClickListener {
             val intent: Intent = Intent(this, InoculationWriteActivity::class.java)
+            binding.toggle1.isChecked = false
+            binding.toggle2.isChecked = false
 
             activityResult.launch(intent)
         }
