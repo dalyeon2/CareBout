@@ -10,14 +10,21 @@ import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.example.carebout.R
+import com.example.carebout.view.medical.db.AppDatabase
+import com.example.carebout.view.medical.db.MedicineDao
+import com.example.carebout.view.medical.db.TodoDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Date
 
 val st = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.WRAP_CONTENT)
 
 
-public class Medi(nm: String = "", pr: Int = 0, ing: Boolean = false) {
+public class Medi(nm: String = "", pr: String = "", ing: Boolean = false) {
     var name: String = ""
-    var period: Int = 0
+    var period: String = ""
     var isIng : Boolean = false
 
     init {
@@ -32,17 +39,21 @@ public class Medi(nm: String = "", pr: Int = 0, ing: Boolean = false) {
     }
 
     @JvmName("getInt")
-    public fun getPeriod() : Int {
+    public fun getPeriod() : String {
         return period
     }
 }
 
 class Mediing : Fragment() {
+
+    private lateinit var db: AppDatabase
+    private lateinit var medicineDao: MedicineDao
+
     // 약 정보 입력
-    var medi0 = Medi("감기약", 20230910, true)
-    var medi1 = Medi("심장약", 20200310, false)
-    var medi2 = Medi("연고", 20210910, false)
-    var medi3 = Medi("비타민", 20230901, true)
+    var medi0 = Medi("감기약", "20230910", true)
+    var medi1 = Medi("심장약", "20200310", false)
+    var medi2 = Medi("연고", "20210910", false)
+    var medi3 = Medi("비타민", "20230901", true)
 
     fun setMedicine(md: Medi) : View {
         var mediView = TextView(this.context) // 빈 텍스트뷰 생성
@@ -63,9 +74,20 @@ class Mediing : Fragment() {
         val mediView: View = inflater.inflate(R.layout.mediing, container, false)
         val lay : LinearLayout = mediView.findViewById(R.id.mediLay)
 
-        lay.addView(setMedicine(medi0))
+        db = AppDatabase.getInstance(requireContext())!!
+        medicineDao = db.getMedicineDao()
 
-        lay.addView(setMedicine(medi3))
+        CoroutineScope(Dispatchers.IO).launch {
+            val allMediList = medicineDao.getMediWithCheck()
+            withContext(Dispatchers.Main) {
+                for (medi in allMediList) {
+                    lay.addView(setMedicine(Medi(medi.title ?: "", medi.start ?: "")))
+                }
+            }
+        }
+
+//        lay.addView(setMedicine(medi0))
+//        lay.addView(setMedicine(medi3))
 // 💊
         return mediView
     }
