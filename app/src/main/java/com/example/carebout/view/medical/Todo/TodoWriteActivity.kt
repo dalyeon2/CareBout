@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityTodoWriteBinding
+import com.example.carebout.view.medical.MedicalActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.DailyTodo
 import com.example.carebout.view.medical.db.TodoDao
@@ -84,13 +85,18 @@ class TodoWriteActivity : AppCompatActivity() {
 //            val sEtc = editTextMultiLine.text.toString()
 
             insertTodo()
-            //TodoList()
-//            moveToAnotherPage()
             }
         }
 
         btnplus.setOnClickListener {
-            counter++ //숫자는 1증가
+            if(counter <= 5) {
+                counter++ //숫자는 1증가
+            }else{
+                Toast.makeText(
+                    this, "최대 5회까지 가능합니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             numText.text= counter.toString()
         }
 
@@ -139,7 +145,8 @@ class TodoWriteActivity : AppCompatActivity() {
     }
 
     private fun moveToAnotherPage() {
-        val intent = Intent(this, TodoReadActivity::class.java)
+        val intent = Intent(this, MedicalActivity::class.java)
+            //TodoReadActivity::class.java)
         startActivity(intent)
         finish()
     }
