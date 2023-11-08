@@ -1,6 +1,7 @@
 package com.example.carebout.view.medical
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -58,6 +59,7 @@ class Mediing : Fragment() {
     fun setMedicine(md: Medi) : View {
         var mediView = TextView(this.context) // 빈 텍스트뷰 생성
         mediView.text = "\uD83D\uDC8A ${md.getName()}   ${md.getPeriod()}~" // 텍스트 넣기
+        mediView.setTextColor(Color.parseColor("#000000"))
         mediView.textSize = 16.0f
         mediView.layoutParams = st // 레이아웃 지정
         mediView.id = ViewCompat.generateViewId() // 아이디 랜덤으로 지정
