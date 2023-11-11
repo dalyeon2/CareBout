@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Inoc.InoculationReadActivity"
+    tools:context=".view.medical.Inoc.InoculationReadActivity"
     android:id="@+id/parent_layout">
 
     <LinearLayout

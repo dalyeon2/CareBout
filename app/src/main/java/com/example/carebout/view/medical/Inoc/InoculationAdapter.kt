@@ -34,8 +34,6 @@ class InoculationAdapter(private val context: Context)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.inoc_recyclerview, parent, false)
-        //
-        //.todo_list, parent, false)
 
         return MyViewHolder(view)
     }
