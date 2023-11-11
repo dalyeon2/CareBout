@@ -16,11 +16,10 @@ class AddPetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPetBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_add_pet)
+        setContentView(binding.root)
 
-//        val toolbar: androidx.appcompat.widget.Toolbar = binding.topBarOuter.topBar
-//        setSupportActionBar(toolbar)
-        supportActionBar?.title = "반려동물 등록"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
     }
 }
