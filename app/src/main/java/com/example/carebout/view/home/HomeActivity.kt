@@ -1,5 +1,6 @@
 package com.example.carebout.view.home
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -40,6 +41,11 @@ class HomeActivity : AppCompatActivity() {
         binding.checkGraph.adapter = recyclerAdapter
 
         bottomTabClick(binding.bottomTapBarOuter, this)
+
+        binding.profileImage.setOnClickListener{
+            val intent = Intent(this, AddPetActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setWeightGraph() {

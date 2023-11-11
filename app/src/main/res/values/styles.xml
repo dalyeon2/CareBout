@@ -40,4 +40,8 @@
         <item name="tabRippleColor">@android:color/transparent</item>
     </style>
 
+    <style name="CustomTopBar" parent="Theme.AppCompat.Light">
+        <item name="background">@color/white</item>
+    </style>
+
 </resources>
