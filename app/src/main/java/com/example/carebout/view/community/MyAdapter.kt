@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.databinding.ItemRecyclerviewBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 //항목 뷰를 가지는 역할
 class MyViewHolder(val binding: ItemRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root)
@@ -53,6 +56,20 @@ class MyAdapter(val contents: MutableList<String>?):RecyclerView.Adapter<Recycle
         val binding = (holder as MyViewHolder).binding
         //뷰에 데이터 출력
         binding.itemData.text = contents!![position]
+
+        // 현재 날짜와 요일 설정
+        val currentDate = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("MM월 dd일", Locale.getDefault())
+        val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault()).apply {
+            val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
+            applyPattern("${koreanDays[Calendar.DAY_OF_WEEK - 1]}")
+        }
+
+        val formattedDate = dateFormat.format(currentDate)
+        val formattedDay = dayFormat.format(currentDate)
+
+        binding.date.text = formattedDate
+        binding.day.text = formattedDay
     }
 }
 
