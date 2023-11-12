@@ -14,7 +14,6 @@ import com.example.carebout.R
 import com.example.carebout.databinding.ActivityAddBinding
 import com.example.carebout.view.community.CommunityActivity
 import com.example.carebout.view.community.DBHelper
-import com.example.carebout.view.community.OneFragment
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
