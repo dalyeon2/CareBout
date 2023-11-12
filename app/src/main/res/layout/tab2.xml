@@ -15,28 +15,60 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ToggleButton
-            android:id="@+id/junggiGumjin"
+            android:layout_marginRight="10dp"
+            android:id="@+id/toggle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
-            android:text="#기초"
-            android:textOff="#기초"
-            android:textOn="#기초" />
+
+            android:text="기초"
+            android:textOn="기초"
+            android:textOff="기초"
+
+            android:background="@drawable/togglebtn_check"/>
 
         <ToggleButton
-            android:id="@+id/cold"
+            android:layout_marginRight="10dp"
+            android:id="@+id/toggle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
-            android:layout_toEndOf="@+id/junggiGumjin"
-            android:text="#정기"
-            android:textOff="#정기"
-            android:textOn="#정기" />
+            android:layout_toEndOf="@+id/toggle1"
+
+            android:text="정기"
+            android:textOn="정기"
+            android:textOff="정기"
+            android:background="@drawable/togglebtn_check"
+            />
+
+<!--        <ToggleButton-->
+<!--            android:id="@+id/junggiGumjin"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_marginStart="24dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:text="#기초"-->
+<!--            android:textOff="#기초"-->
+<!--            android:textOn="#기초" />-->
+
+<!--        <ToggleButton-->
+<!--            android:id="@+id/cold"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:layout_toEndOf="@+id/junggiGumjin"-->
+<!--            android:text="#정기"-->
+<!--            android:textOff="#정기"-->
+<!--            android:textOn="#정기" />-->
 
         <RelativeLayout
             android:id="@+id/tableBG"
@@ -74,21 +106,21 @@
                     android:layout_marginBottom="5dp">
 
                     <TextView
-                        android:id="@+id/mediName"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="접종 날짜"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
                         android:id="@+id/gumjinName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="접종 항목"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/mediName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="접종 날짜"
                         android:textAlignment="center"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -103,6 +135,22 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </TableRow>
+
+                <!--구분선-->
+                <View
+                    android:id="@+id/lineView"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="#262626"
+                    android:layout_below="@+id/innoTableRow"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lineView"
+                    />
 
             </TableLayout>
         </RelativeLayout>
