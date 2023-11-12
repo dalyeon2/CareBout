@@ -79,7 +79,7 @@ class MedicalNoteTab : Fragment() {
 
         var tabs = medicalNoteTabView.findViewById<TabLayout>(R.id.tabs)
         var dailycareMenu = medicalNoteTabView.findViewById<ImageView>(R.id.dailycareMenu)
-        var medi = medicalNoteTabView.findViewById<RelativeLayout>(R.id.mediing)
+        var medi = medicalNoteTabView.findViewById<LinearLayout>(R.id.mediingFrame)
         dailycareNull = medicalNoteTabView.findViewById<TextView>(R.id.dailycareNull)
         mediingNull = medicalNoteTabView.findViewById<TextView>(R.id.mediingNull)
 
@@ -87,7 +87,7 @@ class MedicalNoteTab : Fragment() {
         childFragmentManager.beginTransaction().replace(R.id.frame1, selected!!).commit()
         childFragmentManager.beginTransaction().replace(R.id.dailycareFrame, dailycare!!).commit()
         childFragmentManager.beginTransaction().replace(R.id.currentWeight, currentWeight!!).commit()
-        childFragmentManager.beginTransaction().replace(R.id.mediing, mediing!!).commit()
+        childFragmentManager.beginTransaction().replace(R.id.mediingFrame, mediing!!).commit()
 
         allTodoList  = db?.getTodoDao()!!.getTodoAll() as ArrayList<DailyTodo>
         allMedicineList = db?.getMedicineDao()!!.getMediWithCheck() as ArrayList<Medicine>

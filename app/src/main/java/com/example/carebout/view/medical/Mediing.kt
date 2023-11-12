@@ -52,12 +52,6 @@ class Mediing : Fragment() {
     private lateinit var db: AppDatabase
     private lateinit var medicineDao: MedicineDao
 
-    // 약 정보 입력
-    var medi0 = Medi("감기약", "20230910", true)
-    var medi1 = Medi("심장약", "20200310", false)
-    var medi2 = Medi("연고", "20210910", false)
-    var medi3 = Medi("비타민", "20230901", true)
-
     lateinit var allMediList: List<Medicine>
     private lateinit var lay: LinearLayout
 
