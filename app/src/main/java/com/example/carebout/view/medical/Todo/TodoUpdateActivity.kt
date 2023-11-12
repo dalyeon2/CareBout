@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityTodoUpdateBinding
+import com.example.carebout.view.medical.MedicalActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.DailyTodo
 import com.example.carebout.view.medical.db.TodoDao
@@ -71,7 +72,14 @@ class TodoUpdateActivity : AppCompatActivity() {
         }
 
         btnplus.setOnClickListener {
-            counter++ //숫자는 1증가
+            if(counter < 5) {
+                counter++ //숫자는 1증가
+            }else{
+                Toast.makeText(
+                    this, "최대 5회까지 가능합니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             numText.text= counter.toString()
         }
 
@@ -136,6 +144,12 @@ class TodoUpdateActivity : AppCompatActivity() {
 
 
     private fun moveToAnotherPage() {
+        val intent = Intent(applicationContext, MedicalActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun moveToMainPage() {
         val intent = Intent(applicationContext, TodoReadActivity::class.java)
         startActivity(intent)
         finish()

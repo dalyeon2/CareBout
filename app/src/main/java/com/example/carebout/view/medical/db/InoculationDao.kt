@@ -1,5 +1,6 @@
 package com.example.carebout.view.medical.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -32,6 +33,10 @@ interface InoculationDao {
 
     @Query("SELECT * FROM table_inoculation WHERE tag2 = 1")
     fun getInocWithTag2(): List<Inoculation>
+
+    @Query("SELECT * FROM table_inoculation")
+    fun getAllInoculation(): LiveData<List<Inoculation>>
+
 
     //@Query("DELETE FROM User WHERE name = :name") // 'name'에 해당하는 유저를 삭제해라
     //    fun deleteUserByName(name: String)
