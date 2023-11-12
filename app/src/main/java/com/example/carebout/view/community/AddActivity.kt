@@ -15,6 +15,9 @@ import com.example.carebout.databinding.ActivityAddBinding
 import com.example.carebout.view.community.CommunityActivity
 import com.example.carebout.view.community.DBHelper
 import com.example.carebout.view.community.OneFragment
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class AddActivity: AppCompatActivity() {
     lateinit var binding: ActivityAddBinding
@@ -28,11 +31,28 @@ class AddActivity: AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // 현재 날짜 표기
+        val currentDate = Calendar.getInstance().time
+        val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault()).apply {
+            val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
+            applyPattern("${koreanDays[Calendar.DAY_OF_WEEK - 1]}")
+        }
+        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+
+        val dayOfWeek = dayFormat.format(currentDate)
+        val formattedDate = dateFormat.format(currentDate)
+
+        binding.date.text = formattedDate
+        binding.day.text = dayOfWeek
+
+        /*
+        // 데이터 전송
         val userEnteredText = binding.addEditView.text.toString()
         val fragment = OneFragment()
         val args = Bundle()
         args.putString("userEnteredText", userEnteredText) // 사용자가 입력한 텍스트를 Bundle에 추가
         fragment.arguments = args
+         */
     }
 
     override fun onCreateOptionsMenu (menu: Menu?): Boolean {
@@ -41,22 +61,17 @@ class AddActivity: AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
-        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
-            // 이 부분 스택에 저장돼서 우리가 쓸 필요 없는 코드라고 해서 주석처리 해 놨어요!
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-            finish()
-            true
-        }
 
         R.id.menu_add_save -> {
+            /*
             val inputData = binding.addEditView.text.toString()
             val db = DBHelper (this).writableDatabase
             db.execSQL ("insert into TODO_TB (todo) values (?)",
                 arrayOf<String>(inputData))
             db.close()
+             */
 
-            val intent = intent.putExtra("result", inputData)
+            val intent = intent.putExtra("result", binding.addEditView.text.toString())
             setResult(Activity.RESULT_OK, intent)
             finish()
             true
