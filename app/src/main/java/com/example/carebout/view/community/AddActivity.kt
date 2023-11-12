@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.carebout.R
@@ -20,6 +22,31 @@ import java.util.Locale
 
 class AddActivity: AppCompatActivity() {
     lateinit var binding: ActivityAddBinding
+
+    private val requestLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val newData = result.data?.getStringExtra("result")
+            val selectedImageUri = result.data?.data
+
+            // 데이터와 이미지 URI를 CommunityActivity로 전달
+            val intent = Intent()
+                .putExtra("result", newData)
+                .putExtra("imageUri", selectedImageUri)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+    }
+
+    private val requestGalleryLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // 갤러리에서 선택한 이미지 처리
+                val selectedImage = result.data?.data
+                // TODO: 선택한 이미지를 사용하여 원하는 작업 수행
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
