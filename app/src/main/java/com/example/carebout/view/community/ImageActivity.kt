@@ -12,7 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityImageBinding
-import com.example.carebout.databinding.FragmentOneBinding
 import java.io.File
 import java.lang.Exception
 import java.text.SimpleDateFormat
