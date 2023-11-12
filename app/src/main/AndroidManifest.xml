@@ -35,6 +35,9 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".view.medical.MedicalActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.community.CommunityActivity"
             android:exported="false" />
         <activity
