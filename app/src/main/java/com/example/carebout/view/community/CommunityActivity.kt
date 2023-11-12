@@ -1,11 +1,14 @@
 package com.example.carebout.view.community
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -13,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.carebout.R
 import com.example.carebout.base.bottomTabClick
@@ -24,6 +28,24 @@ class CommunityActivity : AppCompatActivity() {
     lateinit var binding: ActivityCommunityBinding
     lateinit var adapter: MyAdapter
     var contents: MutableList<String>? = null
+
+    private val requestLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val newData = result.data?.getStringExtra("result")
+            newData?.let {
+                contents?.add(it)
+                adapter.notifyDataSetChanged()
+
+                // 데이터가 추가되면 RecyclerView를 보이도록 설정
+                if (contents?.isNotEmpty() == true) {
+                    binding.recyclerView.visibility = View.VISIBLE
+                    binding.emptyView.visibility = View.GONE
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,14 +74,6 @@ class CommunityActivity : AppCompatActivity() {
             true
         }
 
-        val requestLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            it.data!!.getStringExtra("result")?.let {
-                contents?.add(it)
-                adapter.notifyDataSetChanged()
-            }
-        }
         binding.mainFab.setOnClickListener {
             val intent = Intent(this, AddActivity::class.java)
             requestLauncher.launch(intent)
@@ -78,7 +92,7 @@ class CommunityActivity : AppCompatActivity() {
         binding.recyclerView.addItemDecoration(
             DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
         )
-
+/*
         val db = DBHelper(this).readableDatabase
         val cursor = db.rawQuery("select * from TODO_TB", null)
         cursor.run {
@@ -87,8 +101,8 @@ class CommunityActivity : AppCompatActivity() {
             }
         }
         db.close()
+ */
 
-        // 하단탭바 클릭 시 intent할 수 있도록 함수를 따로 만들었습니다!
         bottomTabClick(binding.bottomTapBarOuter, this)
     }
 
@@ -119,4 +133,5 @@ class CommunityActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

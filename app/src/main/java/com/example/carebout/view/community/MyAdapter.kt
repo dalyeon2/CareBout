@@ -93,12 +93,6 @@ class MyDecoration(val context: Context) : RecyclerView.ItemDecoration() {
     ) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        val index = parent.getChildAdapterPosition(view) + 1
-        if (index % 3 == 0)
-            outRect.set(10, 10, 10, 60)
-        else
-            outRect.set(10, 10, 10, 0)
-
         ViewCompat.setElevation(view, 20.0f)
     }
 }

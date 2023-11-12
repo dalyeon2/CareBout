@@ -62,6 +62,11 @@ class AddActivity: AppCompatActivity() {
 
     override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
 
+        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
+            finish()
+            true
+        }
+
         R.id.menu_add_save -> {
             /*
             val inputData = binding.addEditView.text.toString()
