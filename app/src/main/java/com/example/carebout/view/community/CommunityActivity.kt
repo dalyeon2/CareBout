@@ -34,9 +34,10 @@ class CommunityActivity : AppCompatActivity() {
         binding.viewpager.adapter = adapter
         TabLayoutMediator(binding.tabs, binding.viewpager) { tab, position ->
             when(position) {
-                0 -> tab.text = "스토리"
+                0 -> tab.text = "2022"
             }
         }.attach()
+
 
         //ActionBarDrawerToggle 버튼 적용
         val toggle = ActionBarDrawerToggle(this, binding.drawer, R.string.drawer_opened,

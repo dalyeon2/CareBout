@@ -45,12 +45,13 @@
             app:layout_anchor="@id/viewpager"
             app:layout_anchorGravity="bottom|right"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-            />
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 

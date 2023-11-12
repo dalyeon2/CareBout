@@ -28,7 +28,7 @@ class AddActivity: AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val userEnteredText = binding.storyTitle.text.toString()
+        val userEnteredText = binding.addEditView.text.toString()
         val fragment = OneFragment()
         val args = Bundle()
         args.putString("userEnteredText", userEnteredText) // 사용자가 입력한 텍스트를 Bundle에 추가

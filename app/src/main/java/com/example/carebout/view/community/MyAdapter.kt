@@ -15,8 +15,7 @@ class MyViewHolder(val binding: ItemRecyclerviewBinding) : RecyclerView.ViewHold
 
 //항목 구성자: 어댑터
 class MyAdapter(
-    val context: Context, val contents: MutableList<String>,
-    val contents_sub: MutableList<String>, val contents_date: MutableList<String>) :
+    val context: Context, val contents: MutableList<String>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //항목 개수를 판단하기 위해 자동 호출
     override fun getItemCount(): Int {
@@ -56,7 +55,7 @@ class MyAdapter(
         val binding = (holder as MyViewHolder).binding
         //뷰에 데이터 출력
         binding.itemData.text = contents[position]
-        binding.itemSubdata.text = contents_sub[position]
+        //binding.itemSubdata.text = contents_sub[position]
         //binding.itemDatedata.text = contents_date[position]
     }
 }

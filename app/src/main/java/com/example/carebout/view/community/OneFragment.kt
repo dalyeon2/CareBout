@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.carebout.databinding.FragmentOneBinding
 
 class OneFragment : Fragment() {
@@ -50,16 +51,19 @@ class OneFragment : Fragment() {
 
         //리사이클러 뷰를 위한 데이터 준비
         contents?.addAll(listOf("오늘도 산책 완료"))
-        val contents_sub = mutableListOf<String>("귀여운 내 꾸미", "야옹야옹", "밥풀이네")
-        val contents_date = mutableListOf<String>("신나게 놀고 난 후", "밥풀이네", "2022 9월")
+        val contents_sub = mutableListOf<String>("귀여운 내 꾸미")
+        val contents_date = mutableListOf<String>("신나게 놀고 난 후")
 
 
         //리사이클러 뷰에 LayoutManger, Adapter, ItemDecoration 적용
-        val columnCount = 2 // 그리드의 열 개수를 설정
-        val layoutManager = GridLayoutManager(activity, columnCount)
+        //val columnCount = 2 // 그리드의 열 개수를 설정
+        //val layoutManager = GridLayoutManager(activity, columnCount)
+
+        val layoutManager = LinearLayoutManager(activity)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
 
         // 리사이클러 뷰 어댑터 초기화 시 Context 전달
-        adapter = MyAdapter(requireContext(), contents!!, contents_sub, contents_date)
+        adapter = MyAdapter(requireContext(), contents!!)
 
         // 리사이클러뷰 어댑터에 아이템 클릭 리스너 설정
         adapter.setOnItemClickListener(object : MyAdapter.OnItemClickListener {
