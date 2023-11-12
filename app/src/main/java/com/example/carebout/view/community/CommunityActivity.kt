@@ -86,13 +86,29 @@ class CommunityActivity : AppCompatActivity() {
         }
 
         val layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.layoutManager = layoutManager
+
         adapter = MyAdapter(contents)
+
+        // 리사이클러뷰 어댑터에 아이템 클릭 리스너 설정
+        adapter.setOnItemClickListener(object : MyAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                // 아이템 클릭 시 다른 화면으로 전환
+                if (position >= 0 && position < contents!!.size) {
+                    val intent = Intent(this@CommunityActivity, StoryActivity::class.java)
+                    intent.putExtra("data_key", contents!![position]) // 데이터 전달
+                    startActivity(intent)
+                } else {
+                    Log.e("MyApp", "Invalid position: $position")
+                }
+            }
+        })
+
+        binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(
             DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
         )
-/*
+
         val db = DBHelper(this).readableDatabase
         val cursor = db.rawQuery("select * from TODO_TB", null)
         cursor.run {
@@ -101,7 +117,6 @@ class CommunityActivity : AppCompatActivity() {
             }
         }
         db.close()
- */
 
         bottomTabClick(binding.bottomTapBarOuter, this)
     }

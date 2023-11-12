@@ -2,6 +2,7 @@ package com.example.carebout.view.community
 
 import android.app.ActionBar
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -60,17 +61,21 @@ class AddActivity: AppCompatActivity() {
 
         // 현재 날짜 표기
         val currentDate = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
         val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault()).apply {
             val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
             applyPattern("${koreanDays[Calendar.DAY_OF_WEEK - 1]}")
         }
-        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
 
-        val dayOfWeek = dayFormat.format(currentDate)
+        val formattedDay = dayFormat.format(currentDate)
         val formattedDate = dateFormat.format(currentDate)
 
         binding.date.text = formattedDate
-        binding.day.text = dayOfWeek
+        binding.day.text = formattedDay
+
+        binding.date.setOnClickListener {
+            showDatePickerDialog()
+        }
 
         /*
         // 데이터 전송
@@ -95,13 +100,11 @@ class AddActivity: AppCompatActivity() {
         }
 
         R.id.menu_add_save -> {
-            /*
             val inputData = binding.addEditView.text.toString()
             val db = DBHelper (this).writableDatabase
             db.execSQL ("insert into TODO_TB (todo) values (?)",
                 arrayOf<String>(inputData))
             db.close()
-             */
 
             val intent = intent.putExtra("result", binding.addEditView.text.toString())
             setResult(Activity.RESULT_OK, intent)
@@ -109,5 +112,24 @@ class AddActivity: AppCompatActivity() {
             true
         }
         else -> true
+    }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                // 선택된 날짜로 TextView 갱신
+                val selectedDate = "${selectedYear}년 ${selectedMonth + 1}월 ${selectedDay}일"
+                binding.date.text = selectedDate
+            },
+            year, month, dayOfMonth
+        )
+
+        datePickerDialog.show()
     }
 }

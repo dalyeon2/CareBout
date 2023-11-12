@@ -14,7 +14,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
@@ -39,6 +39,13 @@
             android:textColor="#828282"
             android:textSize="13dp" />
 
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:src="@drawable/dog_head" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -51,7 +58,7 @@
             android:id="@+id/add_editView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:gravity="top"
             android:textSize="14dp"
             android:hint="오늘 하루는 어땠나요?"
