@@ -11,6 +11,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.carebout.R
 import com.example.carebout.base.bottomTabClick
 import com.example.carebout.databinding.ActivityHomeBinding
+import com.example.carebout.view.medical.db.AppDatabase
+import com.example.carebout.view.medical.db.ClinicDao
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -18,6 +20,9 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class HomeActivity : AppCompatActivity() {
 
@@ -26,20 +31,44 @@ class HomeActivity : AppCompatActivity() {
     private val MIN_SCALE = 0.7f // 뷰가 몇퍼센트로 줄어들 것인지
     private val MIN_ALPHA = 0.5f // 어두워지는 정도를 나타낸 듯 하다.
 
+    private lateinit var clinicDao: ClinicDao
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.helloName.text = "반가워, 쿵이야"
         setWeightGraph()
 
-        val dataSet: MutableList<Pair<String, String>> =
-            mutableListOf(Pair("X-ray", "01-04"), Pair("피검사", "01-05"), Pair("초음파", "01-06"),
-                Pair("피검사", "02-10"), Pair("X-ray", "03-10"), Pair("CT", "03-12"), Pair("MRI", "03-14"),
-                Pair("피검사", "04-05"), Pair("초음파", "04-10"), Pair("X-ray", "04-12"), Pair("피검사", "05-12"),
-                Pair("초음파", "05-14"))
+
+
+        clinicDao = AppDatabase.getInstance(this)!!.getClinicDao()
+
+        val dataSet: MutableList<Pair<String, String>> = mutableListOf()
+
+        for(c in clinicDao.getClinicAll()){
+            if(c.tag_blood == true)
+                dataSet.add(Pair("피검사", c.date!!))
+            if(c.tag_ct == true)
+                dataSet.add(Pair("CT", c.date!!))
+            if(c.tag_checkup == true)
+                dataSet.add(Pair("접종", c.date!!))
+            if(c.tag_mri == true)
+                dataSet.add(Pair("MRI", c.date!!))
+            if(c.tag_xray == true)
+                dataSet.add(Pair("X-Ray", c.date!!))
+            if(c.tag_ultrasonic == true)
+                dataSet.add(Pair("초음파", c.date!!))
+        }
+
+        dataSet.sortBy { it.second }
+
+//        val dataSet: MutableList<Pair<String, String>> =
+//            mutableListOf(Pair("X-ray", "01-04"), Pair("피검사", "01-05"), Pair("초음파", "01-06"),
+//                Pair("피검사", "02-10"), Pair("X-ray", "03-10"), Pair("CT", "03-12"), Pair("MRI", "03-14"),
+//                Pair("피검사", "04-05"), Pair("초음파", "04-10"), Pair("X-ray", "04-12"), Pair("피검사", "05-12"),
+//                Pair("초음파", "05-14"))
 
         val recyclerAdapter = RecyclerAdapter(dataSet)
         binding.checkGraph.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
@@ -69,6 +98,22 @@ class HomeActivity : AppCompatActivity() {
         binding.profileViewPager.setPageTransformer(ZoomOutPageTransformer())
 
         binding.profileIndicator.setViewPager2(binding.profileViewPager)
+
+        binding.profileViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                // Called when the scroll state changes (starting, stopping, or changing position)
+            }
+
+            override fun onPageSelected(position: Int) {
+                // Called when a new page has been selected
+
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                // Called when the page is scrolled
+            }
+        })
+
 
     }
 
