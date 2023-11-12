@@ -14,12 +14,10 @@ import com.example.carebout.databinding.ItemRecyclerviewBinding
 class MyViewHolder(val binding: ItemRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root)
 
 //항목 구성자: 어댑터
-class MyAdapter(
-    val context: Context, val contents: MutableList<String>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MyAdapter(val contents: MutableList<String>?):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //항목 개수를 판단하기 위해 자동 호출
     override fun getItemCount(): Int {
-        return contents.size
+        return contents?.size ?: 0
     }
 
     interface OnItemClickListener {
@@ -54,9 +52,7 @@ class MyAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding = (holder as MyViewHolder).binding
         //뷰에 데이터 출력
-        binding.itemData.text = contents[position]
-        //binding.itemSubdata.text = contents_sub[position]
-        //binding.itemDatedata.text = contents_date[position]
+        binding.itemData.text = contents!![position]
     }
 }
 

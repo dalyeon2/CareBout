@@ -11,6 +11,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.carebout.R
 import com.example.carebout.base.bottomTabClick
@@ -19,16 +21,18 @@ import com.example.carebout.databinding.ActivityCommunityBinding
 import com.example.carebout.view.IntroActivity
 
 class CommunityActivity : AppCompatActivity() {
-    var contents: MutableList<String>? = null
     lateinit var binding: ActivityCommunityBinding
+    lateinit var adapter: MyAdapter
+    var contents: MutableList<String>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
         binding = ActivityCommunityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        /*
         // 탭바
         val adapter = MyFragmentPagerAdapter(this)
         binding.viewpager.adapter = adapter
@@ -37,16 +41,14 @@ class CommunityActivity : AppCompatActivity() {
                 0 -> tab.text = "2022"
             }
         }.attach()
+        */
 
-
-        //ActionBarDrawerToggle 버튼 적용
-        val toggle = ActionBarDrawerToggle(this, binding.drawer, R.string.drawer_opened,
-            R.string.drawer_closed)
+        // Navigation Drawer 토글 동작 설정
+        val toggle = ActionBarDrawerToggle(this, binding.drawer, R.string.drawer_opened, R.string.drawer_closed)
         toggle.syncState()
 
-        // 네비게이션 바
         binding.mainDrawerView.setNavigationItemSelectedListener {
-            Log .d("kkang", "navigation item is clicked: ${it.title}")
+
             true
         }
 
@@ -68,6 +70,14 @@ class CommunityActivity : AppCompatActivity() {
         } ?: let {
             mutableListOf<String>()
         }
+
+        val layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = layoutManager
+        adapter = MyAdapter(contents)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.addItemDecoration(
+            DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
+        )
 
         val db = DBHelper(this).readableDatabase
         val cursor = db.rawQuery("select * from TODO_TB", null)
@@ -109,15 +119,4 @@ class CommunityActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-}
-
-class MyFragmentPagerAdapter(activity: FragmentActivity): FragmentStateAdapter(activity) {
-    val fragments: List<Fragment>
-    init {
-        fragments = listOf(OneFragment())
-    }
-
-    override fun getItemCount(): Int = fragments.size
-
-    override fun createFragment(position: Int): Fragment = fragments[position]
 }

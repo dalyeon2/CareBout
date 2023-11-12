@@ -1,4 +1,4 @@
-package com.example.carebout.view.community
+/*package com.example.carebout.view.community
 
 import android.content.Context
 import android.content.Intent
@@ -173,3 +173,4 @@ class OneFragment : Fragment() {
 
      */
      */
+*/
