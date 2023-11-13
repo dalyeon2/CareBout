@@ -1,6 +1,5 @@
 package com.example.carebout.view.home
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -20,9 +19,6 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.Date
 
 class HomeActivity : AppCompatActivity() {
 
@@ -45,24 +41,35 @@ class HomeActivity : AppCompatActivity() {
 
         clinicDao = AppDatabase.getInstance(this)!!.getClinicDao()
 
-        val dataSet: MutableList<Pair<String, String>> = mutableListOf()
+        val dataSet1: MutableList<Pair<String, String>> = mutableListOf()
+        val dataSet2: MutableList<Pair<String, String>> = mutableListOf()
 
         for(c in clinicDao.getClinicAll()){
             if(c.tag_blood == true)
-                dataSet.add(Pair("피검사", c.date!!))
+                dataSet1.add(Pair("피검사", c.date!!))
             if(c.tag_ct == true)
-                dataSet.add(Pair("CT", c.date!!))
+                dataSet1.add(Pair("CT", c.date!!))
             if(c.tag_checkup == true)
-                dataSet.add(Pair("접종", c.date!!))
+                dataSet1.add(Pair("접종", c.date!!))
             if(c.tag_mri == true)
-                dataSet.add(Pair("MRI", c.date!!))
+                dataSet1.add(Pair("MRI", c.date!!))
             if(c.tag_xray == true)
-                dataSet.add(Pair("X-Ray", c.date!!))
+                dataSet1.add(Pair("X-Ray", c.date!!))
             if(c.tag_ultrasonic == true)
-                dataSet.add(Pair("초음파", c.date!!))
+                dataSet1.add(Pair("초음파", c.date!!))
         }
 
-        dataSet.sortBy { it.second }
+        for(c in clinicDao.getClinicAll()){
+            if(c.tag_blood == true)
+                dataSet2.add(Pair("피검사", c.date!!))
+            if(c.tag_ct == true)
+                dataSet2.add(Pair("CT", c.date!!))
+            if(c.tag_checkup == true)
+                dataSet2.add(Pair("접종", c.date!!))
+        }
+
+        dataSet1.sortBy { it.second }
+        dataSet2.sortBy { it.second }
 
 //        val dataSet: MutableList<Pair<String, String>> =
 //            mutableListOf(Pair("X-ray", "01-04"), Pair("피검사", "01-05"), Pair("초음파", "01-06"),
@@ -70,7 +77,7 @@ class HomeActivity : AppCompatActivity() {
 //                Pair("피검사", "04-05"), Pair("초음파", "04-10"), Pair("X-ray", "04-12"), Pair("피검사", "05-12"),
 //                Pair("초음파", "05-14"))
 
-        val recyclerAdapter = RecyclerAdapter(dataSet)
+        val recyclerAdapter = RecyclerAdapter(dataSet1)
         binding.checkGraph.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         binding.checkGraph.adapter = recyclerAdapter
 
@@ -100,17 +107,17 @@ class HomeActivity : AppCompatActivity() {
         binding.profileIndicator.setViewPager2(binding.profileViewPager)
 
         binding.profileViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                // Called when the scroll state changes (starting, stopping, or changing position)
-            }
-
             override fun onPageSelected(position: Int) {
                 // Called when a new page has been selected
-
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-                // Called when the page is scrolled
+                if (position == 0) {
+                    val recyclerAdapter = RecyclerAdapter(dataSet1)
+                    binding.checkGraph.layoutManager = LinearLayoutManager(this@HomeActivity, RecyclerView.HORIZONTAL, false)
+                    binding.checkGraph.adapter = recyclerAdapter
+                } else if (position == 1) {
+                    val recyclerAdapter = RecyclerAdapter(dataSet2)
+                    binding.checkGraph.layoutManager = LinearLayoutManager(this@HomeActivity, RecyclerView.HORIZONTAL, false)
+                    binding.checkGraph.adapter = recyclerAdapter
+                }
             }
         })
 
@@ -156,8 +163,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun getProfileList(): ArrayList<Int> {
-        return arrayListOf<Int>(R.drawable.koong, R.drawable.moong, R.drawable.sunset,
-            R.drawable.stray1, R.drawable.stray2)
+        return arrayListOf<Int>(R.drawable.pet_0, R.drawable.pet_1, R.drawable.pet_2,
+            R.drawable.pet_3, R.drawable.pet_4)
     }
 
     private fun setWeightGraph() {
