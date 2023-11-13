@@ -30,14 +30,26 @@
             android:windowSoftInputMode="adjustPan"
             android:exported="false"/>
         <activity
+<<<<<<< Updated upstream
             android:name=".view.community.StoryActivity"
             android:label=""
             android:exported="false"/>
         <activity
+=======
+>>>>>>> Stashed changes
             android:name=".view.medical.MedicalActivity"
             android:exported="false"/>
         <activity
             android:name=".view.community.CommunityActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.community.StoryActivity"
+            android:label=" "
+            android:exported="false"/>
+        <activity
+            android:name=".view.community.AddActivity"
+            android:label=" "
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false"/>
         <activity
             android:name=".view.medical.Todo.TodoReadActivity"
