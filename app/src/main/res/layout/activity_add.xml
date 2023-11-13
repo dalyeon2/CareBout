@@ -1,70 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_collapseMode="pin">
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="2023년 11월 10일"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="14dp" />
-
-        <TextView
-            android:id="@+id/day"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="금요일"
-            android:textColor="#828282"
-            android:textSize="13dp" />
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:src="@drawable/dog_head" />
-
-    </LinearLayout>
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="20dp">
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/add_editView"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textMultiLine"
-            android:gravity="top"
-            android:textSize="14dp"
-            android:hint="오늘 하루는 어땠나요?"
-            android:background="@null"
-            android:textColorHint="#959AA3"/>
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin">
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="2023년 11월 10일"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="금요일"
+                android:textColor="#828282"
+                android:textSize="13dp" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/dog_head" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="480dp"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/userImageView"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/square_shape"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/add_editView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="top"
+                android:hint="오늘 하루는 어땠나요?"
+                android:inputType="textMultiLine"
+                android:textColorHint="#959AA3"
+                android:textSize="14dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/bottomIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_pic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
