@@ -35,7 +35,7 @@ class CommunityActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val newData = result.data?.getStringExtra("result")
             newData?.let {
-                contents?.add(it)
+                contents?.add(0, it)
                 adapter.notifyDataSetChanged()
 
                 // 데이터가 추가되면 RecyclerView를 보이도록 설정
@@ -43,6 +43,8 @@ class CommunityActivity : AppCompatActivity() {
                     binding.recyclerView.visibility = View.VISIBLE
                     binding.emptyView.visibility = View.GONE
                 }
+                // 리사이클러뷰 갱신
+                adapter.notifyItemInserted(0)
             }
         }
     }
@@ -103,20 +105,28 @@ class CommunityActivity : AppCompatActivity() {
             }
         })
 
+        val db = DBHelper(this).readableDatabase
+        //db.execSQL("DELETE FROM TODO_TB") // 데이터 초기화
+        val cursor = db.rawQuery("select * from TODO_TB", null)
+        cursor.run {
+            while (moveToNext()) {
+                // 최근에 추가된 아이템을 리스트의 맨 앞에 추가
+                contents?.add(0, cursor.getString(1))
+            }
+        }
+        db.close()
+
+        // 데이터가 추가되면 RecyclerView를 보이도록 설정
+        if (contents?.isNotEmpty() == true) {
+            binding.recyclerView.visibility = View.VISIBLE
+            binding.emptyView.visibility = View.GONE
+        }
+
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(
             DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
         )
-
-        val db = DBHelper(this).readableDatabase
-        val cursor = db.rawQuery("select * from TODO_TB", null)
-        cursor.run {
-            while (moveToNext()) {
-                contents?.add(cursor.getString(1))
-            }
-        }
-        db.close()
 
         bottomTabClick(binding.bottomTapBarOuter, this)
     }
