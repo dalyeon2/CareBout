@@ -19,56 +19,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 import com.example.carebout.view.medical.Medicine.MedicineAdapter
+import com.example.carebout.view.medical.Medicine.MedicineAdapter2
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Medicine
 import com.example.carebout.view.medical.db.MedicineDao
 
 class Tab1 : Fragment() {
-    //private val st = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-    /*
-    fun setMedi(name: String, peri: String, memo: String, tag: String) : View { // 약 정보 입력
-        st.setMargins(0,30,0,30)
-        var tablerow: TableRow = TableRow(this.context)     // 넣을 새 row 생성
-        var mediName: TextView = TextView(this.context)     // 넣을 약 이름 text view
-        var mediPeriod: TextView = TextView(this.context)   // 넣을 약 복용 기간 text view
-        var mediMemo: TextView = TextView(this.context)     // 넣을 약 비고 text view
-        var mediTag: String = tag
-        tablerow.layoutParams = st                          // 레이아웃 적용
-
-        mediName.text = name
-        mediPeriod.text = peri
-        mediMemo.text = memo
-        mediName.textSize = 16f
-        mediPeriod.textSize = 16f
-        mediMemo.textSize = 16f
-        mediMemo.setGravity(Gravity.CENTER)
-        mediName.setGravity(Gravity.CENTER)
-        mediPeriod.setGravity(Gravity.CENTER)
-
-        tablerow.addView(mediName)
-        tablerow.addView(mediPeriod)
-        tablerow.addView(mediMemo)
-
-        return tablerow
-    }
-    */
-
-    fun setTagButtonOnClick(tagButton: ToggleButton) {
-        tagButton.setOnClickListener {
-            if (tagButton.isChecked) {
-//                tagButton.setBackgroundDrawable(resources.getDrawable(R.drawable.fillborn))
-            } else {
-//                tagButton.setBackgroundDrawable(resources.getDrawable(R.drawable.bornn))
-                // sql 문으로
-            }
-        }
-    }
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var db: AppDatabase
     private lateinit var medicineDao: MedicineDao
     private var mediList: ArrayList<Medicine> = ArrayList<Medicine>()
-    private lateinit var adapter: MedicineAdapter
+    private lateinit var adapter2: MedicineAdapter2
     private lateinit var checkTag: ToggleButton
 
     @SuppressLint("MissingInflatedId")
@@ -88,8 +49,8 @@ class Tab1 : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         // UserAdapter 초기화
-        adapter = MedicineAdapter(requireContext())
-        recyclerView.adapter = adapter
+        adapter2 = MedicineAdapter2(requireContext())
+        recyclerView.adapter = adapter2
 
         // LiveData를 관찰하여 데이터 변경에 대응
         medicineDao.getAllMedicine().observe(viewLifecycleOwner, Observer { medicineList ->
@@ -98,7 +59,7 @@ class Tab1 : Fragment() {
                 // 토글 버튼이 체크된 상태이면
                 getMediCheckList()
             } else {
-                adapter.setMediList(medicineList as ArrayList<Medicine>)
+                adapter2.setMediList(medicineList as ArrayList<Medicine>)
             }
         })
 
@@ -122,7 +83,7 @@ class Tab1 : Fragment() {
 
         if (mediList.isNotEmpty()) {
             //데이터 적용
-            adapter.setMediList(mediList)
+            adapter2.setMediList(mediList)
 
         } else {
 
@@ -135,10 +96,10 @@ class Tab1 : Fragment() {
 
         if (mediCheckList.isNotEmpty()) {
             //데이터 적용
-            adapter.setMediList(mediCheckList)
+            adapter2.setMediList(mediCheckList)
 
         } else {
-            adapter.setMediList(ArrayList())
+            adapter2.setMediList(ArrayList())
         }
     }
 

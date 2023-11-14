@@ -92,7 +92,7 @@
 
                     <TextView
                         android:id="@+id/mediName"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="약 이름"
@@ -112,7 +112,7 @@
 
                     <TextView
                         android:id="@+id/start_text"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="복용 시작일"
@@ -122,7 +122,7 @@
 
                     <TextView
                         android:id="@+id/end_text"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="복용 종료일"
@@ -130,15 +130,6 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/hName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="비고"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
                 </TableRow>
 
                 <!--구분선-->
@@ -154,8 +145,7 @@
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/lineView"
-                    />
+                    android:layout_below="@+id/lineView" />
 
             </TableLayout>
         </RelativeLayout>

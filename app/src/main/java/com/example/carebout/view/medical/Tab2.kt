@@ -18,42 +18,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 import com.example.carebout.view.medical.Inoc.InoculationAdapter
+import com.example.carebout.view.medical.Inoc.InoculationAdapter2
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Inoculation
 import com.example.carebout.view.medical.db.InoculationDao
 
 class Tab2 : Fragment() {
-   // private val st = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-/*
-    fun setInoculation(date: String, name: String, expectedDate: String) : View { // 약 정보 입력
-        st.setMargins(0,30,0,30)
-        var tablerow: TableRow = TableRow(this.context)     // 넣을 새 row 생성
-        var innoDate: TextView = TextView(this.context)     // 넣을 약 이름 text view
-        var innoName: TextView = TextView(this.context)   // 넣을 약 복용 기간 text view
-        var innoEDate: TextView = TextView(this.context)     // 넣을 약 비고 text view
-        tablerow.layoutParams = st                          // 레이아웃 적용
-
-        innoDate.text = date
-        innoName.text = name
-        innoEDate.text = expectedDate
-        innoDate.textSize = 16f
-        innoName.textSize = 16f
-        innoEDate.textSize = 16f
-        innoEDate.setGravity(Gravity.CENTER)
-        innoDate.setGravity(Gravity.CENTER)
-        innoName.setGravity(Gravity.CENTER)
-
-        tablerow.addView(innoDate)
-        tablerow.addView(innoName)
-        tablerow.addView(innoEDate)
-
-        return tablerow
-    }*/
-
     private lateinit var db: AppDatabase
     private lateinit var inocDao: InoculationDao
     private var inocList: ArrayList<Inoculation> = ArrayList<Inoculation>()
-    private lateinit var adapter: InoculationAdapter
+    private lateinit var adapter: InoculationAdapter2
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var tag1: ToggleButton
@@ -75,7 +49,7 @@ class Tab2 : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         //UserAdapter 초기화
-        adapter = InoculationAdapter(requireContext())
+        adapter = InoculationAdapter2(requireContext())
         //Adapter 적용
         recyclerView.adapter = adapter
 
