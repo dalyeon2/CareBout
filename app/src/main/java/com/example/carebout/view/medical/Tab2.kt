@@ -266,4 +266,11 @@ class Tab2 : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // 다른 화면에서 돌아올 때 토글 버튼을 false로 설정
+        val Tags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH)
+        Tags.forEach { it.isChecked = false }
+    }
+
 }

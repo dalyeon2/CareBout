@@ -23,6 +23,16 @@ class InoculationReadActivity : AppCompatActivity() {
     private var inocList: ArrayList<Inoculation> = ArrayList<Inoculation>()
     private lateinit var adapter: InoculationAdapter
 
+    override fun onResume() {
+        super.onResume()
+        // 다른 화면에서 돌아올 때 토글 버튼을 false로 설정
+        val toggleButtons = arrayOf(
+            binding.toggleButton1, binding.toggleButton2, binding.toggleButton3,
+            binding.toggleButton4, binding.toggleButton5, binding.toggleButton6,
+            binding.toggleButton7, binding.toggleButton8)
+        toggleButtons.forEach { it.isChecked = false }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInoculationReadBinding.inflate(layoutInflater)
@@ -33,16 +43,9 @@ class InoculationReadActivity : AppCompatActivity() {
         inocDao = db.getInocDao()
 
         val insertBtn: FloatingActionButton = findViewById(R.id.insert_btn)
-        val toggleButtons = arrayOf(
-            binding.toggleButton1, binding.toggleButton2, binding.toggleButton3,
-            binding.toggleButton4, binding.toggleButton5, binding.toggleButton6,
-            binding.toggleButton7, binding.toggleButton8
-        )
 
         insertBtn.setOnClickListener {
             val intent: Intent = Intent(this, InoculationWriteActivity::class.java)
-            toggleButtons.forEach { it.isChecked = false }
-
             activityResult.launch(intent)
         }
 

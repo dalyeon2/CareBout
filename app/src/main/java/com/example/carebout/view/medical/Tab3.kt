@@ -227,4 +227,11 @@ class Tab3 : Fragment() {
             adapter.setClinicList(ArrayList())
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        // 다른 화면에서 돌아올 때 토글 버튼을 false로 설정
+        val Tags = listOf(tag_blood, tag_xray, tag_ultrasonic, tag_ct, tag_mri, tag_checkup)
+        Tags.forEach { it.isChecked = false }
+    }
 }
