@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="21.5dp"
-    android:layout_marginTop="12.5dp">
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="16dp">
 
     <ImageView
         android:id="@+id/dogImage"
@@ -45,7 +45,6 @@
         android:id="@+id/textView18"
         android:layout_width="60dp"
         android:layout_height="35dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="7dp"
         android:text="KG"
         android:textAlignment="center"
