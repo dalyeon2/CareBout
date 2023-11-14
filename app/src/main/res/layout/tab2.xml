@@ -14,37 +14,106 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ToggleButton
-            android:layout_marginRight="10dp"
-            android:id="@+id/toggle1"
+        <HorizontalScrollView
+            android:id="@+id/tag_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp">
 
-            android:text="기초"
-            android:textOn="기초"
-            android:textOff="기초"
+            <LinearLayout
 
-            android:background="@drawable/togglebtn_check"/>
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <ToggleButton
-            android:layout_marginRight="10dp"
-            android:id="@+id/toggle2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_toEndOf="@+id/toggle1"
+                <ToggleButton
+                    android:id="@+id/toggleButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="DHPPL"
+                    android:textOff="DHPPL"
+                    android:textOn="DHPPL" />
 
-            android:text="정기"
-            android:textOn="정기"
-            android:textOff="정기"
-            android:background="@drawable/togglebtn_check"
-            />
+                <ToggleButton
+                    android:id="@+id/toggleButton2"
+                    android:layout_width="80dp"
+                    android:layout_height="48dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="코로나"
+                    android:textOff="코로나"
+                    android:textOn="코로나" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="켄넬코프"
+                    android:textOff="켄넬코프"
+                    android:textOn="켄넬코프" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButton4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="CVRP"
+                    android:textOff="CVRP"
+                    android:textOn="CVRP" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButton5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="백혈병"
+                    android:textOff="백혈병"
+                    android:textOn="백혈병" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButton6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="FID"
+                    android:textOff="FID"
+                    android:textOn="FID" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButton7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="광견병"
+                    android:textOff="광견병"
+                    android:textOn="광견병" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButton8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="심장사상충"
+                    android:textOff="심장사상충"
+                    android:textOn="심장사상충" />
+
+            </LinearLayout>
+        </HorizontalScrollView>
 
 <!--        <ToggleButton-->
 <!--            android:id="@+id/junggiGumjin"-->
