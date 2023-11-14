@@ -3,6 +3,7 @@ package com.example.carebout.view.community
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Rect
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,7 @@ import java.util.Locale
 class MyViewHolder(val binding: ItemRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root)
 
 //항목 구성자: 어댑터
-class MyAdapter(val contents: MutableList<String>?):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MyAdapter(val contents: MutableList<String>?, val imageUris: MutableList<Uri>?):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //항목 개수를 판단하기 위해 자동 호출
     override fun getItemCount(): Int {
         return contents?.size ?: 0
@@ -56,6 +57,11 @@ class MyAdapter(val contents: MutableList<String>?):RecyclerView.Adapter<Recycle
         val binding = (holder as MyViewHolder).binding
         //뷰에 데이터 출력
         binding.itemData.text = contents!![position]
+
+        // 이미지 URI가 있다면 이미지를 로드하여 표시
+        imageUris?.get(position)?.let {
+            binding.itemImage.setImageURI(it)
+        }
 
         // 현재 날짜와 요일 설정
         val currentDate = Calendar.getInstance().time

@@ -29,7 +29,8 @@ import android.view.ViewTreeObserver
 
 class AddActivity: AppCompatActivity() {
     lateinit var binding: ActivityAddBinding
-
+    private var selectedImageUri: Uri? = null
+    /*
     private val requestLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -45,7 +46,7 @@ class AddActivity: AppCompatActivity() {
             finish()
         }
     }
-
+    */
     private val requestGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -68,8 +69,9 @@ class AddActivity: AppCompatActivity() {
                     bitmap?.let {
                         binding.userImageView.setImageBitmap(bitmap)
                         binding.userImageView.visibility = View.VISIBLE
+                        selectedImageUri = result.data!!.data
                     } ?: let {
-
+                        selectedImageUri = null
                     }
                 } catch (e: Exception) {
 
@@ -107,15 +109,6 @@ class AddActivity: AppCompatActivity() {
         binding.date.setOnClickListener {
             showDatePickerDialog()
         }
-
-        /*
-        // 데이터 전송
-        val userEnteredText = binding.addEditView.text.toString()
-        val fragment = OneFragment()
-        val args = Bundle()
-        args.putString("userEnteredText", userEnteredText) // 사용자가 입력한 텍스트를 Bundle에 추가
-        fragment.arguments = args
-         */
     }
 
     override fun onCreateOptionsMenu (menu: Menu?): Boolean {
@@ -137,7 +130,12 @@ class AddActivity: AppCompatActivity() {
                 arrayOf<String>(inputData))
             db.close()
 
-            val intent = intent.putExtra("result", binding.addEditView.text.toString())
+            val intent = Intent().apply {
+                putExtra("result", inputData)
+                selectedImageUri?.let {
+                    putParcelableArrayListExtra("imageUris", arrayListOf(it))
+                }
+            }
             setResult(Activity.RESULT_OK, intent)
             finish()
             true
