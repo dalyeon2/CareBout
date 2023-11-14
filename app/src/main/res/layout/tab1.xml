@@ -100,15 +100,15 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/gumjinName"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="복용 기간"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textStyle="bold" />-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/gumjinName"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_weight="1"-->
+                    <!--                        android:text="복용 기간"-->
+                    <!--                        android:textAlignment="center"-->
+                    <!--                        android:textSize="16sp"-->
+                    <!--                        android:textStyle="bold" />-->
 
                     <TextView
                         android:id="@+id/start_text"
@@ -137,9 +137,9 @@
                     android:id="@+id/lineView"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_below="@+id/mediTableRow"
                     android:layout_marginHorizontal="10dp"
-                    android:background="#262626"
-                    android:layout_below="@+id/mediTableRow"/>
+                    android:background="#262626" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"

@@ -100,7 +100,8 @@
                     android:layout_marginEnd="13dp"
                     android:layout_marginBottom="13dp"
                     android:layout_toEndOf="@+id/currentWeight"
-                    android:background="@drawable/tab_radius">
+                    android:background="@drawable/tab_radius"
+                    android:gravity="top">
 
                     <TextView
                         android:id="@+id/mediingMainText"
@@ -132,7 +133,7 @@
                     <LinearLayout
                         android:id="@+id/mediingFrame"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/emptyView"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
@@ -141,6 +142,7 @@
                         android:layout_marginTop="6dp"
                         android:layout_marginEnd="0dp"
                         android:layout_marginBottom="6dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
