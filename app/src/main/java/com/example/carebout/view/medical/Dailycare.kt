@@ -39,8 +39,8 @@ class Dailycare : Fragment() {
     fun getTime() : String{
         var now: Long = System.currentTimeMillis();
         var date = Date(now);
-        val sdf = SimpleDateFormat("mm");
-//        val sdf = SimpleDateFormat("yyyyMMdd");
+//        val sdf = SimpleDateFormat("mm");
+        val sdf = SimpleDateFormat("yyyyMMdd");
 //        시험삼아 해보기 위해 날짜 포맷을 분을 가져옴, 실제 돌릴 땐 위 sdf 말고 주석처리한 아래의 sdf로 사용
         var getTime: String = sdf.format(date)
 

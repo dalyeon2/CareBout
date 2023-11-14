@@ -18,42 +18,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 import com.example.carebout.view.medical.Clinic.ClinicAdapter
+import com.example.carebout.view.medical.Clinic.ClinicAdapter2
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Clinic
 import com.example.carebout.view.medical.db.ClinicDao
 
 class Tab3 : Fragment() {
-    //private val st = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-/*
-    fun setSheet(date: String, name: String, hpName: String) : View { // 약 정보 입력
-        st.setMargins(0,30,0,30)
-        var tablerow: TableRow = TableRow(this.context)     // 넣을 새 row 생성
-        var sheetDate: TextView = TextView(this.context)     // 넣을 약 이름 text view
-        var sheetName: TextView = TextView(this.context)   // 넣을 약 복용 기간 text view
-        var sheetHpName: TextView = TextView(this.context)     // 넣을 약 비고 text view
-        tablerow.layoutParams = st                          // 레이아웃 적용
-
-        sheetDate.text = date
-        sheetName.text = name
-        sheetHpName.text = hpName
-        sheetDate.textSize = 16f
-        sheetName.textSize = 16f
-        sheetHpName.textSize = 16f
-        sheetHpName.setGravity(Gravity.CENTER)
-        sheetDate.setGravity(Gravity.CENTER)
-        sheetName.setGravity(Gravity.CENTER)
-
-        tablerow.addView(sheetDate)
-        tablerow.addView(sheetName)
-        tablerow.addView(sheetHpName)
-
-        return tablerow
-    }*/
-
     private lateinit var db: AppDatabase
     private lateinit var clinicDao: ClinicDao
     private var clinicList: ArrayList<Clinic> = ArrayList<Clinic>()
-    private lateinit var adapter: ClinicAdapter
+    private lateinit var adapter: ClinicAdapter2
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var tag_blood: ToggleButton
@@ -77,7 +51,7 @@ class Tab3 : Fragment() {
         recyclerView = tab3View.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter = ClinicAdapter(requireContext())
+        adapter = ClinicAdapter2(requireContext())
         recyclerView.adapter = adapter
 
         // LiveData를 관찰하여 데이터 변경에 대응
@@ -252,5 +226,12 @@ class Tab3 : Fragment() {
         } else {
             adapter.setClinicList(ArrayList())
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 다른 화면에서 돌아올 때 토글 버튼을 false로 설정
+        val Tags = listOf(tag_blood, tag_xray, tag_ultrasonic, tag_ct, tag_mri, tag_checkup)
+        Tags.forEach { it.isChecked = false }
     }
 }
