@@ -4,19 +4,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.example.carebout.R
-import com.example.carebout.databinding.PetListBinding
 
-class MyViewPagerAdapter(profileList: ArrayList<Int>): RecyclerView.Adapter<MyViewPagerAdapter.PagerViewHolder>() {
+class MyViewPagerAdapter(context: HomeActivity, profileList: ArrayList<String>): RecyclerView.Adapter<MyViewPagerAdapter.PagerViewHolder>() {
     var item = profileList
+    val context = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PagerViewHolder((parent))
 
     override fun getItemCount(): Int = item.size
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-        holder.pet.setImageResource(item[position])
+        for(i in item) {
+            holder.pet.setImageURI(ImageUtil().get(context, i))
+        }
+
+//        holder.pet.setImageResource(item[position])
+        //holder.pet.setImageURI(ImageUtil().get())
     }
 
     inner class PagerViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder

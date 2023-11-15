@@ -4,22 +4,25 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface PersonalInfoDao {
-//    @Query("SELECT * FROM personalinfo")
-//    fun getAll(): List<PersonalInfo>
-//
-//    @Query("SELECT * FROM personalinfo WHERE pid IN (:PersonalInfoIds)")
-//    fun loadAllByIds(PersonalInfoIds: IntArray): List<PersonalInfo>
-//
-//    @Query("SELECT * FROM PersonalInfo WHERE first_name LIKE :first AND " +
-//            "last_name LIKE :last LIMIT 1")
-//    fun findByName(first: String, last: String): PersonalInfo
-//
-//    @Insert
-//    fun insertAll(vararg PersonalInfos: PersonalInfo)
-//
-//    @Delete
-//    fun delete(PersonalInfo: PersonalInfo)
+    @Insert
+    fun insertInfo(personalInfo: PersonalInfo): Long
+
+    @Delete
+    fun deleteInfo(personalInfo: PersonalInfo)
+
+    @Update
+    fun updateInfo(personalInfo: PersonalInfo)
+
+    @Query("SELECT * FROM personalinfo")
+    fun getAllInfo(): List<PersonalInfo>
+
+    @Query("SELECT * FROM personalinfo WHERE pid = :pid")
+    fun getInfoById(pid: Int): PersonalInfo?   // pid로 모든 정보 가져오기
+
+    @Query("SELECT name FROM personalinfo")
+    fun getAllNames(): List<String>
 }
