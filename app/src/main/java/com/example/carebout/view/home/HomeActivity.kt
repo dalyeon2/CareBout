@@ -121,10 +121,6 @@ class HomeActivity : AppCompatActivity() {
 
                 val p = db.personalInfoDao().getAllInfo()
 
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    p = db.personalInfoDao().getAllInfo()
-//                }
-
                 binding.helloName.text = "반가워, " + p[position].name + "!"
                 binding.man.text = p[position].sex
                 binding.birth.text = p[position].birth
