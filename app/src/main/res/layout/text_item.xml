@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="50dp"
-    android:layout_height="match_parent">
+    android:layout_width="55dp"
+    android:layout_height="match_parent"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +13,7 @@
 
         <TextView
             android:id="@+id/inspection"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="test"
             android:textSize="12dp"
@@ -19,7 +21,7 @@
 
         <TextView
             android:id="@+id/date"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00.00"
             android:textSize="10dp"

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addPetContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.home.AddPetActivity">
@@ -10,129 +11,24 @@
         android:id="@+id/topBarOuter"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/addPetContainer"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/addProfileImageCardView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="200dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBarOuter">
 
-    <ScrollView
-        android:id="@+id/addPetContainerScroll"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/topBarOuter"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/addPetContainer"
+        <ImageView
+            android:id="@+id/profileImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="12dp"
-            android:paddingBottom="50dp">
+            android:src="@drawable/ic_launcher_background"/>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/addProfileImageCardView"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="50dp"
-                app:cardCornerRadius="200dp"
-                app:layout_constraintTop_toTopOf="@id/addPetContainer"
-                app:layout_constraintStart_toStartOf="@id/addPetContainer"
-                app:layout_constraintEnd_toEndOf="@id/addPetContainer">
-
-                <ImageView
-                    android:id="@+id/profileImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher_background"/>
-
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/nameTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="이름"
-                app:layout_constraintTop_toBottomOf="@id/addProfileImageCardView"/>
-
-            <EditText
-                android:id="@+id/editName"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:layout_constraintTop_toBottomOf="@id/nameTitle"/>
-
-            <TextView
-                android:id="@+id/sexTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="성별"
-                app:layout_constraintTop_toBottomOf="@id/editName" />
-
-            <EditText
-                android:id="@+id/editSex"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:layout_constraintTop_toBottomOf="@id/sexTitle"/>
-
-            <TextView
-                android:id="@+id/birthTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="생년월일"
-                app:layout_constraintTop_toBottomOf="@id/editSex" />
-
-            <EditText
-                android:id="@+id/editBirth"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:layout_constraintTop_toBottomOf="@id/birthTitle"/>
-
-            <TextView
-                android:id="@+id/weightTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="체중"
-                app:layout_constraintTop_toBottomOf="@id/editBirth" />
-
-            <EditText
-                android:id="@+id/editWeight"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:layout_constraintTop_toBottomOf="@id/weightTitle"/>
-
-            <TextView
-                android:id="@+id/breedTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="품종"
-                app:layout_constraintTop_toBottomOf="@id/editWeight" />
-
-            <EditText
-                android:id="@+id/editBreed"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:layout_constraintTop_toBottomOf="@id/breedTitle"/>
-
-            <TextView
-                android:id="@+id/animalTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="동물 분류"
-                app:layout_constraintTop_toBottomOf="@id/editBreed" />
-
-            <EditText
-                android:id="@+id/editAnimal"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:layout_constraintTop_toBottomOf="@id/animalTitle"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
