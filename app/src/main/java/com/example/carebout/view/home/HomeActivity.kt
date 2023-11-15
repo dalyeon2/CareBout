@@ -50,11 +50,15 @@ class HomeActivity : AppCompatActivity() {
 
         val profileList: ArrayList<String> = arrayListOf()
 
-        CoroutineScope(Dispatchers.IO).launch {
-            for (p in db.personalInfoDao().getAllInfo()) {
-                p.image?.let { profileList.add(it) }
-            }
+        for (p in db.personalInfoDao().getAllInfo()) {
+            p.image?.let { profileList.add(it) }
         }
+
+//        CoroutineScope(Dispatchers.IO).launch {
+//            for (p in db.personalInfoDao().getAllInfo()) {
+//                p.image?.let { profileList.add(it) }
+//            }
+//        }
 
         val checkDataSet: MutableList<Pair<String, String>> = mutableListOf()
         val dataSet2: MutableList<Pair<String, String>> = mutableListOf()
@@ -65,7 +69,7 @@ class HomeActivity : AppCompatActivity() {
             if(c.tag_ct == true)
                 checkDataSet.add(Pair("CT", c.date!!))
             if(c.tag_checkup == true)
-                checkDataSet.add(Pair("접종", c.date!!))
+                checkDataSet.add(Pair("정기검진", c.date!!))
             if(c.tag_mri == true)
                 checkDataSet.add(Pair("MRI", c.date!!))
             if(c.tag_xray == true)
@@ -115,14 +119,16 @@ class HomeActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 // Called when a new page has been selected
 
-                CoroutineScope(Dispatchers.IO).launch {
-                    val p: List<PersonalInfo> = db.personalInfoDao().getAllInfo()
-                    binding.helloName.text = "반가워, " + p[position].name + "!"
-                    binding.man.text = p[position].sex
-                    binding.birth.text = p[position].birth
-                    binding.weight.text = p[position].breed
+                val p = db.personalInfoDao().getAllInfo()
 
-                }
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    p = db.personalInfoDao().getAllInfo()
+//                }
+
+                binding.helloName.text = "반가워, " + p[position].name + "!"
+                binding.man.text = p[position].sex
+                binding.birth.text = p[position].birth
+                binding.weight.text = p[position].breed
             }
         })
 

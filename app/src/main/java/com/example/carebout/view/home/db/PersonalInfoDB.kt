@@ -21,7 +21,10 @@ abstract class PersonalInfoDB : RoomDatabase() {
                         context.applicationContext,
                         PersonalInfoDB::class.java,
                         "personalInfo-database"
-                    ).build()
+                    ).allowMainThreadQueries()
+                        .fallbackToDestructiveMigration()
+                        .build()
+
                 }
             }
            return instance
