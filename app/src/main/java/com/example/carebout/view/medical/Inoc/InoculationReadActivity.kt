@@ -23,6 +23,16 @@ class InoculationReadActivity : AppCompatActivity() {
     private var inocList: ArrayList<Inoculation> = ArrayList<Inoculation>()
     private lateinit var adapter: InoculationAdapter
 
+    override fun onResume() {
+        super.onResume()
+        // 다른 화면에서 돌아올 때 토글 버튼을 false로 설정
+        val toggleButtons = arrayOf(
+            binding.toggleButton1, binding.toggleButton2, binding.toggleButton3,
+            binding.toggleButton4, binding.toggleButton5, binding.toggleButton6,
+            binding.toggleButton7, binding.toggleButton8)
+        toggleButtons.forEach { it.isChecked = false }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInoculationReadBinding.inflate(layoutInflater)
@@ -33,11 +43,9 @@ class InoculationReadActivity : AppCompatActivity() {
         inocDao = db.getInocDao()
 
         val insertBtn: FloatingActionButton = findViewById(R.id.insert_btn)
+
         insertBtn.setOnClickListener {
             val intent: Intent = Intent(this, InoculationWriteActivity::class.java)
-            binding.toggle1.isChecked = false
-            binding.toggle2.isChecked = false
-
             activityResult.launch(intent)
         }
 
@@ -51,63 +59,111 @@ class InoculationReadActivity : AppCompatActivity() {
         //Adapter 적용
         recyclerView.adapter = adapter
 
-
         //조회
         getInocList()
 
-
-        val tag1 = binding.toggle1
-        val tag2 = binding.toggle2
-
-        tag1.setOnCheckedChangeListener { _, isChecked ->
-            getInocList()
-            if (isChecked) {
-                if (tag2.isChecked) {
-                    tag2.isChecked = false
-                }
-                Log.i("check", "true")
-                getInocTag1List()
-            }
-        }
-
-        tag2.setOnCheckedChangeListener { _, isChecked ->
-            getInocList()
-            if (isChecked) {
-                if (tag1.isChecked) {
-                    tag1.isChecked = false
-                }
-                Log.i("check", "true")
-                getInocTag2List()
-            }
-        }
+        val tagDHPPL = binding.toggleButton1
+        val tagC = binding.toggleButton2
+        val tagKC = binding.toggleButton3
+        val tagCVRP = binding.toggleButton4
+        val tagFL = binding.toggleButton5
+        val tagFID = binding.toggleButton6
+        val tagR = binding.toggleButton7
+        val tagH = binding.toggleButton8
 
 //        tag1.setOnCheckedChangeListener { _, isChecked ->
+//            getInocList()
 //            if (isChecked) {
 //                if (tag2.isChecked) {
 //                    tag2.isChecked = false
-//                    Log.i("check", "true")
-//                    getInocTag1List()
 //                }
-//            }else {
-//                getInocList()
+//                Log.i("check", "true")
+//                getInocTag1List()
 //            }
 //        }
 //
 //        tag2.setOnCheckedChangeListener { _, isChecked ->
+//            getInocList()
 //            if (isChecked) {
 //                if (tag1.isChecked) {
 //                    tag1.isChecked = false
-//                    Log.i("check", "true")
-//                    getInocTag2List()
 //                }
-//            }else {
-//                getInocList()
+//                Log.i("check", "true")
+//                getInocTag2List()
 //            }
 //        }
 
+        tagDHPPL.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagDHPPLList()
+            }
+        }
 
+        tagC.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagCList()
+            }
+        }
 
+        tagKC.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagCVRP, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagKCList()
+            }
+        }
 
+        tagCVRP.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagCVRPList()
+            }
+        }
+
+        tagFL.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagFLList()
+            }
+        }
+
+        tagFID.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagFIDList()
+            }
+        }
+
+        tagR.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagRList()
+            }
+        }
+
+        tagH.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagHList()
+            }
+        }
     }
 
     //액티비티가 백그라운드에 있는데 호출되면 실행 /수정화면에서 호출시 실행
@@ -143,26 +199,104 @@ class InoculationReadActivity : AppCompatActivity() {
         }
     }
 
-    private fun getInocTag1List() {
+    private fun getInocTagDHPPLList() {
 
-        val inocTag1List: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTag1() as ArrayList<Inoculation>
+        val inocTagDHPPLList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagDHPPL() as ArrayList<Inoculation>
 
-        if (inocTag1List.isNotEmpty()) {
+        if (inocTagDHPPLList.isNotEmpty()) {
             //데이터 적용
-            adapter.setInoculationList(inocTag1List)
+            adapter.setInoculationList(inocTagDHPPLList)
 
         } else {
             adapter.setInoculationList(ArrayList())
         }
     }
 
-    private fun getInocTag2List() {
+    private fun getInocTagCList() {
 
-        val inocTag2List: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTag2() as ArrayList<Inoculation>
+        val inocTagCList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagC() as ArrayList<Inoculation>
 
-        if (inocTag2List.isNotEmpty()) {
+        if (inocTagCList.isNotEmpty()) {
             //데이터 적용
-            adapter.setInoculationList(inocTag2List)
+            adapter.setInoculationList(inocTagCList)
+
+        } else {
+            adapter.setInoculationList(ArrayList())
+        }
+    }
+
+    private fun getInocTagKCList() {
+
+        val inocTagKCList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagKC() as ArrayList<Inoculation>
+
+        if (inocTagKCList.isNotEmpty()) {
+            //데이터 적용
+            adapter.setInoculationList(inocTagKCList)
+
+        } else {
+            adapter.setInoculationList(ArrayList())
+        }
+    }
+
+    private fun getInocTagCVRPList() {
+
+        val inocTagCVRPList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagCVRP() as ArrayList<Inoculation>
+
+        if (inocTagCVRPList.isNotEmpty()) {
+            //데이터 적용
+            adapter.setInoculationList(inocTagCVRPList)
+
+        } else {
+            adapter.setInoculationList(ArrayList())
+        }
+    }
+
+    private fun getInocTagFLList() {
+
+        val inocTagFLList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagFL() as ArrayList<Inoculation>
+
+        if (inocTagFLList.isNotEmpty()) {
+            //데이터 적용
+            adapter.setInoculationList(inocTagFLList)
+
+        } else {
+            adapter.setInoculationList(ArrayList())
+        }
+    }
+
+    private fun getInocTagFIDList() {
+
+        val inocTagFIDList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagFID() as ArrayList<Inoculation>
+
+        if (inocTagFIDList.isNotEmpty()) {
+            //데이터 적용
+            adapter.setInoculationList(inocTagFIDList)
+
+        } else {
+            adapter.setInoculationList(ArrayList())
+        }
+    }
+
+    private fun getInocTagRList() {
+
+        val inocTagRList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagR() as ArrayList<Inoculation>
+
+        if (inocTagRList.isNotEmpty()) {
+            //데이터 적용
+            adapter.setInoculationList(inocTagRList)
+
+        } else {
+            adapter.setInoculationList(ArrayList())
+        }
+    }
+
+    private fun getInocTagHList() {
+
+        val inocTagHList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagH() as ArrayList<Inoculation>
+
+        if (inocTagHList.isNotEmpty()) {
+            //데이터 적용
+            adapter.setInoculationList(inocTagHList)
 
         } else {
             adapter.setInoculationList(ArrayList())

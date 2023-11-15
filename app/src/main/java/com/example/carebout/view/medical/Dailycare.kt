@@ -32,15 +32,15 @@ class Dailycare : Fragment() {
     var dailycareNumber = Array<Int>(10, {0}) // 타이틀을 몇 번 해야하는지
     val st = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT)
     val stBtn = LinearLayout.LayoutParams(130, 130)
-    val views: Array<ToggleButton?> = Array(10,  {null})
+    val views: Array<ToggleButton?> = Array(50,  {null})
     var bornCount = 0
 
     // 시간 가져오는 함수
     fun getTime() : String{
         var now: Long = System.currentTimeMillis();
         var date = Date(now);
-        val sdf = SimpleDateFormat("mm");
-//        val sdf = SimpleDateFormat("yyyyMMdd");
+//        val sdf = SimpleDateFormat("mm");
+        val sdf = SimpleDateFormat("yyyyMMdd");
 //        시험삼아 해보기 위해 날짜 포맷을 분을 가져옴, 실제 돌릴 땐 위 sdf 말고 주석처리한 아래의 sdf로 사용
         var getTime: String = sdf.format(date)
 
@@ -99,7 +99,7 @@ class Dailycare : Fragment() {
     // 데일리케어 타이틀의 텍스트뷰 생성
     fun setDailycare() : View {
         var dailycareTextView = TextView(this.context) // 빈 텍스트뷰 생성
-        dailycareTextView.text = "\n-" + dailycareText[nthDaily] // 텍스트 넣기
+        dailycareTextView.text = "\n- " + dailycareText[nthDaily] // 텍스트 넣기
         dailycareTextView.textSize = 18.0f
         dailycareTextView.layoutParams = st // 레이아웃 지정
         dailycareTextView.id = ViewCompat.generateViewId() // 아이디 랜덤으로 지정
@@ -111,6 +111,19 @@ class Dailycare : Fragment() {
     fun insertDailycare(title: String, number: Int) {
         dailycareText[nthDaily] = title
         dailycareNumber[nthDaily] = number
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // 상태를 저장하는 코드 추가
+        outState.putInt("nthDaily", nthDaily)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+        // 저장된 상태를 복원하는 코드 추가
+        nthDaily = savedInstanceState?.getInt("nthDaily", 0) ?: 0
     }
 
     @SuppressLint("MissingInflatedId")

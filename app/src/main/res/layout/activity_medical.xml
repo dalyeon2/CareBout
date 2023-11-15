@@ -165,7 +165,7 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="🩺 검진 내역" />
+            android:text="\uD83E\uDE7A🩺 검진 내역" />
 
         <TextView
             android:id="@+id/menu_item_2"
@@ -176,7 +176,7 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="💊 복용약" />
+            android:text="\uD83D\uDC8A💊 복용약" />
 
         <TextView
             android:id="@+id/menu_item_3"
@@ -187,7 +187,7 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="💉 접종 내역" />
+            android:text="\uD83D\uDC89💉 접종 내역" />
 
         <TextView
             android:id="@+id/menu_item_4"
@@ -198,7 +198,7 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="📃 데일리 투두" />
+            android:text="\uD83D\uDCC3📃 데일리 케어" />
 
     </LinearLayout>
 

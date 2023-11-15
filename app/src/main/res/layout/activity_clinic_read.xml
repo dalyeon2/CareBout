@@ -96,46 +96,50 @@
         android:layout_below="@+id/tag_layout"
 
         android:gravity="center_vertical"
-        android:padding="20dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/tag_v"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="태그"
-            android:textSize="16sp"
-            android:textColor="#000"/>
+            android:textColor="#000"
+            android:textSize="16sp" />
 
         <!--상태 메시지-->
         <TextView
             android:id="@+id/date_v"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:maxLines="1"
             android:text="검진일"
-            android:textSize="16sp"
             android:textColor="#444"
-            android:maxLines="1"/>
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/hospital_v"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:maxLines="1"
             android:text="병원"
-            android:textSize="16sp"
             android:textColor="#444"
-            android:maxLines="1"/>
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/etc_v"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="비고"
-            android:textSize="16sp"
-            android:textColor="#444" />
+            android:textColor="#444"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <!--구분선-->
