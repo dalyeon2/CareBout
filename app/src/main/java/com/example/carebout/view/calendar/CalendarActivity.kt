@@ -1,6 +1,7 @@
 package com.example.carebout.view.calendar
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -142,7 +143,6 @@ class CalendarActivity : AppCompatActivity() {
                 data[selectedDate] = events // 항목을 제거한 데이터로 업데이트
                 adapter.remove(itemText) // ListView에서 해당 항목 삭제
                 adapter.notifyDataSetChanged() // ListView 업데이트
-                Toast.makeText(this, "삭제되었습니다!", Toast.LENGTH_SHORT).show()
                 dialog.dismiss() // AlertDialog 닫기
             }
             .setNegativeButton("취소") { dialog, which ->

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topBar"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:background="@color/white">
+
+    <Button
+        android:id="@+id/backToActivity"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="←"
+        android:textSize="18dp"
+        android:background="@color/transparent" />
+    <TextView
+        android:id="@+id/activityTitle"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:text="반려동물 등록"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:background="@color/transparent"/>
+    <Button
+        android:id="@+id/CompleteBtn"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="등록"
+        android:textSize="18dp"
+        android:textColor="#6EC677"
+        android:textStyle="bold"
+        android:background="@color/transparent"/>
+
+</LinearLayout>
