@@ -23,7 +23,6 @@ fun bottomTabClick(btmBinding: BottomTapBinding, nowActivity: Activity){
                 nowActivity, CalendarActivity::class.java
             )
         )
-        nowActivity.finish()
     }
     btmBinding.goToCommunity.setOnClickListener {
         nowActivity.startActivity(
