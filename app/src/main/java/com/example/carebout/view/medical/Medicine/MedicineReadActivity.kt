@@ -23,12 +23,6 @@ class MedicineReadActivity : AppCompatActivity() {
     private var mediList: ArrayList<Medicine> = ArrayList<Medicine>()
     private lateinit var adapter: MedicineAdapter
 
-    override fun onResume() {
-        super.onResume()
-        // 다른 화면에서 돌아올 때 토글 버튼을 false로 설정
-        binding.toggle.isChecked = false
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMedicineReadBinding.inflate(layoutInflater)
@@ -41,6 +35,7 @@ class MedicineReadActivity : AppCompatActivity() {
         val insertBtn: FloatingActionButton = findViewById(R.id.insert_btn)
         insertBtn.setOnClickListener {
             val intent: Intent = Intent(this, MedicineWriteActivity::class.java)
+
             activityResult.launch(intent)
         }
 
@@ -58,16 +53,6 @@ class MedicineReadActivity : AppCompatActivity() {
         getMedicineList()
 
         val checkTag = binding.toggle
-
-        // Intent에서 값 가져오기
-        val intent = intent
-        val isTrue = intent.getBooleanExtra("isTrue", false) // "isTrue" 키의 값을 가져옴
-
-//        checkTag.isChecked = isTrue
-//        if (checkTag.isChecked) {
-//            Log.i("check", "true")
-//            getMediCheckList()
-//        }
 
         checkTag.setOnCheckedChangeListener { _, isChecked ->
             getMedicineList()

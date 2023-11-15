@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="15dp"
-    android:layout_marginTop="16dp">
+    android:layout_marginLeft="21.5dp"
+    android:layout_marginTop="12.5dp">
 
     <ImageView
         android:id="@+id/dogImage"
@@ -22,7 +22,6 @@
         android:layout_marginLeft="5dp"
         android:text="종이컵 n/n"
         android:textAlignment="center"
-        android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/dogImage"
@@ -35,7 +34,6 @@
         android:layout_marginTop="7dp"
         android:text="0"
         android:textAlignment="textEnd"
-        android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,10 +43,10 @@
         android:id="@+id/textView18"
         android:layout_width="60dp"
         android:layout_height="35dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="7dp"
         android:text="KG"
         android:textAlignment="center"
-        android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/weight"

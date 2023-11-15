@@ -13,6 +13,5 @@ class SettingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_setting)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
     }
 }

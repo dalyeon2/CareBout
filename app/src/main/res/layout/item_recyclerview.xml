@@ -1,87 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginHorizontal="20dp">
+    android:orientation="horizontal"
+    android:layout_marginHorizontal="20dp"
+    android:layout_gravity="center">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_paw"
-            android:layout_marginRight="10dp"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="10월 3일"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:id="@+id/day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#828282"
-                android:text="월요일"
-                android:textSize="12dp"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/item_root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
         android:layout_marginVertical="8dp">
 
         <ImageView
             android:id="@+id/item_image"
-            android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:src="@drawable/square_shape" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/user_pic" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="15dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom|right">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_heart"/>
+
+                <TextView
+                    android:id="@+id/heart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:textSize="8dp"
+                    android:textColor="@color/bgWhite"
+                    android:text="0"/>
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_chat"/>
+
+                <TextView
+                    android:id="@+id/chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:textSize="8dp"
+                    android:textColor="@color/bgWhite"
+                    android:text="0"/>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/item_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="5dp"
-                android:typeface="monospace"
-                android:textSize="13dp"
+                android:layout_gravity="right"
+                android:textSize="11dp"
                 android:textStyle="bold"
-                android:maxLines="5"
-                android:text="오늘은 맑은 날씨에 강아지와 함께 한 산책이 기분 좋았다. 산책로를 따라 걸어가면서, 강아지는 새로운 냄새에 흥분하며 주위를 탐험했다.  작은 발자국 소리와 함께 나뭇가지 사이로 비추어지는 햇살은 우리 모두에게 활력을 불어넣어 주었다. 강아지는 주위의 모든 것에 호기심을 가지고, 꽃의 향기에도 흥분했다. \n함께 뛰어놀며 시간 가는 줄 모르고, 자연 속에서의 소중한 순간을 함께 나눴다. 집에 돌아와 강아지는 행복한 표정으로 피로를 풀며 쉬고 있었다. 오늘의 강아지와의 산책은 우리 둘에게 즐거운 기억으로 남을 것이다."/>
+                android:textColor="@color/bgWhite"
+                android:text="우리집 고양이 츄르를 좋아해"/>
 
+            <TextView
+                android:id="@+id/item_subdata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:textSize="8dp"
+                android:textStyle="normal"
+                android:textColor="#4770FF"
+                android:text="테스트"/>
         </LinearLayout>
 
-    </LinearLayout>
-    <!--
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:background="#D9C5C5C5" /> -->
+    </FrameLayout>
 
 </LinearLayout>
