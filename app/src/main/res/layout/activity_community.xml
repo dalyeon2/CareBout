@@ -18,35 +18,19 @@
             android:background="@color/white"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:text="2023"
-                android:textSize="16dp"
-                android:textColor="@color/black"
-                android:layout_gravity="center_horizontal"/>
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    app:layout_collapseMode="parallax"
+                    app:tabTextAppearance="@style/tabTextSizeBold"
+                    style="@style/TabLayout">
+                </com.google.android.material.tabs.TabLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="620dp"
-            android:background="@color/white"
-            android:visibility="gone"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-        <TextView
-            android:id="@+id/emptyView"
-            android:layout_width="match_parent"
-            android:layout_height="620dp"
-            android:layout_centerInParent="true"
-            android:background="@color/white"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="아직 등록된 일기가 없어요"
-            android:visibility="visible"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/main_fab"
@@ -58,10 +42,28 @@
             app:icon="@drawable/ic_pencil"
             app:iconTint="@color/bgWhite"
             app:iconSize="30dp"
-            app:layout_anchor="@id/bottomTapBarOuter"
+            app:layout_anchor="@id/viewpager"
             app:layout_anchorGravity="bottom|right"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"/>
+            />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:id="@+id/NavigationBar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="62dp"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            app:menu="@menu/bottom_menu"-->
+<!--            app:itemIconTint="@drawable/menu_selector_color"-->
+<!--            app:itemTextColor="@drawable/menu_selector_color"-->
+<!--            app:labelVisibilityMode="labeled"-->
+<!--            style="@style/NavigationBar" />-->
 
         <include layout="@layout/bottom_tap"
             android:id="@+id/bottomTapBarOuter"
@@ -70,6 +72,7 @@
             android:layout_gravity="bottom"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/main_drawer_view"

@@ -35,6 +35,8 @@ class InoculationUpdateActivity : AppCompatActivity() {
         db = AppDatabase.getInstance(applicationContext)!!
         inocDao = db.getInocDao()
 
+        val tag1 : ToggleButton = findViewById(R.id.toggle1)
+        val tag2 : ToggleButton = findViewById(R.id.toggle2)
         val editTextList: EditText = findViewById(R.id.editTextList)
         val editTextDate: EditText = findViewById(R.id.editTextDate)
         val editTextDue: EditText = findViewById(R.id.editTextDue)
@@ -43,15 +45,6 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
         val updateBtn: Button = findViewById(R.id.updateBtn)
         val deleteBtn: Button = findViewById(R.id.deleteBtn)
-
-        val tagDHPPL = binding.toggleButton1
-        val tagC = binding.toggleButton2
-        val tagKC = binding.toggleButton3
-        val tagCVRP = binding.toggleButton4
-        val tagFL = binding.toggleButton5
-        val tagFID = binding.toggleButton6
-        val tagR = binding.toggleButton7
-        val tagH = binding.toggleButton8
 
         // 수정 페이지로 전달된 아이템 정보를 가져옴
         val inocId = intent.getIntExtra("inocId", -1)
@@ -67,14 +60,8 @@ class InoculationUpdateActivity : AppCompatActivity() {
             var uHospital: String? = intent.getStringExtra("uHospital")
             var uEtc: String? = intent.getStringExtra("uEtc")
 
-            var uTagDHPPL: Boolean = intent.getBooleanExtra("uTagDHPPL", true)
-            var uTagC: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagKC: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagCVRP: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagFL: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagFID: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagR: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagH: Boolean = intent.getBooleanExtra("uTagC", false)
+            var uTag1: Boolean = intent.getBooleanExtra("uTag1", true)
+            var uTag2: Boolean = intent.getBooleanExtra("uTag2", false)
 
             //화면에 값 적용
             editTextList.setText(uTag)
@@ -83,71 +70,25 @@ class InoculationUpdateActivity : AppCompatActivity() {
             editTextH.setText(uHospital)
             editTextMultiLine.setText(uEtc)
 
-            tagDHPPL.isChecked = uTagDHPPL
-            tagC.isChecked = uTagC
-            tagKC.isChecked = uTagKC
-            tagCVRP.isChecked = uTagCVRP
-            tagFL.isChecked = uTagFL
-            tagFID.isChecked = uTagFID
-            tagR.isChecked = uTagR
-            tagH.isChecked = uTagH
+            tag1.isChecked = uTag1
+            tag2.isChecked = uTag2
 
             Log.i("in", uTag.toString())
         }
 
-        tagDHPPL.setOnCheckedChangeListener { _, isChecked ->
+        tag1.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                val otherTags = listOf(tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH)
-                otherTags.forEach { it.isChecked = false }
+                if (tag2.isChecked) {
+                    tag2.isChecked = false
+                }
             }
         }
 
-        tagC.setOnCheckedChangeListener { _, isChecked ->
+        tag2.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                val otherTags = listOf(tagDHPPL, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH)
-                otherTags.forEach { it.isChecked = false }
-            }
-        }
-
-        tagKC.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                val otherTags = listOf(tagDHPPL, tagC, tagCVRP, tagFL, tagFID, tagR, tagH)
-                otherTags.forEach { it.isChecked = false }
-            }
-        }
-
-        tagCVRP.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagFL, tagFID, tagR, tagH)
-                otherTags.forEach { it.isChecked = false }
-            }
-        }
-
-        tagFL.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFID, tagR, tagH)
-                otherTags.forEach { it.isChecked = false }
-            }
-        }
-
-        tagFID.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagR, tagH)
-                otherTags.forEach { it.isChecked = false }
-            }
-        }
-
-        tagR.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagH)
-                otherTags.forEach { it.isChecked = false }
-            }
-        }
-
-        tagH.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR)
-                otherTags.forEach { it.isChecked = false }
+                if (tag1.isChecked) {
+                    tag1.isChecked = false
+                }
             }
         }
 
@@ -172,14 +113,8 @@ class InoculationUpdateActivity : AppCompatActivity() {
         val inocH = binding.editTextH.text.toString()
         val inocEtc = binding.editTextMultiLine.text.toString()
 
-        val tagDHPPL = binding.toggleButton1.isChecked
-        val tagC = binding.toggleButton2.isChecked
-        val tagKC = binding.toggleButton3.isChecked
-        val tagCVRP = binding.toggleButton4.isChecked
-        val tagFL = binding.toggleButton5.isChecked
-        val tagFID = binding.toggleButton6.isChecked
-        val tagR = binding.toggleButton7.isChecked
-        val tagH = binding.toggleButton8.isChecked
+        val tag1 = binding.toggle1.isChecked
+        val tag2 = binding.toggle2.isChecked
 
         // Date validation
         if (!isValidDate(inocDate) || (!inocDue.isBlank() && !isValidDate(inocDue))) {
@@ -204,9 +139,9 @@ class InoculationUpdateActivity : AppCompatActivity() {
             return
         }
 
-        val Inoc = Inoculation(id, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocTag, inocDate, inocDue, inocH, inocEtc)
+        val Inoc = Inoculation(id, tag1, tag2, inocTag, inocDate, inocDue, inocH, inocEtc)
 
-        if ((!tagDHPPL && !tagC && !tagKC && !tagCVRP && !tagFL && !tagFID && !tagR && !tagH) || inocDate.isBlank()) {
+        if (!tag1 && !tag2 || inocDate.isBlank()) {
             Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
         } else {
             Thread {
