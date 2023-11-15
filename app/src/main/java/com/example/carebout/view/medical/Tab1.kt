@@ -116,4 +116,10 @@ class Tab1 : Fragment() {
         const val MEDICINE_WRITE_REQUEST = 1
     }
 
+    override fun onResume() {
+        super.onResume()
+        // 다른 화면에서 돌아올 때 토글 버튼을 false로 설정
+        checkTag.isChecked = false
+    }
+
 }

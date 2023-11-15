@@ -24,6 +24,15 @@ class ClinicReadActivity : AppCompatActivity() {
     private var clinicList: ArrayList<Clinic> = ArrayList<Clinic>()
     private lateinit var adapter: ClinicAdapter
 
+    override fun onResume() {
+        super.onResume()
+        // 다른 화면에서 돌아올 때 토글 버튼을 false로 설정
+        val toggleButtons = arrayOf(
+            binding.toggleButton1, binding.toggleButton2, binding.toggleButton3,
+            binding.toggleButton4, binding.toggleButton5, binding.toggleButton6)
+        toggleButtons.forEach { it.isChecked = false }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityClinicReadBinding.inflate(layoutInflater)
@@ -34,13 +43,9 @@ class ClinicReadActivity : AppCompatActivity() {
         clinicDao = db.getClinicDao()
 
         val insertBtn: FloatingActionButton = findViewById(R.id.insert_btn)
-        val toggleButtons = arrayOf(
-            binding.toggleButton1, binding.toggleButton2, binding.toggleButton3,
-            binding.toggleButton4, binding.toggleButton5, binding.toggleButton6
-        )
+
 
         insertBtn.setOnClickListener {
-            toggleButtons.forEach { it.isChecked = false }
             val intent = Intent(this, ClinicWriteActivity::class.java)
             activityResult.launch(intent)
         }

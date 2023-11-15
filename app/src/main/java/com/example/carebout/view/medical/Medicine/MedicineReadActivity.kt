@@ -23,6 +23,12 @@ class MedicineReadActivity : AppCompatActivity() {
     private var mediList: ArrayList<Medicine> = ArrayList<Medicine>()
     private lateinit var adapter: MedicineAdapter
 
+    override fun onResume() {
+        super.onResume()
+        // 다른 화면에서 돌아올 때 토글 버튼을 false로 설정
+        binding.toggle.isChecked = false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMedicineReadBinding.inflate(layoutInflater)
@@ -35,8 +41,6 @@ class MedicineReadActivity : AppCompatActivity() {
         val insertBtn: FloatingActionButton = findViewById(R.id.insert_btn)
         insertBtn.setOnClickListener {
             val intent: Intent = Intent(this, MedicineWriteActivity::class.java)
-            binding.toggle.isChecked = false
-
             activityResult.launch(intent)
         }
 
