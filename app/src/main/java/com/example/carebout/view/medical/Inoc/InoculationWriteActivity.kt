@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -40,8 +41,23 @@ class InoculationWriteActivity : AppCompatActivity() {
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
         val btn1: Button = findViewById(R.id.button)
 
-        val tag1: ToggleButton = findViewById(R.id.toggle1)
-        val tag2: ToggleButton = findViewById(R.id.toggle2)
+//        val tagDHPPL: ToggleButton = findViewById(R.id.toggleButton1)
+//        val tagC: ToggleButton = findViewById(R.id.toggleButton2)
+//        val tagKC: ToggleButton = findViewById(R.id.toggleButton3)
+//        val tagCVRP: ToggleButton = findViewById(R.id.toggleButton4)
+//        val tagFL: ToggleButton = findViewById(R.id.toggleButton5)
+//        val tagFID: ToggleButton = findViewById(R.id.toggleButton6)
+//        val tagR: ToggleButton = findViewById(R.id.toggleButton7)
+//        val tagH: ToggleButton = findViewById(R.id.toggleButton8)
+
+        val tagDHPPL = binding.toggleButton1
+        val tagC = binding.toggleButton2
+        val tagKC = binding.toggleButton3
+        val tagCVRP = binding.toggleButton4
+        val tagFL = binding.toggleButton5
+        val tagFID = binding.toggleButton6
+        val tagR = binding.toggleButton7
+        val tagH = binding.toggleButton8
 
         val NowTime = System.currentTimeMillis()
         val DF = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
@@ -53,23 +69,69 @@ class InoculationWriteActivity : AppCompatActivity() {
             insertInoc()
         }
 
-        tag1.setOnCheckedChangeListener { _, isChecked ->
+//        tag1.setOnCheckedChangeListener { _, isChecked ->
+//            if (isChecked) {
+//                if (tag2.isChecked) {
+//                    tag2.isChecked = false
+//                }
+//            }
+//        }
+
+        tagDHPPL.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                if (tag2.isChecked) {
-                    tag2.isChecked = false
-                }
+                val otherTags = listOf(tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
             }
         }
 
-        tag2.setOnCheckedChangeListener { _, isChecked ->
+        tagC.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                if (tag1.isChecked) {
-                    tag1.isChecked = false
-                }
+                val otherTags = listOf(tagDHPPL, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
             }
         }
 
+        tagKC.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagCVRP, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+            }
+        }
 
+        tagCVRP.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+            }
+        }
+
+        tagFL.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+            }
+        }
+
+        tagFID.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+            }
+        }
+
+        tagR.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagH)
+                otherTags.forEach { it.isChecked = false }
+            }
+        }
+
+        tagH.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR)
+                otherTags.forEach { it.isChecked = false }
+            }
+        }
 
         // 숫자 입력 시 대시 "-" 자동 추가
         setupDateEditText(binding.editTextDate)
@@ -83,8 +145,14 @@ class InoculationWriteActivity : AppCompatActivity() {
         val inocH = binding.editTextH.text.toString()
         val inocEtc = binding.editTextMultiLine.text.toString()
 
-        val tag1 = binding.toggle1.isChecked
-        val tag2 = binding.toggle2.isChecked
+        val tagDHPPL = binding.toggleButton1.isChecked
+        val tagC = binding.toggleButton2.isChecked
+        val tagKC = binding.toggleButton3.isChecked
+        val tagCVRP = binding.toggleButton4.isChecked
+        val tagFL = binding.toggleButton5.isChecked
+        val tagFID = binding.toggleButton6.isChecked
+        val tagR = binding.toggleButton7.isChecked
+        val tagH = binding.toggleButton8.isChecked
 
         // Date validation
         if (!isValidDate(inocDate) || (!inocDue.isBlank() && !isValidDate(inocDue))) {
@@ -109,9 +177,9 @@ class InoculationWriteActivity : AppCompatActivity() {
             return
         }
 
-        val Inoc = Inoculation(null, tag1, tag2, inocTag, inocDate, inocDue, inocH, inocEtc)
+        val Inoc = Inoculation(null, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocTag, inocDate, inocDue, inocH, inocEtc)
 
-        if (!tag1 && !tag2 || inocDate.isBlank()) {
+        if ((!tagDHPPL && !tagC && !tagKC && !tagCVRP && !tagFL && !tagFID && !tagR && !tagH) || inocDate.isBlank()) {
             Toast.makeText(this, "필수 항목을 채워주세요", Toast.LENGTH_SHORT).show()
         } else {
             Thread {

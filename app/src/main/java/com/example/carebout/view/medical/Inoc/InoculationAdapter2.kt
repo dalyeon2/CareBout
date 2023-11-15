@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 import com.example.carebout.view.medical.db.Inoculation
 
-class InoculationAdapter(private val context: Context)
-    : RecyclerView.Adapter<InoculationAdapter.MyViewHolder>() {
+class InoculationAdapter2(private val context: Context)
+    : RecyclerView.Adapter<InoculationAdapter2.MyViewHolder>() {
 
     //초기화
     private var inocList: ArrayList<Inoculation> = ArrayList<Inoculation>()
@@ -25,15 +25,15 @@ class InoculationAdapter(private val context: Context)
         val tagText: TextView = itemView.findViewById(R.id.tag_text)
         val dateText: TextView = itemView.findViewById(R.id.date_text)
         val dueText: TextView = itemView.findViewById(R.id.due_text)
-        val hospitalText: TextView = itemView.findViewById(R.id.hospital_text)
-        val etcText: TextView = itemView.findViewById(R.id.etc_text)
+//        val hospitalText: TextView = itemView.findViewById(R.id.hospital_text)
+//        val etcText: TextView = itemView.findViewById(R.id.etc_text)
 
     }
 
     //화면 설정
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.inoc_recyclerview, parent, false)
+            .inflate(R.layout.inoc_recyclerview2, parent, false)
 
         return MyViewHolder(view)
     }
@@ -61,12 +61,14 @@ class InoculationAdapter(private val context: Context)
         var uTagR = inocList[holder.bindingAdapterPosition].tag_Rabies
         var uTagH = inocList[holder.bindingAdapterPosition].tag_Heartworm
 
+
+
         //데이터 적용
         holder.tagText.text = uTag
         holder.dateText.text = uDate
         holder.dueText.text = uDue
-        holder.hospitalText.text = uHospital
-        holder.etcText.text = uEtc
+//        holder.hospitalText.text = uHospital
+//        holder.etcText.text = uEtc
 
 
         holder.tagText.text = inocData.tag
@@ -88,6 +90,7 @@ class InoculationAdapter(private val context: Context)
         } else if (uTagH == true) {
             holder.tagText.text = "심장사상충"
         }
+
 
         holder.itemView.setOnClickListener {
 
@@ -112,6 +115,7 @@ class InoculationAdapter(private val context: Context)
             intent.putExtra("uTagFID", uTagFID)
             intent.putExtra("uTagR", uTagR)
             intent.putExtra("uTagH", uTagH)
+
 
             context.startActivity(intent)
         }
