@@ -29,6 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
+    // 파일 복구중
 
     private lateinit var binding: ActivityHomeBinding
 
