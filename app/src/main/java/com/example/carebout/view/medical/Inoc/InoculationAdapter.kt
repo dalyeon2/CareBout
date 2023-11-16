@@ -34,6 +34,8 @@ class InoculationAdapter(private val context: Context)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.inoc_recyclerview, parent, false)
+        //
+        //.todo_list, parent, false)
 
         return MyViewHolder(view)
     }
@@ -52,14 +54,10 @@ class InoculationAdapter(private val context: Context)
         var uHospital = inocList[holder.bindingAdapterPosition].hospital
         var uEtc = inocList[holder.bindingAdapterPosition].etc
 
-        var uTagDHPPL = inocList[holder.bindingAdapterPosition].tag_DHPPL
-        var uTagC = inocList[holder.bindingAdapterPosition].tag_Corona
-        var uTagKC = inocList[holder.bindingAdapterPosition].tag_KC
-        var uTagCVRP = inocList[holder.bindingAdapterPosition].tag_CVRP
-        var uTagFL = inocList[holder.bindingAdapterPosition].tag_FL
-        var uTagFID = inocList[holder.bindingAdapterPosition].tag_FID
-        var uTagR = inocList[holder.bindingAdapterPosition].tag_Rabies
-        var uTagH = inocList[holder.bindingAdapterPosition].tag_Heartworm
+        var uTag1 = inocList[holder.bindingAdapterPosition].tag1
+        var uTag2 = inocList[holder.bindingAdapterPosition].tag2
+
+
 
         //데이터 적용
         holder.tagText.text = uTag
@@ -71,23 +69,18 @@ class InoculationAdapter(private val context: Context)
 
         holder.tagText.text = inocData.tag
 
-        if (uTagDHPPL == true) {
-            holder.tagText.text = "혼합예방주사(DHPPL)"
-        } else if (uTagC == true) {
-            holder.tagText.text = "코로나바이러스성 장염"
-        } else if (uTagKC == true) {
-            holder.tagText.text = "켄넬코프"
-        } else if (uTagCVRP == true) {
-            holder.tagText.text = "혼합예방주사(CVRP)"
-        } else if (uTagFL == true) {
-            holder.tagText.text = "백혈병"
-        } else if (uTagFID == true) {
-            holder.tagText.text = "전염성 복막염"
-        } else if (uTagR == true) {
-            holder.tagText.text = "광견병"
-        } else if (uTagH == true) {
-            holder.tagText.text = "심장사상충"
+        if (uTag1 == true) {
+            holder.tagText.text = "기초"
+        } else {
         }
+
+        if (uTag2 == true) {
+            holder.tagText.text = "정기"
+        } else {
+        }
+
+        //holder
+
 
         holder.itemView.setOnClickListener {
 
@@ -104,14 +97,9 @@ class InoculationAdapter(private val context: Context)
             intent.putExtra("uHospital", uHospital)
             intent.putExtra("uEtc", uEtc)
 
-            intent.putExtra("uTagDHPPL", uTagDHPPL)
-            intent.putExtra("uTagC", uTagC)
-            intent.putExtra("uTagKC", uTagKC)
-            intent.putExtra("uTagCVRP", uTagCVRP)
-            intent.putExtra("uTagFL", uTagFL)
-            intent.putExtra("uTagFID", uTagFID)
-            intent.putExtra("uTagR", uTagR)
-            intent.putExtra("uTagH", uTagH)
+            intent.putExtra("uTag1", uTag1)
+            intent.putExtra("uTag2", uTag2)
+
 
             context.startActivity(intent)
         }

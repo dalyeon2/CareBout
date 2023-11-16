@@ -55,25 +55,11 @@ class ClinicUpdateActivity : AppCompatActivity() {
             var uHospital: String? = intent.getStringExtra("uHospital")
             var uEtc: String? = intent.getStringExtra("uEtc")
 
-            var uTagB: Boolean = intent.getBooleanExtra("uTagB", false)
-            var uTagX: Boolean = intent.getBooleanExtra("uTagX", false)
-            var uTagU: Boolean = intent.getBooleanExtra("uTagU", false)
-            var uTagC: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagM: Boolean = intent.getBooleanExtra("uTagM", false)
-            var uTagCheckup: Boolean = intent.getBooleanExtra("uTagCheckup", false)
-
             //화면에 값 적용
             editTextList.setText(uTag)
             editTextDate.setText(uDate)
             editTextH.setText(uHospital)
             editTextMultiLine.setText(uEtc)
-
-            binding.toggleButton1.isChecked = uTagB
-            binding.toggleButton2.isChecked = uTagX
-            binding.toggleButton3.isChecked = uTagU
-            binding.toggleButton4.isChecked = uTagC
-            binding.toggleButton5.isChecked = uTagM
-            binding.toggleButton6.isChecked = uTagCheckup
 
             Log.i("in", uTag.toString())
         }
@@ -98,13 +84,6 @@ class ClinicUpdateActivity : AppCompatActivity() {
         val clinicH = binding.editTextH.text.toString()
         val clinicEtc = binding.editTextMultiLine.text.toString()
 
-        val tag1 = binding.toggleButton1.isChecked
-        val tag2 = binding.toggleButton2.isChecked
-        val tag3 = binding.toggleButton3.isChecked
-        val tag4 = binding.toggleButton4.isChecked
-        val tag5 = binding.toggleButton5.isChecked
-        val tag6 = binding.toggleButton6.isChecked
-
         // Date validation
         if (!isValidDate(clinicDate)) {
             Toast.makeText(
@@ -128,9 +107,9 @@ class ClinicUpdateActivity : AppCompatActivity() {
             return
         }
 
-        val Clinic = Clinic(id, tag1, tag2, tag3, tag4, tag5, tag6, clinicTag, clinicDate, clinicH, clinicEtc)
+        val Clinic = Clinic(id, clinicTag, clinicDate, clinicH, clinicEtc)
 
-        if ((!tag1 && !tag2 && !tag3 && !tag4 && !tag5 && !tag6) || clinicDate.isBlank()) {
+        if (clinicTag.isBlank() || clinicDate.isBlank()) {
             Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
         } else {
             Thread {

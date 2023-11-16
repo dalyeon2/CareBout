@@ -1,6 +1,5 @@
 package com.example.carebout.view.medical.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -30,9 +29,6 @@ interface MedicineDao {
 
     @Query("SELECT * FROM table_medicine WHERE checkBox = 1")
     fun getMediWithCheck(): List<Medicine>
-
-    @Query("SELECT * FROM table_medicine")
-    fun getAllMedicine(): LiveData<List<Medicine>>
 
     //@Query("DELETE FROM User WHERE name = :name") // 'name'에 해당하는 유저를 삭제해라
     //    fun deleteUserByName(name: String)

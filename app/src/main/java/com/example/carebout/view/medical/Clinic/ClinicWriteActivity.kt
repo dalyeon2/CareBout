@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -48,17 +47,6 @@ class ClinicWriteActivity : AppCompatActivity() {
         btn1.setOnClickListener {
             insertClinic()
         }
-
-//        binding.toggleButton1.setOnCheckedChangeListener { _, isChecked ->
-//            if (isChecked) {
-//                val otherTags = listOf(binding.toggleButton2, binding.toggleButton3,
-//                    binding.toggleButton4, binding.toggleButton5, binding.toggleButton6)
-//                otherTags.forEach { it.isChecked = false }
-//            }
-//        }
-
-
-
         // 숫자 입력 시 대시 "-" 자동 추가
         setupDateEditText(binding.editTextDate)
     }
@@ -70,14 +58,6 @@ class ClinicWriteActivity : AppCompatActivity() {
         val clinicDate = binding.editTextDate.text.toString()
         val clinicH = binding.editTextH.text.toString()
         val clinicEtc = binding.editTextMultiLine.text.toString()
-
-        val tag1 = binding.toggleButton1.isChecked
-        val tag2 = binding.toggleButton2.isChecked
-        val tag3 = binding.toggleButton3.isChecked
-        val tag4 = binding.toggleButton4.isChecked
-        val tag5 = binding.toggleButton5.isChecked
-        val tag6 = binding.toggleButton6.isChecked
-
 
         // Date validation
         if (!isValidDate(clinicDate)) {
@@ -102,9 +82,9 @@ class ClinicWriteActivity : AppCompatActivity() {
             return
         }
 
-        val Clinic = Clinic(null, tag1, tag2, tag3, tag4, tag5, tag6, clinicTag, clinicDate, clinicH, clinicEtc)
+        val Clinic = Clinic(null, clinicTag, clinicDate, clinicH, clinicEtc)
 
-        if ((!tag1 && !tag2 && !tag3 && !tag4 && !tag5 && !tag6) || clinicDate.isBlank()) {
+        if (clinicTag.isBlank() || clinicDate.isBlank()) {
             Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
         } else {
             Thread {
