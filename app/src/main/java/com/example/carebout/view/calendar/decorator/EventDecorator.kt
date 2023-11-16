@@ -19,7 +19,10 @@ class EventDecorator(private val context: Context) : DayViewDecorator {
     }
 
     override fun shouldDecorate(day: CalendarDay?): Boolean {
-        return datesWithEvents.contains(day)
+        Log.d("EventDecorator", "shouldDecorate: day=$day, datesWithEvents=$datesWithEvents")
+        val result = datesWithEvents.any { it == day }
+        Log.d("EventDecorator", "shouldDecorate result: $result")
+        return result
     }
 
     override fun decorate(view: DayViewFacade?) {

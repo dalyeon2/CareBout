@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityTodoWriteBinding
+import com.example.carebout.view.medical.MedicalActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.DailyTodo
 import com.example.carebout.view.medical.db.TodoDao
@@ -84,13 +85,18 @@ class TodoWriteActivity : AppCompatActivity() {
 //            val sEtc = editTextMultiLine.text.toString()
 
             insertTodo()
-            //TodoList()
-//            moveToAnotherPage()
             }
         }
 
         btnplus.setOnClickListener {
-            counter++ //숫자는 1증가
+            if(counter < 5) {
+                counter++ //숫자는 1증가
+            }else{
+                Toast.makeText(
+                    this, "최대 5회까지 가능합니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             numText.text= counter.toString()
         }
 
@@ -139,7 +145,8 @@ class TodoWriteActivity : AppCompatActivity() {
     }
 
     private fun moveToAnotherPage() {
-        val intent = Intent(this, TodoReadActivity::class.java)
+        val intent = Intent(this, MedicalActivity::class.java)
+            //TodoReadActivity::class.java)
         startActivity(intent)
         finish()
     }
@@ -177,84 +184,5 @@ class TodoWriteActivity : AppCompatActivity() {
         }
 
     }
-//    private fun TodoList(){
-//        var todoList = "데일리 케어\n"
-//
-//        CoroutineScope(Dispatchers.Main).launch {
-//            val table_todos = CoroutineScope(Dispatchers.IO).async {
-//                db.getTodoDao().getAll()
-//            }.await()
-//
-//            for(table_todo in table_todos){
-//                todoList += "할 일: ${table_todo.title}, 횟수: ${table_todo.count}, 비고: ${table_todo.etc}\n"
-//            }
-//            binding.textTodo.text = todoList
-//        }
-//    }
-
-        // 싱글톤 패턴을 사용하지 않은 경우
-//        val db = Room.databaseBuilder(
-//            applicationContext,
-//            AppDatabase::class.java,
-//            "db_todo"
-//        ).build()
-//        db.getTodoDao().insertTodo(Todo)
-
-        // 싱글톤 패턴을 사용한 경우
-//        val db = AppDatabase.getInstance(applicationContext)
-//        db!!.getTodoDao().insertTodo(Todo)
-
-//        var db: AppDatabase? = AppDatabase.getInstance(applicationContext)
-//
-//        db?.getTodoDao()?.insertTodo(Todo)
-//
-//        finish()
-
-//        if(title.isBlank() || count == 0) {
-//            Toast.makeText(this, "항목을 채워주세요",
-//                Toast.LENGTH_SHORT).show()
-//        }
-//        else {
-
-
-//            Thread {
-//                todoDao.insertTodo(Todo)
-//                setResult(Activity.RESULT_OK)
-//                //todoDao.insertTodo(DailyTodo(null, todoTitle, todoCount, todoEtc))
-//                runOnUiThread { //아래 작업은 UI 스레드에서 실행해주어야 합니다.
-//                    Toast.makeText(
-//                        this, "추가되었습니다.",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                    finish()
-//                }
-//            }.start()
-//        }
-//    }
-
-//    private fun insertTodo() {
-//
-//        val todoTitle = binding.TodoEditText.text.toString() // 할일 제목
-//        val todoCount = binding.numText.text.count()
-//        val todoEtc = binding.editTextMultiLine.text.toString()
-//
-//        if(todoTitle.isBlank() || todoCount == 0) {
-//            Toast.makeText(this, "항목을 채워주세요",
-//                Toast.LENGTH_SHORT).show()
-//        }
-//        else {
-//            Thread {
-//                todoDao.insertTodo(DailyTodo(null, todoTitle, todoCount, todoEtc))
-//                runOnUiThread { //아래 작업은 UI 스레드에서 실행해주어야 합니다.
-//                    Toast.makeText(
-//                        this, "추가되었습니다.",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                    finish()
-//                }
-//            }.start()
-//        }
-//    }
-
 
 }

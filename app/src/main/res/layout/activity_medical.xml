@@ -14,16 +14,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:layout_marginBottom="627dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="17dp"
         android:backgroundTint="@color/main_color"
         android:contentDescription="정보 작성탭 연결 메뉴"
         android:tint="@color/white"
         android:visibility="visible"
-        app:elevation="6dp"
 
+        app:elevation="6dp"
         app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@+id/mainTab"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/mainFrame"
+        app:layout_constraintEnd_toEndOf="@+id/mainFrame"
         app:srcCompat="@drawable/ic_add" />
 
 
@@ -36,17 +37,19 @@
         android:text="Care'Bout"
         android:textAlignment="center"
         android:textAllCaps="false"
+        android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 <!--    다른 액티비티를 넘나들 수 있게 공통의 하단탭바를 만들었습니다!   -->
-    <include layout="@layout/bottom_tap"
+    <include
         android:id="@+id/bottomTapBarOuter"
+        layout="@layout/bottom_tap"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        app:layout_constraintBottom_toBottomOf="@id/bgLayout"/>
+        app:layout_constraintBottom_toBottomOf="@id/bgLayout" />
 
 <!--    <com.google.android.material.tabs.TabLayout-->
 <!--        android:id="@+id/mainTab"-->
@@ -135,13 +138,14 @@
                 android:text="검진 목록"
                 app:layout_constraintBottom_toTopOf="@+id/mediListButton"
                 app:layout_constraintStart_toStartOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
     <LinearLayout
         android:id="@+id/popup_menu"
-        android:layout_width="144dp"
-        android:layout_height="247dp"
+        android:layout_width="123dp"
+        android:layout_height="218dp"
         android:layout_gravity="center|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
@@ -161,7 +165,7 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="검진" />
+            android:text="\uD83E\uDE7A🩺 검진 내역" />
 
         <TextView
             android:id="@+id/menu_item_2"
@@ -172,7 +176,7 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="약" />
+            android:text="\uD83D\uDC8A💊 복용약" />
 
         <TextView
             android:id="@+id/menu_item_3"
@@ -183,7 +187,7 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="접종" />
+            android:text="\uD83D\uDC89💉 접종 내역" />
 
         <TextView
             android:id="@+id/menu_item_4"
@@ -194,11 +198,12 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="투두" />
+            android:text="\uD83D\uDCC3📃 데일리 케어" />
 
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

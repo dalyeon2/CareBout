@@ -9,11 +9,31 @@ data class Inoculation (
     @PrimaryKey(autoGenerate = true)
     var inocId: Int?,
 
-    @ColumnInfo(name = "tag1")
-    var tag1: Boolean?,
+    @ColumnInfo(name = "tag_DHPPL")
+    var tag_DHPPL: Boolean?,
 
-    @ColumnInfo(name = "tag2")
-    var tag2: Boolean?,
+    @ColumnInfo(name = "tag_Corona")
+    var tag_Corona: Boolean?,
+
+    @ColumnInfo(name = "tag_KC")
+    var tag_KC: Boolean?,
+//    Kennel Cough
+
+    @ColumnInfo(name = "tag_CVRP")
+    var tag_CVRP: Boolean?,
+
+    @ColumnInfo(name = "tag_FL")
+    var tag_FL: Boolean?,
+    //Feline Leukemia
+
+    @ColumnInfo(name = "tag_FID")
+    var tag_FID: Boolean?,
+
+    @ColumnInfo(name = "tag_Rabies")
+    var tag_Rabies: Boolean?,
+
+    @ColumnInfo(name = "tag_Heartworm")
+    var tag_Heartworm: Boolean?,
 
     @ColumnInfo(name = "tag")
     var tag: String?,
