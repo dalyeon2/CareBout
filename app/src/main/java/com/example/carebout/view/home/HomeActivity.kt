@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
 class HomeActivity : AppCompatActivity() {
+    // 파일 복구중
 
     private lateinit var binding: ActivityHomeBinding
 
