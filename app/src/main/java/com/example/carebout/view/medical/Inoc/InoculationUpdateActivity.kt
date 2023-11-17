@@ -1,12 +1,15 @@
 package com.example.carebout.view.medical.Inoc
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -32,6 +35,9 @@ class InoculationUpdateActivity : AppCompatActivity() {
         binding = ActivityInoculationUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar9)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         db = AppDatabase.getInstance(applicationContext)!!
         inocDao = db.getInocDao()
 
@@ -41,8 +47,8 @@ class InoculationUpdateActivity : AppCompatActivity() {
         val editTextH: EditText = findViewById(R.id.editTextH)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
 
-        val updateBtn: Button = findViewById(R.id.updateBtn)
-        val deleteBtn: Button = findViewById(R.id.deleteBtn)
+//        val updateBtn: Button = findViewById(R.id.updateBtn)
+//        val deleteBtn: Button = findViewById(R.id.deleteBtn)
 
         val tagDHPPL = binding.toggleButton1
         val tagC = binding.toggleButton2
@@ -151,13 +157,13 @@ class InoculationUpdateActivity : AppCompatActivity() {
             }
         }
 
-        updateBtn.setOnClickListener{
-            updateInoc()
-        }
-
-        deleteBtn.setOnClickListener {
-            deletInoc()
-        }
+//        updateBtn.setOnClickListener{
+//            updateInoc()
+//        }
+//
+//        deleteBtn.setOnClickListener {
+//            deletInoc()
+//        }
 
         // 숫자 입력 시 대시 "-" 자동 추가
         setupDateEditText(binding.editTextDate)
@@ -281,5 +287,35 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {}
         })
+    }
+
+    override fun onCreateOptionsMenu (menu: Menu?): Boolean {
+        menuInflater.inflate (R.menu.menu_story, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
+
+        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
+            finish()
+            true
+        }
+
+        R.id.menu_edit -> {
+            updateInoc()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+            true
+        }
+
+        R.id.menu_remove -> {
+            deletInoc()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+            true
+        }
+        else -> true
     }
 }

@@ -65,7 +65,7 @@ class Mediing : Fragment() {
         var mediView = TextView(this.context) // 빈 텍스트뷰 생성
         mediView.text = "\uD83D\uDC8A ${md.getName()}   ${md.getPeriod()}~" // 텍스트 넣기
         mediView.setTextColor(Color.parseColor("#5A5A5A"))
-        mediView.textSize = 16.0f
+        mediView.textSize = 14.0f
         mediView.setPadding(0, 0, 0, 5)
         mediView.layoutParams = st // 레이아웃 지정
         mediView.id = ViewCompat.generateViewId() // 아이디 랜덤으로 지정

@@ -27,7 +27,8 @@
                 android:layout_marginTop="18dp"
                 android:layout_marginRight="13dp"
                 android:layout_marginBottom="18dp"
-                android:background="@drawable/tab_radius">
+                android:background="@drawable/tab_radius"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/dailycareMainText"
@@ -37,7 +38,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="13dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="13dp"
                     android:text="데일리 케어"
                     android:textColor="#5A5A5A"
@@ -50,7 +51,7 @@
                     android:layout_height="20dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="7dp"
                     android:layout_marginEnd="10dp"
                     app:srcCompat="@drawable/ic_pencil"
                     app:tint="@color/black" />
@@ -64,7 +65,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="10dp"
-                    android:background="#7B7B7B" />
+                    android:background="#D5D5D5" />
 
                 <LinearLayout
                     android:id="@+id/dailycareFrame"
@@ -106,7 +107,8 @@
                     android:layout_marginBottom="18dp"
                     android:layout_toEndOf="@+id/currentWeight"
                     android:background="@drawable/tab_radius"
-                    android:gravity="top">
+                    android:gravity="top"
+                    android:padding="5dp">
 
                     <TextView
                         android:id="@+id/mediingMainText"
@@ -116,7 +118,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="13dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginEnd="13dp"
                         android:text="복용중인 약"
                         android:textColor="#5A5A5A"
@@ -132,7 +134,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="2dp"
                         android:layout_marginEnd="10dp"
-                        android:background="#7B7B7B" />
+                        android:background="#D5D5D5" />
 
                     <LinearLayout
                         android:id="@+id/mediingFrame"
@@ -143,9 +145,9 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginStart="0dp"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="0dp"
-                        android:layout_marginBottom="6dp"
+                        android:layout_marginBottom="10dp"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -153,8 +155,6 @@
                             android:id="@+id/mediingNull"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="25dp"
-                            android:layout_marginBottom="25dp"
                             android:gravity="center"
                             android:text="&quot;현재 복용약이 없습니다&quot;"
                             android:textSize="16dp"
@@ -197,7 +197,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="35dp"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="35dp"
                     app:tabGravity="fill"
                     app:tabIndicatorAnimationMode="linear"

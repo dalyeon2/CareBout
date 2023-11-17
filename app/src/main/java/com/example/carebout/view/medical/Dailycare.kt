@@ -1,6 +1,7 @@
 package com.example.carebout.view.medical
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -79,6 +80,7 @@ class Dailycare : Fragment() {
 
             btnView.addView(bornButton)
         }
+
         return btnView // 뷰 리턴
     }
 
@@ -95,16 +97,35 @@ class Dailycare : Fragment() {
         saveTime = crtTime // 마지막으로 누른 시간 = 지금 누른 시간
     }
 
+    fun makeDot() : View {
+        var dotView = TextView(this.context) // 빈 텍스트뷰 생성
+        dotView.text = "\u2022"
+        dotView.setTextColor(Color.parseColor("#6EC677"))
+        dotView.textSize = 20.0f
+        dotView.layoutParams = st
+
+        return  dotView
+    }
 
     // 데일리케어 타이틀의 텍스트뷰 생성
     fun setDailycare() : View {
         var dailycareTextView = TextView(this.context) // 빈 텍스트뷰 생성
-        dailycareTextView.text = "\n- " + dailycareText[nthDaily] // 텍스트 넣기
+        dailycareTextView.text = " " + dailycareText[nthDaily] // 텍스트 넣기
         dailycareTextView.textSize = 15.0f
         dailycareTextView.layoutParams = st // 레이아웃 지정
         dailycareTextView.id = ViewCompat.generateViewId() // 아이디 랜덤으로 지정
 
         return dailycareTextView
+    }
+
+    fun makeSubLay() : View {
+        var subLay = LinearLayout(this.context)
+        subLay.orientation = LinearLayout.HORIZONTAL
+        subLay.addView(makeDot())
+        subLay.addView(setDailycare())
+        subLay.setPadding(0,30,0,0)
+
+        return subLay
     }
 
     // 데일리케어 정보를 insert
@@ -145,7 +166,7 @@ class Dailycare : Fragment() {
                 for (dailyTodo in allTodoList) {
                     // 가져온 Daily Care 정보를 UI에 표시
                     insertDailycare(dailyTodo.title ?: "", dailyTodo.count?.toInt() ?: 0)
-                    lay.addView(setDailycare())
+                    lay.addView(makeSubLay())
                     lay.addView(setBornIcon())
                     nthDaily++
                 }
