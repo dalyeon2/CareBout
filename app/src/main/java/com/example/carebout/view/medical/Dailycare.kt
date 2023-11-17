@@ -31,7 +31,7 @@ class Dailycare : Fragment() {
     var dailycareText = Array<String>(10, {"-"}) // 데일리케어 타이틀
     var dailycareNumber = Array<Int>(10, {0}) // 타이틀을 몇 번 해야하는지
     val st = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT)
-    val stBtn = LinearLayout.LayoutParams(130, 130)
+    val stBtn = LinearLayout.LayoutParams(100, 100)
     val views: Array<ToggleButton?> = Array(50,  {null})
     var bornCount = 0
 
@@ -100,7 +100,7 @@ class Dailycare : Fragment() {
     fun setDailycare() : View {
         var dailycareTextView = TextView(this.context) // 빈 텍스트뷰 생성
         dailycareTextView.text = "\n- " + dailycareText[nthDaily] // 텍스트 넣기
-        dailycareTextView.textSize = 18.0f
+        dailycareTextView.textSize = 15.0f
         dailycareTextView.layoutParams = st // 레이아웃 지정
         dailycareTextView.id = ViewCompat.generateViewId() // 아이디 랜덤으로 지정
 
