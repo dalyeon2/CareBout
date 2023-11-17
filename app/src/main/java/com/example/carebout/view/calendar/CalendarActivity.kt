@@ -1,6 +1,7 @@
 package com.example.carebout.view.calendar
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.*
@@ -13,6 +14,7 @@ import com.example.carebout.databinding.ActivityCalendarBinding
 import com.example.carebout.view.calendar.decorator.EventDecorator
 import com.example.carebout.view.calendar.decorator.SaturdayDecorator
 import com.example.carebout.view.calendar.decorator.SundayDecorator
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import java.util.*
@@ -45,7 +47,7 @@ class CalendarActivity : AppCompatActivity() {
         calendarView.addDecorator(SaturdayDecorator()) // 토요일은 파란색
         eventDecorator = EventDecorator(this)
         calendarView.addDecorator(eventDecorator)
-        val button = findViewById<Button>(R.id.addplan)
+        val button = findViewById<FloatingActionButton>(R.id.addplan)
         button.setOnClickListener {
             showAddEventDialog()
         }
@@ -114,7 +116,7 @@ class CalendarActivity : AppCompatActivity() {
             .create()
             .show()
     }
-    private fun updateListView(selectedDate: CalendarDay) {
+    fun updateListView(selectedDate: CalendarDay) {
         val events = data[selectedDate] ?: mutableListOf()
         adapter.clear()
         adapter.addAll(events)
@@ -143,7 +145,7 @@ class CalendarActivity : AppCompatActivity() {
                     adapter.addAll(entry.value)
                 }
                 adapter.notifyDataSetChanged() // ListView 업데이트
-
+                updateListView(calendarView.selectedDate)
                 // EventDecorator를 업데이트된 datesWithEvents로 설정
                 eventDecorator.setDatesWithEvents(datesWithEvents)
                 calendarView.invalidateDecorators()
