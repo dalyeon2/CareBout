@@ -30,7 +30,7 @@ class CurrentWeight : Fragment() {
     ): View? {
         val weightView: View = inflater.inflate(R.layout.currentweight, container, false)
         val feedAmount: TextView = weightView.findViewById(R.id.feedAmount)
-        val cWeight: TextView = weightView.findViewById(R.id.breed)
+        val cWeight: TextView = weightView.findViewById(R.id.weight)
 
         feedAmount.text = "종이컵\n%.1f".format(getAmount(weight))
         cWeight.text = weight.toString()
