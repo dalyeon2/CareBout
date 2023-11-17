@@ -12,7 +12,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.carebout.R
 import com.example.carebout.base.bottomTabClick
 import com.example.carebout.databinding.ActivityHomeBinding
-import com.example.carebout.view.home.db.PersonalInfo
 import com.example.carebout.view.home.db.PersonalInfoDB
 import com.example.carebout.view.home.db.PersonalInfoDao
 import com.example.carebout.view.medical.db.AppDatabase
@@ -24,9 +23,6 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
     // 파일 복구중
@@ -54,12 +50,6 @@ class HomeActivity : AppCompatActivity() {
         for (p in db.personalInfoDao().getAllInfo()) {
             p.image?.let { profileList.add(it) }
         }
-
-//        CoroutineScope(Dispatchers.IO).launch {
-//            for (p in db.personalInfoDao().getAllInfo()) {
-//                p.image?.let { profileList.add(it) }
-//            }
-//        }
 
         val checkDataSet: MutableList<Pair<String, String>> = mutableListOf()
         val dataSet2: MutableList<Pair<String, String>> = mutableListOf()
@@ -99,10 +89,6 @@ class HomeActivity : AppCompatActivity() {
 
         // 플로팅버튼 클릭시 반려동물 추가 액티비티로
         binding.addProfileBtn.setOnClickListener{
-//            CoroutineScope(Dispatchers.IO).launch {
-//                Log.d("aaaaaaaaaa", db.weightDao().TEMP().toString())
-//                Log.d("aaaaaaaaaa", db.personalInfoDao().getAllInfo().toString())
-//            }
             val intent = Intent(this, AddPetActivity::class.java)
             startActivity(intent)
         }
@@ -118,13 +104,7 @@ class HomeActivity : AppCompatActivity() {
         // 각 페이지마다 선택되었을 때 보여줘야 할 데이터 설정
         profile.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                // Called when a new page has been selected
-
                 val p = db.personalInfoDao().getAllInfo()
-
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    p = db.personalInfoDao().getAllInfo()
-//                }
 
                 binding.helloName.text = "반가워, " + p[position].name + "!"
                 binding.man.text = p[position].sex
@@ -132,10 +112,9 @@ class HomeActivity : AppCompatActivity() {
                 binding.weight.text = p[position].breed
             }
         })
-
     }
 
-    inner class ZoomOutPageTransformer : ViewPager2.PageTransformer {
+    inner class ZoomOutPageTransformer() : ViewPager2.PageTransformer {
         override fun transformPage(view: View, position: Float) {
             view.apply {
                 val pageWidth = width
@@ -173,7 +152,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun getProfileList(db: PersonalInfoDao): MutableList<Pair<Int, String>> {
+    fun getProfileList(db: PersonalInfoDao): MutableList<Pair<Int, String>> {
         val profileList = mutableListOf<Pair<Int, String>>()
 
 
@@ -182,9 +161,7 @@ class HomeActivity : AppCompatActivity() {
         return profileList
     }
 
-//    private fun
-
-    private fun setWeightGraph() {
+    fun setWeightGraph() {
 
         val xAxis: XAxis = binding.weightGraph.xAxis   //x축 가져오기
 

@@ -51,36 +51,27 @@ class AddPetActivity : AppCompatActivity() {
             if(!isValid())
                 return@setOnClickListener
 
-            CoroutineScope(Dispatchers.IO).launch { // IO 쓰레드 열어서 아래 작업 수행
+            var fileName = ImageUtil().save(this@AddPetActivity, imageUri)
 
-                var fileName = ImageUtil().save(this@AddPetActivity, imageUri)
+            val pid = db.personalInfoDao().insertInfo(PersonalInfo(
+                binding.editName.text.toString(),
+                binding.editSex.text.toString(),
+                binding.editBirth.text.toString(),
+                binding.editBreed.text.toString(),
+                binding.editAnimal.text.toString(),
+                fileName
+            )).toInt()
 
-                if (fileName.isNullOrBlank())
-                    fileName = R.drawable.add_image.toString()
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+            val currentDate = sdf.format(Date())
 
-                val pid = db.personalInfoDao().insertInfo(PersonalInfo(
-                    binding.editName.text.toString(),
-                    binding.editSex.text.toString(),
-                    binding.editBirth.text.toString(),
-                    binding.editBreed.text.toString(),
-                    binding.editAnimal.text.toString(),
-                    fileName
-                )).toInt()
+            db.weightDao().insertInfo(Weight(
+                pid,
+                binding.editWeight.text.toString().toFloat(),
+                currentDate
+            ))
 
-                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
-                val currentDate = sdf.format(Date())
-
-                db.weightDao().insertInfo(Weight(
-                    pid,
-                    binding.editWeight.text.toString().toFloat(),
-                    currentDate
-                ))
-                // 메인 쓰레드로 이동 후 AddPetActivity를 닫고 홈 엑티비티로
-                // IO 쓰레드와 별개의 동작
-                withContext(Dispatchers.Main){
-                    finish()
-                }
-            }
+            finish()
         }
 
         val galleryVariable: ActivityResultLauncher<Intent> =
@@ -90,6 +81,7 @@ class AddPetActivity : AppCompatActivity() {
                     imageUri = it.data?.data!!
                 }
             }
+
         binding.profileImage.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
