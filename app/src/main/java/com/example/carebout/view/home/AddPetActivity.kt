@@ -5,23 +5,15 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.carebout.R
 import com.example.carebout.databinding.ActivityAddPetBinding
 import com.example.carebout.view.home.db.PersonalInfo
 import com.example.carebout.view.home.db.PersonalInfoDB
 import com.example.carebout.view.home.db.Weight
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
 
 class AddPetActivity : AppCompatActivity() {
 
@@ -40,6 +32,14 @@ class AddPetActivity : AppCompatActivity() {
     }
 
     private fun setClickListener(){
+        val galleryVariable: ActivityResultLauncher<Intent> =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == RESULT_OK && it.data != null) {
+                    binding.profileImage.setImageURI(it.data?.data)
+                    imageUri = it.data?.data!!
+                }
+            }
+
         // 뒤로가기 버튼 클릭시
         binding.topBarOuter.backToActivity.setOnClickListener {
             finish()
@@ -71,16 +71,19 @@ class AddPetActivity : AppCompatActivity() {
                 currentDate
             ))
 
+            var empty = EmptyActivity.emptyActivity
+
+            if (!intent.getBooleanExtra("addedPet", true)) {
+                empty?.startActivity(Intent(empty, HomeActivity::class.java))
+                empty?.finish()
+            }
+
+            var home = HomeActivity.homeActivity
+
+            home?.finish()
+            home?.startActivity(Intent(this@AddPetActivity, HomeActivity::class.java))
             finish()
         }
-
-        val galleryVariable: ActivityResultLauncher<Intent> =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                if (it.resultCode == RESULT_OK && it.data != null) {
-                    binding.profileImage.setImageURI(it.data?.data)
-                    imageUri = it.data?.data!!
-                }
-            }
 
         binding.profileImage.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
@@ -99,6 +102,7 @@ class AddPetActivity : AppCompatActivity() {
         val weight = binding.editWeight
         val breed = binding.editBreed
         val animal = binding.editAnimal
+        val image = binding.profileImage
 
         if(name.text.isNullOrBlank())
             name.error = ""

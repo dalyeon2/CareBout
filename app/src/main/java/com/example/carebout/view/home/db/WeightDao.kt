@@ -18,9 +18,6 @@ interface WeightDao {
     fun updateInfo(weight: Weight)
 
     @Query("SELECT * FROM weight WHERE pid = :pid")
-    fun getInfoById(pid: Int): List<Weight>   // pid로 모든 정보 가져오기
+    fun getWeightById(pid: Int): List<Weight>   // pid로 모든 정보 가져오기
 
-
-    @Query("SELECT * FROM weight")
-    fun TEMP(): List<Weight>   // pid로 모든 정보 가져오기
 }

@@ -21,7 +21,6 @@ class MyViewPagerAdapter(context: HomeActivity, profileList: ArrayList<String>):
 
     inner class PagerViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder
         (LayoutInflater.from(parent.context).inflate(R.layout.pet_list, parent, false)){
-
         val pet = itemView.findViewById<ImageView>(R.id.petImage)!!
     }
 }

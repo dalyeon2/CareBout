@@ -54,6 +54,6 @@
         android:textColor="#5A5A5A"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/weight"
+        app:layout_constraintStart_toEndOf="@+id/breed"
         app:layout_constraintTop_toBottomOf="@+id/feedAmount" />
 </androidx.constraintlayout.widget.ConstraintLayout>
