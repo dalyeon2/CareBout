@@ -20,7 +20,6 @@ import com.example.carebout.R
 import com.example.carebout.databinding.ActivityAddBinding
 import com.example.carebout.view.community.CommunityActivity
 import com.example.carebout.view.community.DBHelper
-import com.example.carebout.view.community.OneFragment
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -95,12 +94,15 @@ class AddActivity: AppCompatActivity() {
         // 현재 날짜 표기
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
-        val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault()).apply {
-            val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
-            applyPattern("${koreanDays[Calendar.DAY_OF_WEEK - 1]}")
-        }
 
-        val formattedDay = dayFormat.format(currentDate)
+        val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+        val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
+
+        val calendar = Calendar.getInstance()
+        calendar.time = currentDate
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+
+        val formattedDay = koreanDays[dayOfWeek - 1]
         val formattedDate = dateFormat.format(currentDate)
 
         binding.date.text = formattedDate
@@ -152,9 +154,15 @@ class AddActivity: AppCompatActivity() {
         val datePickerDialog = DatePickerDialog(
             this,
             { _, selectedYear, selectedMonth, selectedDay ->
-                // 선택된 날짜로 TextView 갱신
-                val selectedDate = "${selectedYear}년 ${selectedMonth + 1}월 ${selectedDay}일"
-                binding.date.text = selectedDate
+                calendar.set(selectedYear, selectedMonth, selectedDay)
+
+                val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+                val formattedDate = dateFormat.format(calendar.time)
+                binding.date.text = formattedDate
+
+                val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
+                val formattedDay = koreanDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]
+                binding.day.text = formattedDay
             },
             year, month, dayOfMonth
         )
