@@ -1,14 +1,18 @@
 package com.example.carebout.view.medical.Todo
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityTodoWriteBinding
+import com.example.carebout.view.community.DBHelper
 import com.example.carebout.view.medical.MedicalActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.DailyTodo
@@ -27,6 +31,9 @@ class TodoWriteActivity : AppCompatActivity() {
         binding = ActivityTodoWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar2)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         //setContentView(R.layout.activity_todo_write)
 
         //db = AppDatabase.getInstance(this)!!
@@ -39,7 +46,7 @@ class TodoWriteActivity : AppCompatActivity() {
         val todoText: TextView = findViewById(R.id.TodoEditText)
         val numText: TextView = findViewById(R.id.numText)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
-        val btn1: Button = findViewById(R.id.button)
+//        val btn1: Button = findViewById(R.id.button)
         val btnminus: Button = findViewById(R.id.button2)
         val btnplus: Button = findViewById(R.id.button3)
 
@@ -71,22 +78,22 @@ class TodoWriteActivity : AppCompatActivity() {
 //            finish()
 //        }
 
-        // 함수호출
-        if (todoId != -1){
-            btn1.setOnClickListener {
-                Log.i("btn", todoId.toString())
-                updateTodo()
-            }
-        } else {
-            btn1.setOnClickListener {
-
-//            val sTitle = todoText.text.toString()
-//            val sCount = numText.text.toString().toInt()
-//            val sEtc = editTextMultiLine.text.toString()
-
-            insertTodo()
-            }
-        }
+//        // 함수호출
+//        if (todoId != -1){
+//            btn1.setOnClickListener {
+//                Log.i("btn", todoId.toString())
+//                updateTodo()
+//            }
+//        } else {
+//            btn1.setOnClickListener {
+//
+////            val sTitle = todoText.text.toString()
+////            val sCount = numText.text.toString().toInt()
+////            val sEtc = editTextMultiLine.text.toString()
+//
+//            insertTodo()
+//            }
+//        }
 
         btnplus.setOnClickListener {
             if(counter < 5) {
@@ -183,6 +190,34 @@ class TodoWriteActivity : AppCompatActivity() {
             }.start()
         }
 
+    }
+
+    override fun onCreateOptionsMenu (menu: Menu?): Boolean {
+        menuInflater.inflate (R.menu.menu_add, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
+
+        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
+            finish()
+            true
+        }
+
+        R.id.menu_add_save -> {
+            val todoId = intent.getIntExtra("todoId", -1)
+
+            if (todoId != -1){
+                Log.i("btn", todoId.toString())
+                updateTodo()
+            } else {
+                insertTodo()
+            }
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+            true
+        }
+        else -> true
     }
 
 }
