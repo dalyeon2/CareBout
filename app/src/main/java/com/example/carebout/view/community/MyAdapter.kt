@@ -58,10 +58,12 @@ class MyAdapter(val contents: MutableList<String>?, val imageUris: MutableList<U
         //뷰에 데이터 출력
         binding.itemData.text = contents!![position]
 
+        /*
         // 이미지 URI가 있다면 이미지를 로드하여 표시
         imageUris?.get(position)?.let {
             binding.itemImage.setImageURI(it)
         }
+        */
 
         // 현재 날짜와 요일 설정
         val currentDate = Calendar.getInstance().time
@@ -76,6 +78,8 @@ class MyAdapter(val contents: MutableList<String>?, val imageUris: MutableList<U
 
         binding.date.text = formattedDate
         binding.day.text = formattedDay
+
+
     }
 }
 
