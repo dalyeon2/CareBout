@@ -52,8 +52,8 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
         calendarActivity = activity
     }
 
-    fun updateListView(selectedDate: CalendarDay) {
-//        calendarActivity.updateListView(selectedDate)
+    private fun updateListView(selectedDate: CalendarDay) {
+        calendarActivity.updateListView(selectedDate)
     }
     fun setCalendarView(view: MaterialCalendarView) {
         calendarView = view
