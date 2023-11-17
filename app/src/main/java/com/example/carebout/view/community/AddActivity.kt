@@ -28,7 +28,8 @@ import android.view.ViewTreeObserver
 
 class AddActivity: AppCompatActivity() {
     lateinit var binding: ActivityAddBinding
-
+    private var selectedImageUri: Uri? = null
+    /*
     private val requestLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -44,7 +45,7 @@ class AddActivity: AppCompatActivity() {
             finish()
         }
     }
-
+    */
     private val requestGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -67,8 +68,9 @@ class AddActivity: AppCompatActivity() {
                     bitmap?.let {
                         binding.userImageView.setImageBitmap(bitmap)
                         binding.userImageView.visibility = View.VISIBLE
+                        selectedImageUri = result.data!!.data
                     } ?: let {
-
+                        selectedImageUri = null
                     }
                 } catch (e: Exception) {
 
@@ -92,12 +94,15 @@ class AddActivity: AppCompatActivity() {
         // 현재 날짜 표기
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
-        val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault()).apply {
-            val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
-            applyPattern("${koreanDays[Calendar.DAY_OF_WEEK - 1]}")
-        }
 
-        val formattedDay = dayFormat.format(currentDate)
+        val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+        val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
+
+        val calendar = Calendar.getInstance()
+        calendar.time = currentDate
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+
+        val formattedDay = koreanDays[dayOfWeek - 1]
         val formattedDate = dateFormat.format(currentDate)
 
         binding.date.text = formattedDate
@@ -106,15 +111,6 @@ class AddActivity: AppCompatActivity() {
         binding.date.setOnClickListener {
             showDatePickerDialog()
         }
-
-        /*
-        // 데이터 전송
-        val userEnteredText = binding.addEditView.text.toString()
-        val fragment = OneFragment()
-        val args = Bundle()
-        args.putString("userEnteredText", userEnteredText) // 사용자가 입력한 텍스트를 Bundle에 추가
-        fragment.arguments = args
-         */
     }
 
     override fun onCreateOptionsMenu (menu: Menu?): Boolean {
@@ -136,7 +132,12 @@ class AddActivity: AppCompatActivity() {
                 arrayOf<String>(inputData))
             db.close()
 
-            val intent = intent.putExtra("result", binding.addEditView.text.toString())
+            val intent = Intent().apply {
+                putExtra("result", inputData)
+                selectedImageUri?.let {
+                    putParcelableArrayListExtra("imageUris", arrayListOf(it))
+                }
+            }
             setResult(Activity.RESULT_OK, intent)
             finish()
             true
@@ -153,9 +154,15 @@ class AddActivity: AppCompatActivity() {
         val datePickerDialog = DatePickerDialog(
             this,
             { _, selectedYear, selectedMonth, selectedDay ->
-                // 선택된 날짜로 TextView 갱신
-                val selectedDate = "${selectedYear}년 ${selectedMonth + 1}월 ${selectedDay}일"
-                binding.date.text = selectedDate
+                calendar.set(selectedYear, selectedMonth, selectedDay)
+
+                val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+                val formattedDate = dateFormat.format(calendar.time)
+                binding.date.text = formattedDate
+
+                val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
+                val formattedDay = koreanDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]
+                binding.day.text = formattedDay
             },
             year, month, dayOfMonth
         )

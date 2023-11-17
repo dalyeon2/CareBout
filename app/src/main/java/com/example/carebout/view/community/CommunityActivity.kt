@@ -2,6 +2,7 @@ package com.example.carebout.view.community
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -28,14 +29,20 @@ class CommunityActivity : AppCompatActivity() {
     lateinit var binding: ActivityCommunityBinding
     lateinit var adapter: MyAdapter
     var contents: MutableList<String>? = null
+    var imageUris: MutableList<Uri>? = null
 
     private val requestLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val newData = result.data?.getStringExtra("result")
+            val selectedImageUri = result.data?.getParcelableExtra<Uri>("imageUri")
+
             newData?.let {
                 contents?.add(0, it)
+                selectedImageUri?.let {
+                    imageUris?.add(0, it)
+                }
                 adapter.notifyDataSetChanged()
 
                 // 데이터가 추가되면 RecyclerView를 보이도록 설정
@@ -55,17 +62,6 @@ class CommunityActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        /*
-        // 탭바
-        val adapter = MyFragmentPagerAdapter(this)
-        binding.viewpager.adapter = adapter
-        TabLayoutMediator(binding.tabs, binding.viewpager) { tab, position ->
-            when(position) {
-                0 -> tab.text = "2022"
-            }
-        }.attach()
-        */
 
         // Navigation Drawer 토글 동작 설정
         val toggle = ActionBarDrawerToggle(this, binding.drawer, R.string.drawer_opened, R.string.drawer_closed)
@@ -87,9 +83,18 @@ class CommunityActivity : AppCompatActivity() {
             mutableListOf<String>()
         }
 
+        imageUris = savedInstanceState?.let {
+            it.getParcelableArrayList<Uri>("imageUris")?.toMutableList()
+        } ?: mutableListOf<Uri>()
+
         val layoutManager = LinearLayoutManager(this)
 
-        adapter = MyAdapter(contents)
+        val selectedImageUri = intent.getParcelableExtra<Uri>("imageUri")
+        selectedImageUri?.let {
+            imageUris?.add(0, it)
+        }
+
+        adapter = MyAdapter(contents, imageUris)
 
         // 리사이클러뷰 어댑터에 아이템 클릭 리스너 설정
         adapter.setOnItemClickListener(object : MyAdapter.OnItemClickListener {
@@ -106,7 +111,7 @@ class CommunityActivity : AppCompatActivity() {
         })
 
         val db = DBHelper(this).readableDatabase
-        //db.execSQL("DELETE FROM TODO_TB") // 데이터 초기화
+        db.execSQL("DELETE FROM TODO_TB") // 데이터 초기화
         val cursor = db.rawQuery("select * from TODO_TB", null)
         cursor.run {
             while (moveToNext()) {
@@ -134,6 +139,7 @@ class CommunityActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putStringArrayList("contents", ArrayList(contents))
+        outState.putParcelableArrayList("imageUris", ArrayList(imageUris))
     }
 
     // 옵션 메뉴
