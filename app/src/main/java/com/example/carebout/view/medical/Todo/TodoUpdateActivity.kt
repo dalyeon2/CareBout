@@ -1,8 +1,11 @@
 package com.example.carebout.view.medical.Todo
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -27,6 +30,9 @@ class TodoUpdateActivity : AppCompatActivity() {
         binding = ActivityTodoUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar7)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         db = AppDatabase.getInstance(applicationContext)!!
         todoDao = db.getTodoDao()
 
@@ -36,8 +42,8 @@ class TodoUpdateActivity : AppCompatActivity() {
         val numText: TextView = findViewById(R.id.numText)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
 
-        val updateBtn: Button = findViewById(R.id.updateBtn)
-        val deleteBtn: Button = findViewById(R.id.deleteBtn)
+//        val updateBtn: Button = findViewById(R.id.updateBtn)
+//        val deleteBtn: Button = findViewById(R.id.deleteBtn)
 
         val btnminus: Button = findViewById(R.id.button2)
         val btnplus: Button = findViewById(R.id.button3)
@@ -63,13 +69,13 @@ class TodoUpdateActivity : AppCompatActivity() {
             Log.i("in", uTitle.toString())
         }
 
-        updateBtn.setOnClickListener{
-            updateTodo()
-        }
-
-        deleteBtn.setOnClickListener {
-            deletTodo()
-        }
+//        updateBtn.setOnClickListener{
+//            updateTodo()
+//        }
+//
+//        deleteBtn.setOnClickListener {
+//            deletTodo()
+//        }
 
         btnplus.setOnClickListener {
             if(counter < 5) {
@@ -153,5 +159,35 @@ class TodoUpdateActivity : AppCompatActivity() {
         val intent = Intent(applicationContext, TodoReadActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun onCreateOptionsMenu (menu: Menu?): Boolean {
+        menuInflater.inflate (R.menu.menu_story, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
+
+        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
+            finish()
+            true
+        }
+
+        R.id.menu_edit -> {
+            updateTodo()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+            true
+        }
+
+        R.id.menu_remove -> {
+            deletTodo()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+            true
+        }
+        else -> true
     }
 }
