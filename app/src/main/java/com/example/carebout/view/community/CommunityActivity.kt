@@ -2,6 +2,8 @@ package com.example.carebout.view.community
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -133,6 +135,11 @@ class CommunityActivity : AppCompatActivity() {
             DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
         )
 
+        // 현재 클릭 중인 탭 tint. 지우지 말아주세요!
+        binding.bottomTapBarOuter.diaryImage.imageTintList = ColorStateList.valueOf(Color.parseColor("#6EC677"))
+        binding.bottomTapBarOuter.diaryText.setTextColor(Color.parseColor("#6EC677"))
+
+        // 하단 탭바
         bottomTabClick(binding.bottomTapBarOuter, this)
     }
 

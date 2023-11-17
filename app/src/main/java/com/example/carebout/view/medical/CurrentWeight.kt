@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.carebout.R
@@ -31,7 +30,7 @@ class CurrentWeight : Fragment() {
     ): View? {
         val weightView: View = inflater.inflate(R.layout.currentweight, container, false)
         val feedAmount: TextView = weightView.findViewById(R.id.feedAmount)
-        val cWeight: TextView = weightView.findViewById(R.id.weight)
+        val cWeight: TextView = weightView.findViewById(R.id.breed)
 
         feedAmount.text = "종이컵\n%.1f".format(getAmount(weight))
         cWeight.text = weight.toString()

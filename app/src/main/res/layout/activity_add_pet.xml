@@ -33,6 +33,7 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="50dp"
+                android:background="#6EC677"
                 app:cardCornerRadius="200dp"
                 app:layout_constraintTop_toTopOf="@id/addPetContainer"
                 app:layout_constraintStart_toStartOf="@id/addPetContainer"
@@ -43,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher_background"/>
+                    android:src="@drawable/add_image"/>
 
             </androidx.cardview.widget.CardView>
 

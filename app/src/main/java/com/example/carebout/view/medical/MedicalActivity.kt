@@ -2,6 +2,8 @@ package com.example.carebout.view.medical
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -110,7 +112,11 @@ class MedicalActivity : AppCompatActivity() {
             val intent = Intent(this, ClinicReadActivity::class.java)
             startActivity(intent)
         }
-    
+
+        // 현재 클릭 중인 탭 tint. 지우지 말아주세용
+        binding.bottomTapBarOuter.medicalImage.imageTintList = ColorStateList.valueOf(Color.parseColor("#6EC677"))
+        binding.bottomTapBarOuter.medicalText.setTextColor(Color.parseColor("#6EC677"))
+
         // 하단탭 클릭시 intent를 하기 위한 함수
         bottomTabClick(binding.bottomTapBarOuter, this)
     }
