@@ -49,7 +49,7 @@
         <activity
             android:name=".view.community.AddActivity"
             android:label=" "
-            android:windowSoftInputMode="adjustNothing"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false"/>
         <activity
             android:name=".view.medical.Todo.TodoReadActivity"
