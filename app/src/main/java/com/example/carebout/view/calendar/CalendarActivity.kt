@@ -30,6 +30,7 @@ class CalendarActivity : AppCompatActivity() {
     val data = mutableMapOf<CalendarDay, MutableList<String>>()
     val adapter: ArrayAdapter<String> by lazy { ArrayAdapter(this, android.R.layout.simple_list_item_1) }
     private lateinit var viewModel: CalendarViewModel
+
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,10 @@ class CalendarActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(CalendarViewModel::class.java)
 
         calendarView = findViewById(R.id.calendarView)
+
+        val currentDate = CalendarDay.today()
+
+        calendarView.selectedDate = currentDate
 
         calendarView.addDecorator(SundayDecorator()) // 일요일은 빨간색
         calendarView.addDecorator(SaturdayDecorator()) // 토요일은 파란색
