@@ -1,5 +1,6 @@
 package com.example.carebout.view.medical
 
+import PidApplication
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
@@ -39,6 +41,9 @@ class Tab2 : Fragment() {
     private lateinit var tagR: ToggleButton
     private lateinit var tagH: ToggleButton
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,8 +64,25 @@ class Tab2 : Fragment() {
         //Adapter 적용
         recyclerView.adapter = adapter
 
+
+        //val application = requireActivity().application as PidApplication
+        petId = MyPid.getPid() //application.petId
+
+        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+
+        viewModel.mpid.observe(viewLifecycleOwner, Observer { mpid ->
+            // mpid가 변경될 때마다 호출되는 콜백
+            petId = MyPid.getPid()
+            Log.i("petId_tab2", petId.toString())
+
+            //MyPid.setPid(petId)
+            //application.petId = mpid
+            getInocList()
+        })
+
+
         // LiveData를 관찰하여 데이터 변경에 대응
-        inocDao.getAllInoculation().observe(viewLifecycleOwner, Observer { inocList ->
+        inocDao.getAllInoculation(petId).observe(viewLifecycleOwner, Observer { inocList ->
             // LiveData가 변경될 때마다 호출되는 콜백
             adapter.setInoculationList(inocList as ArrayList<Inoculation>)
         })
@@ -150,7 +172,7 @@ class Tab2 : Fragment() {
 
     private fun getInocList() {
 
-        val inocList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocDateAsc() as ArrayList<Inoculation>
+        val inocList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocDateAsc(petId) as ArrayList<Inoculation>
         //.getInoculationAll() as ArrayList<Inoculation>
 
         if (inocList.isNotEmpty()) {
@@ -164,7 +186,7 @@ class Tab2 : Fragment() {
 
     private fun getInocTagDHPPLList() {
 
-        val inocTagDHPPLList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagDHPPL() as ArrayList<Inoculation>
+        val inocTagDHPPLList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagDHPPL(petId) as ArrayList<Inoculation>
 
         if (inocTagDHPPLList.isNotEmpty()) {
             //데이터 적용
@@ -177,7 +199,7 @@ class Tab2 : Fragment() {
 
     private fun getInocTagCList() {
 
-        val inocTagCList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagC() as ArrayList<Inoculation>
+        val inocTagCList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagC(petId) as ArrayList<Inoculation>
 
         if (inocTagCList.isNotEmpty()) {
             //데이터 적용
@@ -190,7 +212,7 @@ class Tab2 : Fragment() {
 
     private fun getInocTagKCList() {
 
-        val inocTagKCList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagKC() as ArrayList<Inoculation>
+        val inocTagKCList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagKC(petId) as ArrayList<Inoculation>
 
         if (inocTagKCList.isNotEmpty()) {
             //데이터 적용
@@ -203,7 +225,7 @@ class Tab2 : Fragment() {
 
     private fun getInocTagCVRPList() {
 
-        val inocTagCVRPList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagCVRP() as ArrayList<Inoculation>
+        val inocTagCVRPList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagCVRP(petId) as ArrayList<Inoculation>
 
         if (inocTagCVRPList.isNotEmpty()) {
             //데이터 적용
@@ -216,7 +238,7 @@ class Tab2 : Fragment() {
 
     private fun getInocTagFLList() {
 
-        val inocTagFLList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagFL() as ArrayList<Inoculation>
+        val inocTagFLList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagFL(petId) as ArrayList<Inoculation>
 
         if (inocTagFLList.isNotEmpty()) {
             //데이터 적용
@@ -229,7 +251,7 @@ class Tab2 : Fragment() {
 
     private fun getInocTagFIDList() {
 
-        val inocTagFIDList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagFID() as ArrayList<Inoculation>
+        val inocTagFIDList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagFID(petId) as ArrayList<Inoculation>
 
         if (inocTagFIDList.isNotEmpty()) {
             //데이터 적용
@@ -242,7 +264,7 @@ class Tab2 : Fragment() {
 
     private fun getInocTagRList() {
 
-        val inocTagRList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagR() as ArrayList<Inoculation>
+        val inocTagRList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagR(petId) as ArrayList<Inoculation>
 
         if (inocTagRList.isNotEmpty()) {
             //데이터 적용
@@ -255,7 +277,7 @@ class Tab2 : Fragment() {
 
     private fun getInocTagHList() {
 
-        val inocTagHList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagH() as ArrayList<Inoculation>
+        val inocTagHList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagH(petId) as ArrayList<Inoculation>
 
         if (inocTagHList.isNotEmpty()) {
             //데이터 적용
