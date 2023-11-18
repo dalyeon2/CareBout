@@ -1,6 +1,5 @@
 package com.example.carebout.view.medical
 
-import PidApplication
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList

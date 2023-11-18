@@ -1,6 +1,6 @@
 package com.example.carebout.view.medical.Clinic
 
-import PidApplication
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

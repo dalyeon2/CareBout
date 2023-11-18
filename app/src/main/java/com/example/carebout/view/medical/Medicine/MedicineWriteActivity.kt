@@ -1,6 +1,5 @@
 package com.example.carebout.view.medical.Medicine
 
-import PidApplication
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
