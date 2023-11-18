@@ -32,6 +32,8 @@ class CommunityActivity : AppCompatActivity() {
     lateinit var adapter: MyAdapter
     var contents: MutableList<String>? = null
     var imageUris: MutableList<Uri>? = null
+    var selectedDates: MutableList<String?> = mutableListOf()
+    var selectedDay: MutableList<String?> = mutableListOf()
 
     private val requestLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -39,12 +41,16 @@ class CommunityActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val newData = result.data?.getStringExtra("result")
             val selectedImageUri = result.data?.getParcelableExtra<Uri>("imageUri")
+            val selectedDateResult = result.data?.getStringExtra("selectedDate")
+            val selectedDayResult = result.data?.getStringExtra("selectedDay")
 
             newData?.let {
                 contents?.add(0, it)
                 selectedImageUri?.let {
                     imageUris?.add(0, it)
                 }
+                selectedDates.add(0, selectedDateResult)
+                selectedDay.add(0, selectedDayResult)
                 adapter.notifyDataSetChanged()
 
                 // 데이터가 추가되면 RecyclerView를 보이도록 설정
@@ -96,7 +102,7 @@ class CommunityActivity : AppCompatActivity() {
             imageUris?.add(0, it)
         }
 
-        adapter = MyAdapter(contents, imageUris)
+        adapter = MyAdapter(contents, imageUris, selectedDates, selectedDay)
 
         // 리사이클러뷰 어댑터에 아이템 클릭 리스너 설정
         adapter.setOnItemClickListener(object : MyAdapter.OnItemClickListener {
