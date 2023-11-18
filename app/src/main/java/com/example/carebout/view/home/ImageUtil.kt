@@ -1,9 +1,11 @@
 package com.example.carebout.view.home
 
 import android.content.Context
+import android.content.res.Resources
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.net.toUri
+import com.example.carebout.R
 import java.io.File
 
 class ImageUtil{

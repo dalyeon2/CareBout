@@ -12,11 +12,16 @@
         android:theme="@style/Theme.CareBout"
         tools:targetApi="31">
         <activity
+            android:name=".view.home.EmptyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.home.AddWeightActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.home.AddPetActivity"
-            android:exported="false"/>
-<!--            android:theme="@style/CustomTopBar"-->
-<!--            android:parentActivityName=".view.home.HomeActivity"-->
-<!--            />-->
+            android:exported="false" /> <!-- android:theme="@style/CustomTopBar" -->
+        <!-- android:parentActivityName=".view.home.HomeActivity" -->
+        <!-- /> -->
         <activity
             android:name=".view.home.HomeActivity"
             android:exported="true"
@@ -42,13 +47,13 @@
             android:exported="false" />
         <activity
             android:name=".view.community.StoryActivity"
-            android:label=" "
-            android:exported="false"/>
+            android:exported="false"
+            android:label=" " />
         <activity
             android:name=".view.community.AddActivity"
+            android:exported="false"
             android:label=" "
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.medical.Todo.TodoReadActivity"
             android:exported="false"

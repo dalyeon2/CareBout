@@ -6,33 +6,116 @@
     android:gravity="center"
     android:background="@color/white">
 
-    <Button
+    <LinearLayout
         android:id="@+id/goToHome"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="홈"
-        android:background="@color/transparent"/>
-    <Button
+        android:orientation="vertical"
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/homeImage"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="bottom|center_horizontal"
+            android:tint="#535863"
+            android:src="@drawable/ic_home"/>
+
+        <TextView
+            android:id="@+id/homeText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top|center_horizontal"
+            android:text="홈"
+            android:textColor="#535863"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/goToCalendar"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="캘린더"
-        android:background="@color/transparent"/>
-    <Button
+        android:orientation="vertical"
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/calendarImage"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="bottom|center_horizontal"
+            android:tint="#535863"
+            android:src="@drawable/ic_calendar"/>
+
+        <TextView
+            android:id="@+id/calendarText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top|center_horizontal"
+            android:text="캘린더"
+            android:textColor="#535863"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/goToMedical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="의료"
-        android:background="@color/transparent"/>
-    <Button
-        android:id="@+id/goToCommunity"
+        android:orientation="vertical"
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/medicalImage"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="bottom|center_horizontal"
+            android:tint="#535863"
+            android:src="@drawable/ic_medical"/>
+
+        <TextView
+            android:id="@+id/medicalText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top|center_horizontal"
+            android:text="의료"
+            android:textColor="#535863"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/goToDiary"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="일기"
-        android:background="@color/transparent"/>
+        android:orientation="vertical"
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/diaryImage"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="bottom|center_horizontal"
+            android:tint="#535863"
+            android:src="@drawable/ic_diary"/>
+
+        <TextView
+            android:id="@+id/diaryText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top|center_horizontal"
+            android:text="일기"
+            android:textColor="#535863"/>
+
+    </LinearLayout>
 
 </LinearLayout>

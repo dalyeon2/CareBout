@@ -4,16 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.medical.Inoc.InoculationWriteActivity"
-    android:padding="20dp">
+    tools:context=".view.medical.Inoc.InoculationWriteActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar4"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar4">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,8 +51,7 @@
                         android:id="@+id/tag_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        >
+                        android:gravity="center_vertical">
 
                         <LinearLayout
 
@@ -51,8 +64,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="75dp"
+                                android:layout_height="30dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="DHPPL"
@@ -61,8 +74,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton2"
-                                android:layout_width="80dp"
-                                android:layout_height="48dp"
+                                android:layout_width="75dp"
+                                android:layout_height="30dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="코로나"
@@ -71,8 +84,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="75dp"
+                                android:layout_height="35dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="켄넬코프"
@@ -81,8 +94,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="75dp"
+                                android:layout_height="30dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="CVRP"
@@ -91,8 +104,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="75dp"
+                                android:layout_height="35dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="백혈병"
@@ -101,8 +114,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="75dp"
+                                android:layout_height="35dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="FID"
@@ -111,8 +124,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton7"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="75dp"
+                                android:layout_height="35dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="광견병"
@@ -121,8 +134,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton8"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="75dp"
+                                android:layout_height="35dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="심장사상충"
@@ -136,11 +149,11 @@
                         android:id="@+id/editTextList"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/edittext_rounded_corner_rectangle"
                         android:ems="10"
                         android:hint="  + 직접 작성하기"
-                        android:inputType="text"
-                        android:layout_marginTop="10dp"/>
+                        android:inputType="text" />
 
                 </TableLayout>
 
@@ -230,18 +243,17 @@
 
     </FrameLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_height="wrap_content"
-        android:text="저장하기"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="match_parent"
-        android:background="@drawable/btn_green"
-        android:textColor="@color/_bg__medical_main_ek2_color"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        />
+<!--    <Button-->
+<!--        android:id="@+id/button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/btn_green"-->
+<!--        android:text="저장하기"-->
+<!--        android:textColor="@color/_bg__medical_main_ek2_color"-->
+<!--        android:textSize="16dp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

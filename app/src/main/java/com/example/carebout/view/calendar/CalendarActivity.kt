@@ -1,6 +1,7 @@
 package com.example.carebout.view.calendar
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -70,6 +71,11 @@ class CalendarActivity : AppCompatActivity() {
             showEditDialog(selectedItem, position)
             true // 이벤트 처리를 완료했음을 알림
         }
+
+        // 현재 클릭 중인 탭 tint. 지우지 말아주세요!
+        binding.bottomTapBarOuter.calendarImage.imageTintList = ColorStateList.valueOf(Color.parseColor("#6EC677"))
+        binding.bottomTapBarOuter.calendarText.setTextColor(Color.parseColor("#6EC677"))
+
         //탭 클릭시 화면 전환을 위한 함수입니다. 지우지 말아주세요!
         bottomTabClick(binding.bottomTapBarOuter, this)
     }

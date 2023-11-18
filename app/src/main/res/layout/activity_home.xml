@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/white"
     tools:context=".view.home.HomeActivity">
 
     <ScrollView
@@ -53,6 +54,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 app:dampingRatio="0.5"
+                app:dotsColor="#6EC677"
                 app:dotsCornerRadius="20dp"
                 app:dotsSize="10dp"
                 app:dotsSpacing="6dp"
@@ -63,7 +65,7 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/birthLayout"
+                android:id="@+id/sexAndBirth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="70dp"
@@ -71,22 +73,14 @@
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/profileIndicator">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/woman"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="♀"-->
-<!--                    android:textColor="#F00"-->
-<!--                    android:textSize="14dp"-->
-<!--                    android:textStyle="bold" />-->
 
                 <TextView
-                    android:id="@+id/man"
+                    android:id="@+id/sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:text="♂"
-                    android:textColor="#00F"
+                    android:textColor="#ff005d"
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
@@ -97,39 +91,41 @@
                     android:layout_height="wrap_content"
                     android:text="0년 11개월"
                     android:textSize="14dp"/>
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+<!--            <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--                android:id="@+id/breedAndWeight"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/sexAndBirth">-->
+
+<!--                -->
+
+<!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+            <TextView
+                android:id="@+id/breed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="코리안 숏헤어"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/sexAndBirth"/>
 
             <TextView
                 android:id="@+id/weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="코리안 숏헤어 5.1kg"
+                android:text="5.1kg"
                 android:textSize="16dp"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:paddingBottom="35dp"
-                app:layout_constraintTop_toBottomOf="@id/birthLayout" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/memoLayout"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="15dp"
-                app:cardCornerRadius="100dp"
-                app:cardElevation="0dp"
-                app:layout_constraintTop_toBottomOf="@id/weight"
-                app:strokeColor="#ddd"
-                app:strokeWidth="1dp">
-
-                <EditText
-                    android:id="@+id/memo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:padding="20dp" />
-            </com.google.android.material.card.MaterialCardView>
-
+                app:layout_constraintTop_toBottomOf="@id/breed"/>
 
             <TextView
                 android:id="@+id/weightGraphTitle"
@@ -140,7 +136,7 @@
                 android:text="체중 그래프"
                 android:textSize="16dp"
                 android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/memoLayout" />
+                app:layout_constraintTop_toBottomOf="@id/weight" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/wieghtGraphCardView"
@@ -156,13 +152,13 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="120dp"
                     android:divider="#ccc"
                     android:orientation="vertical">
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="32dp" />
+                        android:layout_height="39dp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -171,7 +167,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="32dp" />
+                        android:layout_height="39dp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -180,14 +176,14 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="32dp" />
+                        android:layout_height="39dp" />
 
                 </LinearLayout>
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/weightGraph"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="120dp"
                     tools:layout_editor_absoluteX="0dp"
                     tools:layout_editor_absoluteY="519dp" />
 
@@ -225,86 +221,59 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
-                android:id="@+id/vGraphTitle"
+                android:id="@+id/inoculationTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:paddingHorizontal="5dp"
-                android:text="예방접종 일지"
+                android:text="접종 및 구충 일지"
                 android:textSize="16dp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/checkGraphCardView" />
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/vGraphCardView"
+                android:id="@+id/inoculationCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="0dp"
                 app:contentPadding="0dp"
-                app:layout_constraintTop_toBottomOf="@id/vGraphTitle"
+                app:layout_constraintTop_toBottomOf="@id/inoculationTitle"
                 app:strokeColor="#ddd"
                 app:strokeWidth="1dp">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/vGraph"
+                    android:id="@+id/inoculation"
                     android:layout_width="match_parent"
                     android:layout_height="75dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:id="@+id/v2GraphTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:paddingHorizontal="5dp"
-                android:text="심장사상충 일지"
-                android:textSize="16dp"
-                android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/vGraphCardView" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="0dp"
-                app:contentPadding="0dp"
-                app:layout_constraintTop_toBottomOf="@id/v2GraphTitle"
-                app:strokeColor="#ddd"
-                app:strokeWidth="1dp">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/v2Graph"
-                    android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="50dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <ImageView
-                android:id="@+id/ejrlqkqh"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addProfileBtn"
+        android:id="@+id/floatingPopup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="17dp"
+        android:backgroundTint="@color/main_color"
+        android:contentDescription="반려동물 추가 버튼"
+        android:tint="@color/white"
+
+        app:elevation="6dp"
+        app:fabSize="normal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottomTapBarOuter"/>
+        app:layout_constraintBottom_toTopOf="@id/bottomTapBarOuter"
+        app:srcCompat="@drawable/ic_add" >
+
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     <include layout="@layout/bottom_tap"
         android:id="@+id/bottomTapBarOuter"
@@ -312,5 +281,56 @@
         android:layout_height="70dp"
         app:layout_constraintBottom_toBottomOf="@id/container"/>
 
+    <LinearLayout
+        android:id="@+id/homePopupMenu"
+        android:layout_width="123dp"
+        android:layout_height="109dp"
+        android:layout_gravity="center|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rounded_menu"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/floatingPopup"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/menuAddPet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="onHomeMenuItemClick"
+            android:padding="16dp"
+            android:text="반려동물 등록" />
+
+        <TextView
+            android:id="@+id/menuAddWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="onHomeMenuItemClick"
+            android:padding="16dp"
+            android:text="체중 등록" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/homePopupMenuFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/homePopupMenuContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#88000000"
+            android:visibility="gone"/>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

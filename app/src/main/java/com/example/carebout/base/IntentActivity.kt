@@ -23,7 +23,7 @@ fun bottomTabClick(btmBinding: BottomTapBinding, nowActivity: Activity){
         nowActivity.overridePendingTransition(0,0)
         nowActivity.finish()
     }
-    btmBinding.goToCommunity.setOnClickListener {
+    btmBinding.goToDiary.setOnClickListener {
         val intent = Intent(nowActivity, CommunityActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         nowActivity.startActivity(intent)

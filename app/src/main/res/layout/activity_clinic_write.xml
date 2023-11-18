@@ -4,16 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.medical.Clinic.ClinicWriteActivity"
-    android:padding="20dp">
+    tools:context=".view.medical.Clinic.ClinicWriteActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar5"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar5">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,8 +50,7 @@
                         android:id="@+id/tag_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        >
+                        android:gravity="center_vertical">
 
                         <LinearLayout
 
@@ -118,11 +131,11 @@
                         android:id="@+id/editTextList"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/edittext_rounded_corner_rectangle"
                         android:ems="10"
                         android:hint="  + 직접 작성하기"
-                        android:inputType="text"
-                        android:layout_marginTop="10dp"/>
+                        android:inputType="text" />
 
                 </TableLayout>
 
@@ -191,19 +204,18 @@
 
     </FrameLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_height="wrap_content"
-        android:text="저장하기"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="match_parent"
-        android:background="@drawable/btn_green"
-        android:textColor="@color/_bg__medical_main_ek2_color"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        />
+<!--    <Button-->
+<!--        android:id="@+id/button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/btn_green"-->
+<!--        android:text="저장하기"-->
+<!--        android:textColor="@color/_bg__medical_main_ek2_color"-->
+<!--        android:textSize="16dp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
