@@ -1,5 +1,6 @@
 package com.example.carebout.view.medical.Medicine
 
+import PidApplication
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -18,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityMedicineWriteBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Medicine
 import com.example.carebout.view.medical.db.MedicineDao
@@ -30,6 +33,9 @@ class MedicineWriteActivity : AppCompatActivity() {
     lateinit var db: AppDatabase
     lateinit var medicineDao: MedicineDao
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -41,6 +47,13 @@ class MedicineWriteActivity : AppCompatActivity() {
 
         db = AppDatabase.getInstance(applicationContext)!!
         medicineDao = db.getMedicineDao()
+
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
 
         val editTextM: EditText = findViewById(R.id.editTextM)
         val editTextStartD: EditText = findViewById(R.id.editTextStartD)
@@ -111,7 +124,7 @@ class MedicineWriteActivity : AppCompatActivity() {
             return
         }
 
-        val Medi = Medicine(null, mediTitle, mediStartD, mediEndD, medicheckBox, mediEtc)
+        val Medi = Medicine(null, petId, mediTitle, mediStartD, mediEndD, medicheckBox, mediEtc)
 
         if (mediTitle.isBlank() || mediStartD.isBlank()) {
             Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()

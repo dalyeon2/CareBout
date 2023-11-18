@@ -1,5 +1,6 @@
 package com.example.carebout.view.medical.Medicine
 
+import PidApplication
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -18,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityMedicineUpdateBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Medicine
 import com.example.carebout.view.medical.db.MedicineDao
@@ -31,6 +34,9 @@ class MedicineUpdateActivity : AppCompatActivity() {
     lateinit var mediDao: MedicineDao
     var id: Int = 0
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,6 +48,13 @@ class MedicineUpdateActivity : AppCompatActivity() {
 
         db = AppDatabase.getInstance(applicationContext)!!
         mediDao = db.getMedicineDao()
+
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
 
         val mediText: TextView = findViewById(R.id.editTextM)
         val editTextStartD: TextView = findViewById(R.id.editTextStartD)
@@ -148,7 +161,7 @@ class MedicineUpdateActivity : AppCompatActivity() {
             return
         }
 
-        val Medi = Medicine(id, mediTitle, mediStart, mediEnd, medicheckBox, mediEtc)
+        val Medi = Medicine(id, petId, mediTitle, mediStart, mediEnd, medicheckBox, mediEtc)
 
         //데이터 수정
         //db?.getTodoDao()?.updateTodo(Todo)
@@ -180,7 +193,7 @@ class MedicineUpdateActivity : AppCompatActivity() {
         // 삭제 기능 구현
         // 해당 ID에 해당하는 할 일 데이터를 삭제하도록 todoDao를 사용합니다.
         Thread {
-            val mediToDelete = mediDao.getMediById(id)
+            val mediToDelete = mediDao.getMediById(id, petId)
             if (mediToDelete != null) {
                 mediDao.deleteMedi(mediToDelete)
                 runOnUiThread {

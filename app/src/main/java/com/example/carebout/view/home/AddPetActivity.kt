@@ -11,6 +11,7 @@ import com.example.carebout.databinding.ActivityAddPetBinding
 import com.example.carebout.view.home.db.PersonalInfo
 import com.example.carebout.view.home.db.PersonalInfoDB
 import com.example.carebout.view.home.db.Weight
+import com.example.carebout.view.medical.db.AppDatabase
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -18,7 +19,8 @@ import java.util.Locale
 class AddPetActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityAddPetBinding
-    private lateinit var db: PersonalInfoDB
+    private lateinit var db: AppDatabase
+    //private lateinit var db: PersonalInfoDB
     private lateinit var imageUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +28,8 @@ class AddPetActivity : AppCompatActivity() {
         binding = ActivityAddPetBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        db = PersonalInfoDB.getInstance(this)!!
+        db = AppDatabase.getInstance(this)!!
+            //PersonalInfoDB.getInstance(this)!!
 
         setClickListener()
     }

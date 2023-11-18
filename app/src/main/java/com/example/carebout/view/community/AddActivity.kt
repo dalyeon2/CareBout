@@ -29,23 +29,9 @@ import android.view.ViewTreeObserver
 class AddActivity: AppCompatActivity() {
     lateinit var binding: ActivityAddBinding
     private var selectedImageUri: Uri? = null
-    /*
-    private val requestLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val newData = result.data?.getStringExtra("result")
-            val selectedImageUri = result.data?.data
+    private var selectedDate: String? = null
+    private var selectDay: String? = null
 
-            // 데이터와 이미지 URI를 CommunityActivity로 전달
-            val intent = Intent()
-                .putExtra("result", newData)
-                .putExtra("imageUri", selectedImageUri)
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-        }
-    }
-    */
     private val requestGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -94,17 +80,12 @@ class AddActivity: AppCompatActivity() {
         // 현재 날짜 표기
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
-
-        val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault())
         val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
-
         val calendar = Calendar.getInstance()
         calendar.time = currentDate
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-
         val formattedDay = koreanDays[dayOfWeek - 1]
         val formattedDate = dateFormat.format(currentDate)
-
         binding.date.text = formattedDate
         binding.day.text = formattedDay
 
@@ -134,9 +115,9 @@ class AddActivity: AppCompatActivity() {
 
             val intent = Intent().apply {
                 putExtra("result", inputData)
-                selectedImageUri?.let {
-                    putParcelableArrayListExtra("imageUris", arrayListOf(it))
-                }
+                putExtra("imageUri", selectedImageUri)
+                putExtra("selectedDate", selectedDate)
+                putExtra("selectedDay", selectDay)
             }
             setResult(Activity.RESULT_OK, intent)
             finish()
@@ -159,10 +140,12 @@ class AddActivity: AppCompatActivity() {
                 val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
                 val formattedDate = dateFormat.format(calendar.time)
                 binding.date.text = formattedDate
+                selectedDate = formattedDate
 
                 val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
                 val formattedDay = koreanDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]
                 binding.day.text = formattedDay
+                selectDay = formattedDay
             },
             year, month, dayOfMonth
         )
@@ -199,6 +182,9 @@ class AddActivity: AppCompatActivity() {
     private fun openGallery() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
+
+        selectedImageUri = null
+
         requestGalleryLauncher.launch(galleryIntent)
     }
 }

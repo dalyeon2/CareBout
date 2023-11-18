@@ -26,12 +26,17 @@ import com.example.carebout.base.bottomTabClick
 import com.google.android.material.tabs.TabLayoutMediator
 import com.example.carebout.databinding.ActivityCommunityBinding
 import com.example.carebout.view.IntroActivity
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class CommunityActivity : AppCompatActivity() {
     lateinit var binding: ActivityCommunityBinding
     lateinit var adapter: MyAdapter
     var contents: MutableList<String>? = null
     var imageUris: MutableList<Uri>? = null
+    var selectedDates: MutableList<String?> = mutableListOf()
+    var selectedDay: MutableList<String?> = mutableListOf()
 
     private val requestLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -39,12 +44,16 @@ class CommunityActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val newData = result.data?.getStringExtra("result")
             val selectedImageUri = result.data?.getParcelableExtra<Uri>("imageUri")
+            val selectedDateResult = result.data?.getStringExtra("selectedDate")
+            val selectedDayResult = result.data?.getStringExtra("selectedDay")
 
             newData?.let {
                 contents?.add(0, it)
                 selectedImageUri?.let {
                     imageUris?.add(0, it)
                 }
+                selectedDates.add(0, selectedDateResult)
+                selectedDay.add(0, selectedDayResult)
                 adapter.notifyDataSetChanged()
 
                 // 데이터가 추가되면 RecyclerView를 보이도록 설정
@@ -54,6 +63,25 @@ class CommunityActivity : AppCompatActivity() {
                 }
                 // 리사이클러뷰 갱신
                 adapter.notifyItemInserted(0)
+            }
+        }
+    }
+
+    private val requestRemoveLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val positionToRemove = result.data?.getIntExtra("positionToRemove", -1)
+
+            positionToRemove?.let { position ->
+                if (position in 0 until (contents?.size ?: 0)) {
+                    contents?.removeAt(position)
+                    selectedDates.removeAt(position)
+                    selectedDay.removeAt(position)
+                    adapter.notifyItemRemoved(position)
+                } else {
+                    Log.e("MyApp", "Invalid positionToRemove: $position")
+                }
             }
         }
     }
@@ -96,7 +124,7 @@ class CommunityActivity : AppCompatActivity() {
             imageUris?.add(0, it)
         }
 
-        adapter = MyAdapter(contents, imageUris)
+        adapter = MyAdapter(contents, imageUris, selectedDates, selectedDay)
 
         // 리사이클러뷰 어댑터에 아이템 클릭 리스너 설정
         adapter.setOnItemClickListener(object : MyAdapter.OnItemClickListener {
@@ -104,8 +132,17 @@ class CommunityActivity : AppCompatActivity() {
                 // 아이템 클릭 시 다른 화면으로 전환
                 if (position >= 0 && position < contents!!.size) {
                     val intent = Intent(this@CommunityActivity, StoryActivity::class.java)
-                    intent.putExtra("data_key", contents!![position]) // 데이터 전달
-                    startActivity(intent)
+                    intent.putExtra("result", contents!![position])
+                    intent.putExtra("imageUri", imageUris?.getOrNull(position))
+
+                    val selectedDate = selectedDates.getOrNull(position) ?: getCurrentDate()
+                    intent.putExtra("selectedDate", selectedDate)
+
+                    val selectedDay = selectedDay.getOrNull(position) ?: getCurrentDayOfWeek()
+                    intent.putExtra("selectedDay", selectedDay)
+
+                    intent.putExtra("position", position)
+                    requestRemoveLauncher.launch(intent)
                 } else {
                     Log.e("MyApp", "Invalid position: $position")
                 }
@@ -172,4 +209,15 @@ class CommunityActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun getCurrentDate(): String {
+        val currentDate = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+        return dateFormat.format(currentDate)
+    }
+
+    private fun getCurrentDayOfWeek(): String {
+        val currentDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+        val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
+        return koreanDays.getOrNull(currentDayOfWeek - 1) ?: "표시되지 않음"
+    }
 }

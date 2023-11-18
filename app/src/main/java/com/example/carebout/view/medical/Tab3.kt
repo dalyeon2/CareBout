@@ -1,5 +1,6 @@
 package com.example.carebout.view.medical
 
+import PidApplication
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
@@ -37,6 +39,9 @@ class Tab3 : Fragment() {
     private lateinit var tag_mri: ToggleButton
     private lateinit var tag_checkup: ToggleButton
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,8 +59,24 @@ class Tab3 : Fragment() {
         adapter = ClinicAdapter2(requireContext())
         recyclerView.adapter = adapter
 
+
+        //val application = requireActivity().application as PidApplication
+        petId = MyPid.getPid() //application.petId
+
+        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+
+        viewModel.mpid.observe(viewLifecycleOwner, Observer { mpid ->
+            // mpid가 변경될 때마다 호출되는 콜백
+            petId = MyPid.getPid()
+            Log.i("petId_tab2", petId.toString())
+
+            //MyPid.setPid(petId)
+            //application.petId = mpid
+            getClinicList()
+        })
+
         // LiveData를 관찰하여 데이터 변경에 대응
-        clinicDao.getAllClinic().observe(viewLifecycleOwner, Observer { clinicList ->
+        clinicDao.getAllClinic(petId).observe(viewLifecycleOwner, Observer { clinicList ->
             // LiveData가 변경될 때마다 호출되는 콜백
             adapter.setClinicList(clinicList as ArrayList<Clinic>)
         })
@@ -133,7 +154,7 @@ class Tab3 : Fragment() {
     private fun getClinicList() {
 
         val clinicList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicAll() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicDateAsc(petId) as ArrayList<Clinic>
 
         if (clinicList.isNotEmpty()) {
             //데이터 적용
@@ -147,7 +168,7 @@ class Tab3 : Fragment() {
     private fun getClinicTagBloodList() {
 
         val clinicTagBList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicWithTagB() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicWithTagB(petId) as ArrayList<Clinic>
 
         if (clinicTagBList.isNotEmpty()) {
             //데이터 적용
@@ -161,7 +182,7 @@ class Tab3 : Fragment() {
     private fun getClinicTagXRayList() {
 
         val clinicTagXList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicWithTagX() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicWithTagX(petId) as ArrayList<Clinic>
 
         if (clinicTagXList.isNotEmpty()) {
             //데이터 적용
@@ -175,7 +196,7 @@ class Tab3 : Fragment() {
     private fun getClinicTagUltrasonicList() {
 
         val clinicTagUList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicWithTagU() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicWithTagU(petId) as ArrayList<Clinic>
 
         if (clinicTagUList.isNotEmpty()) {
             //데이터 적용
@@ -189,7 +210,7 @@ class Tab3 : Fragment() {
     private fun getClinicTagCTList() {
 
         val clinicTagCList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicWithTagC() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicWithTagC(petId) as ArrayList<Clinic>
 
         if (clinicTagCList.isNotEmpty()) {
             //데이터 적용
@@ -203,7 +224,7 @@ class Tab3 : Fragment() {
     private fun getClinicTagMRIList() {
 
         val clinicTagMList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicWithTagM() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicWithTagM(petId) as ArrayList<Clinic>
 
         if (clinicTagMList.isNotEmpty()) {
             //데이터 적용
@@ -217,7 +238,7 @@ class Tab3 : Fragment() {
     private fun getClinicTagCheckupList() {
 
         val clinicTagCheckupList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicWithTagCheckup() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicWithTagCheckup(petId) as ArrayList<Clinic>
 
         if (clinicTagCheckupList.isNotEmpty()) {
             //데이터 적용

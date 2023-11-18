@@ -22,6 +22,7 @@ import com.example.carebout.view.home.db.WeightDao
 import com.example.carebout.view.medical.Clinic.ClinicWriteActivity
 import com.example.carebout.view.medical.Inoc.InoculationWriteActivity
 import com.example.carebout.view.medical.Medicine.MedicineWriteActivity
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.Todo.TodoWriteActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.ClinicDao
@@ -47,7 +48,8 @@ class HomeActivity : AppCompatActivity() {
     private val MIN_SCALE = 0.7f // 뷰가 몇퍼센트로 줄어들 것인지
     private val MIN_ALPHA = 0.5f // 어두워지는 정도를 나타낸 듯 하다.
 
-    private lateinit var db: PersonalInfoDB
+    private lateinit var db: AppDatabase
+            //PersonalInfoDB
     private lateinit var weight: WeightDao
     private lateinit var clinicDao: ClinicDao
 
@@ -67,9 +69,12 @@ class HomeActivity : AppCompatActivity() {
         // 하단 탭바 클릭시 이동
         bottomTabClick(binding.bottomTapBarOuter, this)
 
-        db = PersonalInfoDB.getInstance(this)!!
+        //의료탭 데이터 베이스로 db 합쳐 수정됨
+        db = AppDatabase.getInstance(this)!!
+            //PersonalInfoDB.getInstance(this)!!
         weight = db.weightDao()
-        clinicDao = AppDatabase.getInstance(this)!!.getClinicDao()
+        clinicDao = db.getClinicDao()
+            //AppDatabase.getInstance(this)!!.getClinicDao()
 
         // DB에 아무것도 없을 때 바로 반려동물 등록 페이지로
         if(db.personalInfoDao().getAllInfo().size == 0) {
@@ -78,39 +83,41 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
-        val checkDataSet: MutableList<Pair<String, String>> = mutableListOf()
-        val dataSet2: MutableList<Pair<String, String>> = mutableListOf()
+//        val checkDataSet: MutableList<Pair<String, String>> = mutableListOf()
+//        val dataSet2: MutableList<Pair<String, String>> = mutableListOf()
 
-        for(c in clinicDao.getClinicAll()){
-            if(c.tag_blood == true)
-                checkDataSet.add(Pair("피검사", c.date!!))
-            if(c.tag_ct == true)
-                checkDataSet.add(Pair("CT", c.date!!))
-            if(c.tag_checkup == true)
-                checkDataSet.add(Pair("정기검진", c.date!!))
-            if(c.tag_mri == true)
-                checkDataSet.add(Pair("MRI", c.date!!))
-            if(c.tag_xray == true)
-                checkDataSet.add(Pair("X-Ray", c.date!!))
-            if(c.tag_ultrasonic == true)
-                checkDataSet.add(Pair("초음파", c.date!!))
-        }
+//        for(c in clinicDao.getClinicAll()){
+//            if(c.tag_blood == true)
+//                checkDataSet.add(Pair("피검사", c.date!!))
+//            if(c.tag_ct == true)
+//                checkDataSet.add(Pair("CT", c.date!!))
+//            if(c.tag_checkup == true)
+//                checkDataSet.add(Pair("정기검진", c.date!!))
+//            if(c.tag_mri == true)
+//                checkDataSet.add(Pair("MRI", c.date!!))
+//            if(c.tag_xray == true)
+//                checkDataSet.add(Pair("X-Ray", c.date!!))
+//            if(c.tag_ultrasonic == true)
+//                checkDataSet.add(Pair("초음파", c.date!!))
+//        }
+//
+//        for(c in clinicDao.getClinicAll()){
+//            if(c.tag_blood == true)
+//                dataSet2.add(Pair("피검사", c.date!!))
+//            if(c.tag_ct == true)
+//                dataSet2.add(Pair("CT", c.date!!))
+//            if(c.tag_checkup == true)
+//                dataSet2.add(Pair("접종", c.date!!))
+//        }
+//    }
 
-        for(c in clinicDao.getClinicAll()){
-            if(c.tag_blood == true)
-                dataSet2.add(Pair("피검사", c.date!!))
-            if(c.tag_ct == true)
-                dataSet2.add(Pair("CT", c.date!!))
-            if(c.tag_checkup == true)
-                dataSet2.add(Pair("접종", c.date!!))
-        }
 
-        checkDataSet.sortBy { it.second }
-        dataSet2.sortBy { it.second }
+//        checkDataSet.sortBy { it.second }
+//        dataSet2.sortBy { it.second }
 
-        val recyclerAdapter = RecyclerAdapter(checkDataSet)
-        binding.checkGraph.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        binding.checkGraph.adapter = recyclerAdapter
+//        val recyclerAdapter = RecyclerAdapter(checkDataSet)
+//        binding.checkGraph.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+//        binding.checkGraph.adapter = recyclerAdapter
 
         // 플로팅버튼 클릭시 반려동물 추가 액티비티로
         binding.floatingPopup.setOnClickListener {
@@ -139,6 +146,11 @@ class HomeActivity : AppCompatActivity() {
                 binding.sex.text = p[position].sex
                 binding.birth.text = p[position].birth
                 binding.breed.text = p[position].breed
+
+                updateClinic()
+
+                MyPid.setPid(nowPid)
+                Log.i("home_pid", MyPid.getPid().toString())
             }
         })
     }
@@ -181,7 +193,53 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    fun getProfileList(db: PersonalInfoDB): ArrayList<String> {
+    fun updateClinic(){
+
+        val checkDataSet: MutableList<Pair<String, String>> = mutableListOf()
+        val dataSet2: MutableList<Pair<String, String>> = mutableListOf()
+
+        Log.i("home_all_info_size", db.personalInfoDao().getAllInfo().size.toString())
+        Log.i("home_now_pid", nowPid.toString())
+
+        if(db.personalInfoDao().getAllInfo().size != 0){
+
+            Log.i("home_clinic", nowPid.toString())
+            for(c in clinicDao.getClinicAll(nowPid)){
+                if(c.tag_blood == true)
+                    checkDataSet.add(Pair("피검사", c.date!!))
+                if(c.tag_ct == true)
+                    checkDataSet.add(Pair("CT", c.date!!))
+                if(c.tag_checkup == true)
+                    checkDataSet.add(Pair("정기검진", c.date!!))
+                if(c.tag_mri == true)
+                    checkDataSet.add(Pair("MRI", c.date!!))
+                if(c.tag_xray == true)
+                    checkDataSet.add(Pair("X-Ray", c.date!!))
+                if(c.tag_ultrasonic == true)
+                    checkDataSet.add(Pair("초음파", c.date!!))
+            }
+
+            for(c in clinicDao.getClinicAll(nowPid)){
+                if(c.tag_blood == true)
+                    dataSet2.add(Pair("피검사", c.date!!))
+                if(c.tag_ct == true)
+                    dataSet2.add(Pair("CT", c.date!!))
+                if(c.tag_checkup == true)
+                    dataSet2.add(Pair("접종", c.date!!))
+            }
+        }
+
+        checkDataSet.sortBy { it.second }
+        dataSet2.sortBy { it.second }
+
+        val recyclerAdapter = RecyclerAdapter(checkDataSet)
+        binding.checkGraph.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        binding.checkGraph.adapter = recyclerAdapter
+    }
+
+    //PersonalInfoDB
+    //의료탭 데이터 베이스로 db 합쳐 수정됨
+    fun getProfileList(db: AppDatabase): ArrayList<String> {
         val profileList = arrayListOf<String>()
         
         for (p in db.personalInfoDao().getAllInfo()) {

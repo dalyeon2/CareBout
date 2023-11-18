@@ -7,6 +7,7 @@ import com.example.carebout.databinding.ActivityAddWeightBinding
 import com.example.carebout.view.home.db.PersonalInfoDB
 import com.example.carebout.view.home.db.Weight
 import com.example.carebout.view.home.db.WeightDao
+import com.example.carebout.view.medical.db.AppDatabase
 
 class AddWeightActivity : AppCompatActivity() {
 
@@ -18,7 +19,8 @@ class AddWeightActivity : AppCompatActivity() {
         binding = ActivityAddWeightBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        weight = PersonalInfoDB.getInstance(this)!!.weightDao()
+        weight = AppDatabase.getInstance(this)!!.weightDao()
+            //PersonalInfoDB.getInstance(this)!!.weightDao()
 
         binding.topBarOuter.activityTitle.text = "체중 기록"
 

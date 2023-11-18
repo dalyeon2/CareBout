@@ -1,5 +1,6 @@
 package com.example.carebout.view.medical.Inoc
 
+import PidApplication
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -17,6 +18,8 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityInoculationUpdateBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Inoculation
 import com.example.carebout.view.medical.db.InoculationDao
@@ -30,6 +33,9 @@ class InoculationUpdateActivity : AppCompatActivity() {
     lateinit var inocDao: InoculationDao
     var id: Int = 0
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInoculationUpdateBinding.inflate(layoutInflater)
@@ -40,6 +46,13 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
         db = AppDatabase.getInstance(applicationContext)!!
         inocDao = db.getInocDao()
+
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
 
         val editTextList: EditText = findViewById(R.id.editTextList)
         val editTextDate: EditText = findViewById(R.id.editTextDate)
@@ -210,7 +223,7 @@ class InoculationUpdateActivity : AppCompatActivity() {
             return
         }
 
-        val Inoc = Inoculation(id, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocTag, inocDate, inocDue, inocH, inocEtc)
+        val Inoc = Inoculation(id, petId, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocTag, inocDate, inocDue, inocH, inocEtc)
 
         if ((!tagDHPPL && !tagC && !tagKC && !tagCVRP && !tagFL && !tagFID && !tagR && !tagH) || inocDate.isBlank()) {
             Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
@@ -230,7 +243,7 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
     private fun deletInoc() {
         Thread {
-            val inocToDelete = inocDao.getInoculationById(id)
+            val inocToDelete = inocDao.getInoculationById(id, petId)
             if (inocToDelete != null) {
                 inocDao.deleteInoculation(inocToDelete)
                 runOnUiThread {

@@ -2,12 +2,26 @@ package com.example.carebout.view.medical.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.example.carebout.view.home.db.PersonalInfo
 
-@Entity(tableName = "table_clinic")
+@Entity(
+    tableName = "table_clinic",
+    foreignKeys = [
+        ForeignKey(
+            entity = PersonalInfo::class,
+            parentColumns = ["pid"],
+            childColumns = ["pid"]
+        )
+    ]
+)
 data class Clinic(
     @PrimaryKey(autoGenerate = true)
     var clinicId: Int?,
+
+    @ColumnInfo(name = "pid")
+    var pid: Int?, // PersonalInfo의 외래 키
 
     @ColumnInfo(name = "tag_blood")
     var tag_blood: Boolean?,

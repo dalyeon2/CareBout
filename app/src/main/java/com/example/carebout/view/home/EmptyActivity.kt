@@ -8,6 +8,7 @@ import android.os.Bundle
 import com.example.carebout.base.bottomTabClick
 import com.example.carebout.databinding.ActivityEmptyBinding
 import com.example.carebout.view.home.db.PersonalInfoDB
+import com.example.carebout.view.medical.db.AppDatabase
 
 class EmptyActivity : AppCompatActivity() {
 
@@ -16,14 +17,17 @@ class EmptyActivity : AppCompatActivity() {
     }
 
     lateinit var binding: ActivityEmptyBinding
-    lateinit var db: PersonalInfoDB
+    lateinit var db: AppDatabase
+            //PersonalInfoDB
     var addedPet = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEmptyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        db = PersonalInfoDB.getInstance(this)!!
+        //의료탭 데이터 베이스로 db 합쳐 수정됨
+        db = AppDatabase.getInstance(this)!!
+            //PersonalInfoDB.getInstance(this)!!
         emptyActivity = this
 
         // 현재 클릭 중인 탭 tint
