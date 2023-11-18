@@ -102,6 +102,7 @@ class CommunityActivity : AppCompatActivity() {
                     db.delete("TODO_TB", "_id=?", arrayOf(idToRemove.toString()))
                     db.close()
 
+                    imageUris?.removeAt(position)
                     contents?.removeAt(position)
                     selectedDates.removeAt(position)
                     selectedDay.removeAt(position)
@@ -242,10 +243,6 @@ class CommunityActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-        if (item.itemId == R.id.menu_main_setting) {
-            val intent = Intent(this, SettingActivity::class.java)
-            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }

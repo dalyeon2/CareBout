@@ -78,6 +78,8 @@ class MyAdapter(
         if (itemImageUri != null) {
             binding.itemImage.visibility = View.VISIBLE
 
+            Glide.with(holder.itemView.context).clear(binding.itemImage)
+
             // 이미지 로딩
             val requestOptions = RequestOptions()
                 .fitCenter() // 이미지를 중앙에 맞게 조절
@@ -98,6 +100,7 @@ class MyAdapter(
                 })
         } else {
             binding.itemImage.visibility = View.GONE
+            binding.itemImage.setImageBitmap(null)
         }
 
         // 날짜 데이터

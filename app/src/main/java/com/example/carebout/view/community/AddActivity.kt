@@ -5,7 +5,9 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,41 +27,42 @@ import java.util.Calendar
 import java.util.Locale
 import android.view.View
 import android.view.ViewTreeObserver
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 
 class AddActivity: AppCompatActivity() {
     lateinit var binding: ActivityAddBinding
     private var selectedImageUri: Uri? = null
     private var selectedDate: String? = null
     private var selectDay: String? = null
-
     private val requestGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 try {
-                    // inSampleSize 비율 계산, 지정
-                    val calRatio = calculateInSampleSize(
-                        result.data!!.data!!,
-                        resources.getDimensionPixelSize(R.dimen.imgSize),
-                        resources.getDimensionPixelSize(R.dimen.imgSize)
-                    )
-                    val option = BitmapFactory.Options()
-                    option.inSampleSize = calRatio
+                    result.data?.data?.let { fileUri ->
+                        Glide.with(this)
+                            .asBitmap()
+                            .load(fileUri)
+                            .apply(RequestOptions().fitCenter())
+                            .into(object : CustomTarget<Bitmap>() {
+                                override fun onResourceReady(
+                                    resource: Bitmap,
+                                    transition: Transition<in Bitmap>?
+                                ) {
+                                    binding.userImageView.setImageBitmap(resource)
+                                    binding.userImageView.visibility = View.VISIBLE
+                                    selectedImageUri = fileUri
+                                }
 
-                    // 이미지 로딩
-                    var inputStream = contentResolver.openInputStream(result.data!!.data!!)
-                    val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
-                    inputStream?.close()
-                    inputStream = null
+                                override fun onLoadCleared(placeholder: Drawable?) {
 
-                    bitmap?.let {
-                        binding.userImageView.setImageBitmap(bitmap)
-                        binding.userImageView.visibility = View.VISIBLE
-                        selectedImageUri = result.data!!.data
-                    } ?: let {
-                        selectedImageUri = null
+                                }
+                            })
                     }
                 } catch (e: Exception) {
-
+                    e.printStackTrace()
                 }
             }
         }
