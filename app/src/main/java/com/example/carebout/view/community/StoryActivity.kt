@@ -1,11 +1,15 @@
 package com.example.carebout.view.community
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.carebout.R
@@ -18,16 +22,30 @@ class StoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_add)
+
         binding = ActivityStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // 데이터 수신
-        val receivedData = intent.getStringExtra("data_key")
-        // receivedData를 사용하여 데이터 처리
+        val receivedData = intent.getStringExtra("result")
+        val receivedImageUri = intent.getParcelableExtra<Uri>("imageUri")
+        val receivedDate = intent.getStringExtra("selectedDate")
+        val receivedDay = intent.getStringExtra("selectedDay")
+
+        binding.date.text = receivedDate
+        binding.day.text = receivedDay
+
+        if (receivedImageUri != null) {
+            binding.userImage.setImageURI(receivedImageUri)
+            binding.userImage.visibility = View.VISIBLE
+        } else {
+            binding.userImage.visibility = View.GONE
+        }
+
+        binding.userStory.text = receivedData
+
     }
     // 옵션 메뉴
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -49,10 +67,29 @@ class StoryActivity : AppCompatActivity() {
         }
 
         R.id.menu_remove -> {
-
-            finish()
+            showConfirmationDialog()
             true
         }
+
         else -> true
+    }
+    private fun showConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("삭제")
+        builder.setMessage("일기를 삭제하시겠습니까?")
+
+        builder.setNegativeButton("아니요") { _, _ ->
+            // 사용자가 취소한 경우 아무 작업 없이 다이얼로그만 닫기
+        }
+
+        builder.setPositiveButton("예") { _, _ ->
+            val intent = Intent().apply {
+                putExtra("positionToRemove", intent.getIntExtra("position", -1))
+            }
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+
+        builder.show()
     }
 }
