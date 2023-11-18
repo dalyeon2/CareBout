@@ -63,9 +63,20 @@ class MyAdapter(
     //각 항목을 구성하기 위해 호출
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding = (holder as MyViewHolder).binding
+
         //뷰에 데이터 출력
         binding.itemData.text = contents!![position]
 
+        // 이미지를 추가했을 때만 보이도록 처리
+        val itemImageUri = imageUris?.getOrNull(position)
+        if (itemImageUri != null) {
+            binding.itemImage.visibility = View.VISIBLE
+            binding.itemImage.setImageURI(itemImageUri)
+        } else {
+            binding.itemImage.visibility = View.GONE
+        }
+
+        // 날짜 데이터
         val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
 
         val itemDate = dates[position]
@@ -79,7 +90,6 @@ class MyAdapter(
                 ""
             }
         } ?: run {
-            // If itemDate is null, use the current date as the default
             val currentDate = Calendar.getInstance().time
             val newDateFormat = SimpleDateFormat("MM'월' dd'일'", Locale.getDefault())
             newDateFormat.format(currentDate)
@@ -89,7 +99,6 @@ class MyAdapter(
         binding.day.text = when (itemDay) {
             "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" -> itemDay
             else -> {
-                // If itemDay is null, use the current date to determine the day of the week
                 val currentDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
                 val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
                 koreanDays.getOrNull(currentDayOfWeek - 1) ?: "표시되지 않음"
