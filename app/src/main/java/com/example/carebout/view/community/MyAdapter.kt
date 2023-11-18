@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +14,19 @@ import com.example.carebout.databinding.ItemRecyclerviewBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.text.ParseException
 
 //항목 뷰를 가지는 역할
 class MyViewHolder(val binding: ItemRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root)
 
 //항목 구성자: 어댑터
-class MyAdapter(val contents: MutableList<String>?, val imageUris: MutableList<Uri>?):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MyAdapter(
+    val contents: MutableList<String>?,
+    val imageUris: MutableList<Uri>?,
+    val dates: MutableList<String?>,
+    val day: MutableList<String?>
+    ):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     //항목 개수를 판단하기 위해 자동 호출
     override fun getItemCount(): Int {
         return contents?.size ?: 0
@@ -58,28 +66,35 @@ class MyAdapter(val contents: MutableList<String>?, val imageUris: MutableList<U
         //뷰에 데이터 출력
         binding.itemData.text = contents!![position]
 
-        /*
-        // 이미지 URI가 있다면 이미지를 로드하여 표시
-        imageUris?.get(position)?.let {
-            binding.itemImage.setImageURI(it)
+        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+
+        val itemDate = dates[position]
+        binding.date.text = itemDate?.let {
+            try {
+                val parsedDate = dateFormat.parse(it)
+                val newDateFormat = SimpleDateFormat("MM'월' dd'일'", Locale.getDefault())
+                newDateFormat.format(parsedDate)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+                ""
+            }
+        } ?: run {
+            // If itemDate is null, use the current date as the default
+            val currentDate = Calendar.getInstance().time
+            val newDateFormat = SimpleDateFormat("MM'월' dd'일'", Locale.getDefault())
+            newDateFormat.format(currentDate)
         }
-        */
 
-        // 현재 날짜와 요일 설정
-        val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("MM월 dd일", Locale.getDefault())
-        val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault()).apply {
-            val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
-            applyPattern("${koreanDays[Calendar.DAY_OF_WEEK - 1]}")
+        val itemDay = day[position]
+        binding.day.text = when (itemDay) {
+            "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" -> itemDay
+            else -> {
+                // If itemDay is null, use the current date to determine the day of the week
+                val currentDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+                val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
+                koreanDays.getOrNull(currentDayOfWeek - 1) ?: "표시되지 않음"
+            }
         }
-
-        val formattedDate = dateFormat.format(currentDate)
-        val formattedDay = dayFormat.format(currentDate)
-
-        binding.date.text = formattedDate
-        binding.day.text = formattedDay
-
-
     }
 }
 
