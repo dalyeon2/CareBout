@@ -80,7 +80,6 @@ class AddActivity: AppCompatActivity() {
         // 현재 날짜 표기
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
-        val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault())
         val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
         val calendar = Calendar.getInstance()
         calendar.time = currentDate
@@ -116,9 +115,7 @@ class AddActivity: AppCompatActivity() {
 
             val intent = Intent().apply {
                 putExtra("result", inputData)
-                selectedImageUri?.let {
-                    putParcelableArrayListExtra("imageUris", arrayListOf(it))
-                }
+                putExtra("imageUri", selectedImageUri)
                 putExtra("selectedDate", selectedDate)
                 putExtra("selectedDay", selectDay)
             }
@@ -185,6 +182,9 @@ class AddActivity: AppCompatActivity() {
     private fun openGallery() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
+
+        selectedImageUri = null
+
         requestGalleryLauncher.launch(galleryIntent)
     }
 }
