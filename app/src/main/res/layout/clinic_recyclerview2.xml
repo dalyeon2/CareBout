@@ -18,12 +18,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:text="&#8226;"
             android:textAlignment="center"
             android:textColor="@color/main_color"
             android:textSize="20sp"
-            app:layout_columnWeight="0.5" />
+            app:layout_columnWeight="0.5"
+            app:layout_gravity="center_vertical" />
 
         <TextView
             android:id="@+id/date_text"
