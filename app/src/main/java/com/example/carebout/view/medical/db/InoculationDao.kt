@@ -28,11 +28,29 @@ interface InoculationDao {
     fun getInocDateAsc(): List<Inoculation>
     //ASC - 오름
 
-    @Query("SELECT * FROM table_inoculation WHERE tag1 = 1")
-    fun getInocWithTag1(): List<Inoculation>
+    @Query("SELECT * FROM table_inoculation WHERE tag_DHPPL = 1")
+    fun getInocWithTagDHPPL(): List<Inoculation>
 
-    @Query("SELECT * FROM table_inoculation WHERE tag2 = 1")
-    fun getInocWithTag2(): List<Inoculation>
+    @Query("SELECT * FROM table_inoculation WHERE tag_Corona = 1")
+    fun getInocWithTagC(): List<Inoculation>
+
+    @Query("SELECT * FROM table_inoculation WHERE tag_KC = 1")
+    fun getInocWithTagKC(): List<Inoculation>
+
+    @Query("SELECT * FROM table_inoculation WHERE tag_CVRP = 1")
+    fun getInocWithTagCVRP(): List<Inoculation>
+
+    @Query("SELECT * FROM table_inoculation WHERE tag_FL = 1")
+    fun getInocWithTagFL(): List<Inoculation>
+
+    @Query("SELECT * FROM table_inoculation WHERE tag_FID = 1")
+    fun getInocWithTagFID(): List<Inoculation>
+
+    @Query("SELECT * FROM table_inoculation WHERE tag_Rabies = 1")
+    fun getInocWithTagR(): List<Inoculation>
+
+    @Query("SELECT * FROM table_inoculation WHERE tag_Heartworm = 1")
+    fun getInocWithTagH(): List<Inoculation>
 
     @Query("SELECT * FROM table_inoculation")
     fun getAllInoculation(): LiveData<List<Inoculation>>

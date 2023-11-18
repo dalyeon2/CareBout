@@ -18,46 +18,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 import com.example.carebout.view.medical.Inoc.InoculationAdapter
+import com.example.carebout.view.medical.Inoc.InoculationAdapter2
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Inoculation
 import com.example.carebout.view.medical.db.InoculationDao
 
 class Tab2 : Fragment() {
-   // private val st = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-/*
-    fun setInoculation(date: String, name: String, expectedDate: String) : View { // 약 정보 입력
-        st.setMargins(0,30,0,30)
-        var tablerow: TableRow = TableRow(this.context)     // 넣을 새 row 생성
-        var innoDate: TextView = TextView(this.context)     // 넣을 약 이름 text view
-        var innoName: TextView = TextView(this.context)   // 넣을 약 복용 기간 text view
-        var innoEDate: TextView = TextView(this.context)     // 넣을 약 비고 text view
-        tablerow.layoutParams = st                          // 레이아웃 적용
-
-        innoDate.text = date
-        innoName.text = name
-        innoEDate.text = expectedDate
-        innoDate.textSize = 16f
-        innoName.textSize = 16f
-        innoEDate.textSize = 16f
-        innoEDate.setGravity(Gravity.CENTER)
-        innoDate.setGravity(Gravity.CENTER)
-        innoName.setGravity(Gravity.CENTER)
-
-        tablerow.addView(innoDate)
-        tablerow.addView(innoName)
-        tablerow.addView(innoEDate)
-
-        return tablerow
-    }*/
-
     private lateinit var db: AppDatabase
     private lateinit var inocDao: InoculationDao
     private var inocList: ArrayList<Inoculation> = ArrayList<Inoculation>()
-    private lateinit var adapter: InoculationAdapter
+    private lateinit var adapter: InoculationAdapter2
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var tag1: ToggleButton
-    private lateinit var tag2: ToggleButton
+    private lateinit var tagDHPPL: ToggleButton
+    private lateinit var tagC: ToggleButton
+    private lateinit var tagKC: ToggleButton
+    private lateinit var tagCVRP: ToggleButton
+    private lateinit var tagFL: ToggleButton
+    private lateinit var tagFID: ToggleButton
+    private lateinit var tagR: ToggleButton
+    private lateinit var tagH: ToggleButton
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -75,7 +55,7 @@ class Tab2 : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         //UserAdapter 초기화
-        adapter = InoculationAdapter(requireContext())
+        adapter = InoculationAdapter2(requireContext())
         //Adapter 적용
         recyclerView.adapter = adapter
 
@@ -85,27 +65,83 @@ class Tab2 : Fragment() {
             adapter.setInoculationList(inocList as ArrayList<Inoculation>)
         })
 
-        tag1 = tab2View.findViewById(R.id.toggle1)
-        tag1.setOnCheckedChangeListener { _, isChecked ->
+        tagDHPPL = tab2View.findViewById(R.id.toggleButton1)
+        tagDHPPL.setOnCheckedChangeListener { _, isChecked ->
             getInocList()
             if (isChecked) {
-                if (tag2.isChecked) {
-                    tag2.isChecked = false
-                }
-                Log.i("check", "true")
-                getInocTag1List()
+                val otherTags = listOf(tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagDHPPLList()
             }
         }
 
-        tag2 = tab2View.findViewById(R.id.toggle2)
-        tag2.setOnCheckedChangeListener { _, isChecked ->
+        tagC = tab2View.findViewById(R.id.toggleButton2)
+        tagC.setOnCheckedChangeListener { _, isChecked ->
             getInocList()
             if (isChecked) {
-                if (tag1.isChecked) {
-                    tag1.isChecked = false
-                }
-                Log.i("check", "true")
-                getInocTag2List()
+                val otherTags = listOf(tagDHPPL, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagCList()
+            }
+        }
+
+        tagKC = tab2View.findViewById(R.id.toggleButton3)
+        tagKC.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagCVRP, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagKCList()
+            }
+        }
+
+        tagCVRP = tab2View.findViewById(R.id.toggleButton4)
+        tagCVRP.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagCVRPList()
+            }
+        }
+
+        tagFL = tab2View.findViewById(R.id.toggleButton5)
+        tagFL.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagFLList()
+            }
+        }
+
+        tagFID = tab2View.findViewById(R.id.toggleButton6)
+        tagFID.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagFIDList()
+            }
+        }
+
+        tagR = tab2View.findViewById(R.id.toggleButton7)
+        tagR.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagH)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagRList()
+            }
+        }
+
+        tagH = tab2View.findViewById(R.id.toggleButton8)
+        tagH.setOnCheckedChangeListener { _, isChecked ->
+            getInocList()
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR)
+                otherTags.forEach { it.isChecked = false }
+                getInocTagHList()
             }
         }
 
@@ -126,30 +162,115 @@ class Tab2 : Fragment() {
         }
     }
 
-    private fun getInocTag1List() {
+    private fun getInocTagDHPPLList() {
 
-        val inocTag1List: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTag1() as ArrayList<Inoculation>
+        val inocTagDHPPLList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagDHPPL() as ArrayList<Inoculation>
 
-        if (inocTag1List.isNotEmpty()) {
+        if (inocTagDHPPLList.isNotEmpty()) {
             //데이터 적용
-            adapter.setInoculationList(inocTag1List)
+            adapter.setInoculationList(inocTagDHPPLList)
 
         } else {
             adapter.setInoculationList(ArrayList())
         }
     }
 
-    private fun getInocTag2List() {
+    private fun getInocTagCList() {
 
-        val inocTag2List: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTag2() as ArrayList<Inoculation>
+        val inocTagCList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagC() as ArrayList<Inoculation>
 
-        if (inocTag2List.isNotEmpty()) {
+        if (inocTagCList.isNotEmpty()) {
             //데이터 적용
-            adapter.setInoculationList(inocTag2List)
+            adapter.setInoculationList(inocTagCList)
 
         } else {
             adapter.setInoculationList(ArrayList())
         }
+    }
+
+    private fun getInocTagKCList() {
+
+        val inocTagKCList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagKC() as ArrayList<Inoculation>
+
+        if (inocTagKCList.isNotEmpty()) {
+            //데이터 적용
+            adapter.setInoculationList(inocTagKCList)
+
+        } else {
+            adapter.setInoculationList(ArrayList())
+        }
+    }
+
+    private fun getInocTagCVRPList() {
+
+        val inocTagCVRPList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagCVRP() as ArrayList<Inoculation>
+
+        if (inocTagCVRPList.isNotEmpty()) {
+            //데이터 적용
+            adapter.setInoculationList(inocTagCVRPList)
+
+        } else {
+            adapter.setInoculationList(ArrayList())
+        }
+    }
+
+    private fun getInocTagFLList() {
+
+        val inocTagFLList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagFL() as ArrayList<Inoculation>
+
+        if (inocTagFLList.isNotEmpty()) {
+            //데이터 적용
+            adapter.setInoculationList(inocTagFLList)
+
+        } else {
+            adapter.setInoculationList(ArrayList())
+        }
+    }
+
+    private fun getInocTagFIDList() {
+
+        val inocTagFIDList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagFID() as ArrayList<Inoculation>
+
+        if (inocTagFIDList.isNotEmpty()) {
+            //데이터 적용
+            adapter.setInoculationList(inocTagFIDList)
+
+        } else {
+            adapter.setInoculationList(ArrayList())
+        }
+    }
+
+    private fun getInocTagRList() {
+
+        val inocTagRList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagR() as ArrayList<Inoculation>
+
+        if (inocTagRList.isNotEmpty()) {
+            //데이터 적용
+            adapter.setInoculationList(inocTagRList)
+
+        } else {
+            adapter.setInoculationList(ArrayList())
+        }
+    }
+
+    private fun getInocTagHList() {
+
+        val inocTagHList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagH() as ArrayList<Inoculation>
+
+        if (inocTagHList.isNotEmpty()) {
+            //데이터 적용
+            adapter.setInoculationList(inocTagHList)
+
+        } else {
+            adapter.setInoculationList(ArrayList())
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 다른 화면에서 돌아올 때 토글 버튼을 false로 설정
+        val Tags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH)
+        Tags.forEach { it.isChecked = false }
     }
 
 }

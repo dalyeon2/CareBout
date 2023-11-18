@@ -115,6 +115,7 @@
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
         </TableRow>
 
     </TableLayout>

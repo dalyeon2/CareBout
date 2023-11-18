@@ -1,9 +1,14 @@
 package com.example.carebout.view.home
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +16,13 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.carebout.R
 import com.example.carebout.base.bottomTabClick
 import com.example.carebout.databinding.ActivityHomeBinding
+import com.example.carebout.view.home.db.PersonalInfoDB
+import com.example.carebout.view.home.db.PersonalInfoDao
+import com.example.carebout.view.home.db.WeightDao
+import com.example.carebout.view.medical.Clinic.ClinicWriteActivity
+import com.example.carebout.view.medical.Inoc.InoculationWriteActivity
+import com.example.carebout.view.medical.Medicine.MedicineWriteActivity
+import com.example.carebout.view.medical.Todo.TodoWriteActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.ClinicDao
 import com.github.mikephil.charting.components.Legend
@@ -20,104 +32,118 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.Date
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.jetbrains.annotations.NotNull
 
 class HomeActivity : AppCompatActivity() {
 
+    companion object {
+        var homeActivity: HomeActivity? = null
+    }
+
     private lateinit var binding: ActivityHomeBinding
 
+    private var isFoatingPopupOpen = false
     private val MIN_SCALE = 0.7f // 뷰가 몇퍼센트로 줄어들 것인지
     private val MIN_ALPHA = 0.5f // 어두워지는 정도를 나타낸 듯 하다.
 
+    private lateinit var db: PersonalInfoDB
+    private lateinit var weight: WeightDao
     private lateinit var clinicDao: ClinicDao
+
+    private var nowPid: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.helloName.text = "반가워, 쿵이야"
-        setWeightGraph()
+        homeActivity = this
 
+        // 현재 클릭 중인 탭 tint
+        binding.bottomTapBarOuter.homeImage.imageTintList = ColorStateList.valueOf(Color.parseColor("#6EC677"))
+        binding.bottomTapBarOuter.homeText.setTextColor(Color.parseColor("#6EC677"))
 
+        // 하단 탭바 클릭시 이동
+        bottomTabClick(binding.bottomTapBarOuter, this)
 
+        db = PersonalInfoDB.getInstance(this)!!
+        weight = db.weightDao()
         clinicDao = AppDatabase.getInstance(this)!!.getClinicDao()
 
-        val dataSet: MutableList<Pair<String, String>> = mutableListOf()
+        // DB에 아무것도 없을 때 바로 반려동물 등록 페이지로
+        if(db.personalInfoDao().getAllInfo().size == 0) {
+            val intent = Intent(this, EmptyActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        val checkDataSet: MutableList<Pair<String, String>> = mutableListOf()
+        val dataSet2: MutableList<Pair<String, String>> = mutableListOf()
 
         for(c in clinicDao.getClinicAll()){
             if(c.tag_blood == true)
-                dataSet.add(Pair("피검사", c.date!!))
+                checkDataSet.add(Pair("피검사", c.date!!))
             if(c.tag_ct == true)
-                dataSet.add(Pair("CT", c.date!!))
+                checkDataSet.add(Pair("CT", c.date!!))
             if(c.tag_checkup == true)
-                dataSet.add(Pair("접종", c.date!!))
+                checkDataSet.add(Pair("정기검진", c.date!!))
             if(c.tag_mri == true)
-                dataSet.add(Pair("MRI", c.date!!))
+                checkDataSet.add(Pair("MRI", c.date!!))
             if(c.tag_xray == true)
-                dataSet.add(Pair("X-Ray", c.date!!))
+                checkDataSet.add(Pair("X-Ray", c.date!!))
             if(c.tag_ultrasonic == true)
-                dataSet.add(Pair("초음파", c.date!!))
+                checkDataSet.add(Pair("초음파", c.date!!))
         }
 
-        dataSet.sortBy { it.second }
+        for(c in clinicDao.getClinicAll()){
+            if(c.tag_blood == true)
+                dataSet2.add(Pair("피검사", c.date!!))
+            if(c.tag_ct == true)
+                dataSet2.add(Pair("CT", c.date!!))
+            if(c.tag_checkup == true)
+                dataSet2.add(Pair("접종", c.date!!))
+        }
 
-//        val dataSet: MutableList<Pair<String, String>> =
-//            mutableListOf(Pair("X-ray", "01-04"), Pair("피검사", "01-05"), Pair("초음파", "01-06"),
-//                Pair("피검사", "02-10"), Pair("X-ray", "03-10"), Pair("CT", "03-12"), Pair("MRI", "03-14"),
-//                Pair("피검사", "04-05"), Pair("초음파", "04-10"), Pair("X-ray", "04-12"), Pair("피검사", "05-12"),
-//                Pair("초음파", "05-14"))
+        checkDataSet.sortBy { it.second }
+        dataSet2.sortBy { it.second }
 
-        val recyclerAdapter = RecyclerAdapter(dataSet)
+        val recyclerAdapter = RecyclerAdapter(checkDataSet)
         binding.checkGraph.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         binding.checkGraph.adapter = recyclerAdapter
 
-        bottomTabClick(binding.bottomTapBarOuter, this)
+        // 플로팅버튼 클릭시 반려동물 추가 액티비티로
+        binding.floatingPopup.setOnClickListener {
+            toggleFloatingPopup()
+        }
 
-        // 프로필 클릭시 반려동물 추가 액티비티로 (임시)
-//        binding.profileImage.setOnClickListener{
-//            val intent = Intent(this, AddPetActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding.homePopupMenuContainer.setOnClickListener {
+            toggleFloatingPopup()
+        }
 
-        /* 여백, 너비에 대한 정의 */
-//        val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.viewPagerMargin) // dimen 파일 안에 크기를 정의해두었다
-//        val pagerWidth = resources.getDimensionPixelOffset(R.dimen.viewPagerWidth) // dimen 파일이 없으면 생성해야함
-//        val screenWidth = resources.displayMetrics.widthPixels // 스마트폰의 너비 길이를 가져옴
-//        val offsetPx = screenWidth - pageMarginPx - pagerWidth
+        val profile = binding.profileViewPager
 
-//        binding.profileViewPager.setPageTransformer { page, position ->
-//            page.translationX = position * (-offsetPx) }
+        profile.offscreenPageLimit = 1 // 앞뒤로 1개씩 미리 로드해놓기
+        profile.adapter = MyViewPagerAdapter(this, getProfileList(db)) // 어댑터 연결 (이미지 리스트도 보냄)
+        profile.orientation = ViewPager2.ORIENTATION_HORIZONTAL  // 가로로 페이지 증가
+        profile.setPageTransformer(ZoomOutPageTransformer())   // 다음과 같은 애니메이션 효과 적용
+        binding.profileIndicator.setViewPager2(binding.profileViewPager)    // 인디케이터와 뷰페이저 연결
 
-        binding.profileViewPager.offscreenPageLimit = 1 // 앞뒤로 1개씩 미리 로드해놓기
-
-        binding.profileViewPager.adapter = MyViewPagerAdapter(getProfileList())
-        binding.profileViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        binding.profileViewPager.setPageTransformer(ZoomOutPageTransformer())
-
-        binding.profileIndicator.setViewPager2(binding.profileViewPager)
-
-        binding.profileViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                // Called when the scroll state changes (starting, stopping, or changing position)
-            }
-
+        // 각 페이지마다 선택되었을 때 보여줘야 할 데이터 설정
+        profile.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                // Called when a new page has been selected
-
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-                // Called when the page is scrolled
+                val p = db.personalInfoDao().getAllInfo()
+                nowPid = p[position].pid
+                setWeightGraph(nowPid)
+                binding.helloName.text = "반가워, " + p[position].name + "!"
+                binding.sex.text = p[position].sex
+                binding.birth.text = p[position].birth
+                binding.breed.text = p[position].breed
             }
         })
-
-
     }
 
-    inner class ZoomOutPageTransformer : ViewPager2.PageTransformer {
+    inner class ZoomOutPageTransformer() : ViewPager2.PageTransformer {
         override fun transformPage(view: View, position: Float) {
             view.apply {
                 val pageWidth = width
@@ -155,12 +181,17 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun getProfileList(): ArrayList<Int> {
-        return arrayListOf<Int>(R.drawable.koong, R.drawable.moong, R.drawable.sunset,
-            R.drawable.stray1, R.drawable.stray2)
+    fun getProfileList(db: PersonalInfoDB): ArrayList<String> {
+        val profileList = arrayListOf<String>()
+        
+        for (p in db.personalInfoDao().getAllInfo()) {
+            p.image?.let{ profileList.add(it) }
+        }
+
+        return profileList
     }
 
-    private fun setWeightGraph() {
+    fun setWeightGraph(pid: Int) {
 
         val xAxis: XAxis = binding.weightGraph.xAxis   //x축 가져오기
 
@@ -198,25 +229,14 @@ class HomeActivity : AppCompatActivity() {
         val lineData = LineData()
         binding.weightGraph.data = lineData
 
-        addEntry(3f)
-        addEntry(3.5f)
-        addEntry(4f)
-        addEntry(4.4f)
-        addEntry(5f)
-        addEntry(5.2f)
-        addEntry(5.4f)
-        addEntry(5.6f)
-        addEntry(6f)
-        addEntry(6.2f)
-        addEntry(5.9f)
-        addEntry(5.7f)
-        addEntry(5.3f)
-        addEntry(5.1f)
+        for(wList in weight.getWeightById(pid)) {
+            addEntry(wList.weight)
+        }
 
 
     }
 
-    private fun addEntry(a:Float) {
+    private fun addEntry(weight: Float) {
         val data = binding.weightGraph.data
         // 라인 차트
         data?.let { // 데이터가 null이 아닐 때 실행
@@ -227,7 +247,7 @@ class HomeActivity : AppCompatActivity() {
                 data.addDataSet(set)
             }
 
-            data.addEntry(Entry(set!!.entryCount.toFloat(), a), 0) // 데이터 엔트리 추가 Entry(x값, y값)
+            data.addEntry(Entry(set!!.entryCount.toFloat(), weight), 0) // 데이터 엔트리 추가 Entry(x값, y값)
             data.notifyDataChanged() //
             binding.weightGraph.apply {
                 notifyDataSetChanged() //
@@ -255,5 +275,58 @@ class HomeActivity : AppCompatActivity() {
         setDrawValues(true) // 원 위에 값 써줄까? ok
     }
 
+    private fun toggleFloatingPopup() {
+        val rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
+        val rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
+        val fab: FloatingActionButton = binding.floatingPopup
 
+        if (isFoatingPopupOpen) {
+            fab.startAnimation(rotateBackward)
+        } else {
+            fab.startAnimation(rotateForward)
+        }
+
+        isFoatingPopupOpen = !isFoatingPopupOpen
+
+        toggleHomePopupMenu()
+    }
+
+    private fun toggleHomePopupMenu() {
+        val popupMenuContainer: FrameLayout = binding.homePopupMenuContainer
+        val popupMenu: LinearLayout = binding.homePopupMenu
+
+        if (isFoatingPopupOpen) {
+            val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+            popupMenu.startAnimation(fadeIn)
+            popupMenu.visibility = View.VISIBLE
+
+            val fadeInBackground = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+            popupMenuContainer.startAnimation(fadeInBackground)
+            popupMenuContainer.visibility = View.VISIBLE
+        } else {
+            val fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+            popupMenu.startAnimation(fadeOut)
+            popupMenu.visibility = View.GONE
+
+            val fadeOutBackground = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+            popupMenuContainer.startAnimation(fadeOutBackground)
+            popupMenuContainer.visibility = View.GONE
+        }
+    }
+
+    fun onHomeMenuItemClick(view: View) {
+        when (view) {
+            binding.menuAddPet -> {
+                val intent = Intent(this, AddPetActivity::class.java)
+                toggleFloatingPopup() // 메뉴 팝업 창을 닫습니다.
+                startActivity(intent)
+            }
+            binding.menuAddWeight -> {
+                val intent = Intent(this, AddWeightActivity::class.java)
+                toggleFloatingPopup() // 메뉴 팝업 창을 닫습니다.
+                intent.putExtra("pid", nowPid)
+                startActivity(intent)
+            }
+        }
+    }
 }
