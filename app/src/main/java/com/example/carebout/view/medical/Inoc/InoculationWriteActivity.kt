@@ -1,5 +1,6 @@
 package com.example.carebout.view.medical.Inoc
 
+import PidApplication
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -17,6 +18,8 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityInoculationWriteBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Inoculation
 import com.example.carebout.view.medical.db.InoculationDao
@@ -29,6 +32,9 @@ class InoculationWriteActivity : AppCompatActivity() {
     lateinit var db: AppDatabase
     lateinit var inocDao: InoculationDao
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInoculationWriteBinding.inflate(layoutInflater)
@@ -39,6 +45,13 @@ class InoculationWriteActivity : AppCompatActivity() {
 
         db = AppDatabase.getInstance(applicationContext)!!
         inocDao = db.getInocDao()
+
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
 
         val editTextList: EditText = findViewById(R.id.editTextList)
         val editTextDate: EditText = findViewById(R.id.editTextDate)
@@ -184,7 +197,7 @@ class InoculationWriteActivity : AppCompatActivity() {
             return
         }
 
-        val Inoc = Inoculation(null, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocTag, inocDate, inocDue, inocH, inocEtc)
+        val Inoc = Inoculation(null, petId, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocTag, inocDate, inocDue, inocH, inocEtc)
 
         if ((!tagDHPPL && !tagC && !tagKC && !tagCVRP && !tagFL && !tagFID && !tagR && !tagH) || inocDate.isBlank()) {
             Toast.makeText(this, "필수 항목을 채워주세요", Toast.LENGTH_SHORT).show()

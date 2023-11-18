@@ -1,5 +1,6 @@
 package com.example.carebout.view.medical.Clinic
 
+import PidApplication
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -16,6 +17,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityClinicUpdateBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Clinic
 import com.example.carebout.view.medical.db.ClinicDao
@@ -29,6 +32,10 @@ class ClinicUpdateActivity : AppCompatActivity() {
     lateinit var clinicDao: ClinicDao
     var id: Int = 0
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityClinicUpdateBinding.inflate(layoutInflater)
@@ -39,6 +46,13 @@ class ClinicUpdateActivity : AppCompatActivity() {
 
         db = AppDatabase.getInstance(applicationContext)!!
         clinicDao = db.getClinicDao()
+
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
 
         val editTextList: EditText = findViewById(R.id.editTextList)
         val editTextDate: EditText = findViewById(R.id.editTextDate)
@@ -134,7 +148,7 @@ class ClinicUpdateActivity : AppCompatActivity() {
             return
         }
 
-        val Clinic = Clinic(id, tag1, tag2, tag3, tag4, tag5, tag6, clinicTag, clinicDate, clinicH, clinicEtc)
+        val Clinic = Clinic(id, petId, tag1, tag2, tag3, tag4, tag5, tag6, clinicTag, clinicDate, clinicH, clinicEtc)
 
         if ((!tag1 && !tag2 && !tag3 && !tag4 && !tag5 && !tag6) || clinicDate.isBlank()) {
             Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
@@ -155,7 +169,7 @@ class ClinicUpdateActivity : AppCompatActivity() {
 
     private fun deletClinic() {
         Thread {
-            val clinicToDelete = clinicDao.getClinicById(id)
+            val clinicToDelete = clinicDao.getClinicById(id, petId)
             if (clinicToDelete != null) {
                 clinicDao.deleteClinic(clinicToDelete)
                 runOnUiThread {

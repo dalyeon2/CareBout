@@ -1,5 +1,6 @@
 package com.example.carebout.view.medical.Clinic
 
+import PidApplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityClinicReadBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Clinic
 import com.example.carebout.view.medical.db.ClinicDao
@@ -23,6 +26,9 @@ class ClinicReadActivity : AppCompatActivity() {
     private lateinit var clinicDao: ClinicDao
     private var clinicList: ArrayList<Clinic> = ArrayList<Clinic>()
     private lateinit var adapter: ClinicAdapter
+
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
 
     override fun onResume() {
         super.onResume()
@@ -42,8 +48,14 @@ class ClinicReadActivity : AppCompatActivity() {
         db = AppDatabase.getInstance(this)!!
         clinicDao = db.getClinicDao()
 
-        val insertBtn: FloatingActionButton = findViewById(R.id.insert_btn)
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
 
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
+
+        val insertBtn: FloatingActionButton = findViewById(R.id.insert_btn)
 
         insertBtn.setOnClickListener {
             val intent = Intent(this, ClinicWriteActivity::class.java)
@@ -153,24 +165,25 @@ class ClinicReadActivity : AppCompatActivity() {
     }
 
     //리스트 조회
+    //리스트 조회
     private fun getClinicList() {
 
         val clinicList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicAll() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicDateAsc(petId) as ArrayList<Clinic>
 
         if (clinicList.isNotEmpty()) {
             //데이터 적용
             adapter.setClinicList(clinicList)
 
         } else {
-
+            adapter.setClinicList(ArrayList())
         }
     }
 
     private fun getClinicTagBloodList() {
 
         val clinicTagBList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicWithTagB() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicWithTagB(petId) as ArrayList<Clinic>
 
         if (clinicTagBList.isNotEmpty()) {
             //데이터 적용
@@ -184,7 +197,7 @@ class ClinicReadActivity : AppCompatActivity() {
     private fun getClinicTagXRayList() {
 
         val clinicTagXList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicWithTagX() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicWithTagX(petId) as ArrayList<Clinic>
 
         if (clinicTagXList.isNotEmpty()) {
             //데이터 적용
@@ -198,7 +211,7 @@ class ClinicReadActivity : AppCompatActivity() {
     private fun getClinicTagUltrasonicList() {
 
         val clinicTagUList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicWithTagU() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicWithTagU(petId) as ArrayList<Clinic>
 
         if (clinicTagUList.isNotEmpty()) {
             //데이터 적용
@@ -212,7 +225,7 @@ class ClinicReadActivity : AppCompatActivity() {
     private fun getClinicTagCTList() {
 
         val clinicTagCList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicWithTagC() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicWithTagC(petId) as ArrayList<Clinic>
 
         if (clinicTagCList.isNotEmpty()) {
             //데이터 적용
@@ -226,7 +239,7 @@ class ClinicReadActivity : AppCompatActivity() {
     private fun getClinicTagMRIList() {
 
         val clinicTagMList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicWithTagM() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicWithTagM(petId) as ArrayList<Clinic>
 
         if (clinicTagMList.isNotEmpty()) {
             //데이터 적용
@@ -240,7 +253,7 @@ class ClinicReadActivity : AppCompatActivity() {
     private fun getClinicTagCheckupList() {
 
         val clinicTagCheckupList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicWithTagCheckup() as ArrayList<Clinic>
+            db?.getClinicDao()!!.getClinicWithTagCheckup(petId) as ArrayList<Clinic>
 
         if (clinicTagCheckupList.isNotEmpty()) {
             //데이터 적용

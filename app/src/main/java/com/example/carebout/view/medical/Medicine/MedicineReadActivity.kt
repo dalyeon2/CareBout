@@ -1,5 +1,6 @@
 package com.example.carebout.view.medical.Medicine
 
+import PidApplication
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityMedicineReadBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Medicine
 import com.example.carebout.view.medical.db.MedicineDao
@@ -22,6 +25,9 @@ class MedicineReadActivity : AppCompatActivity() {
     private lateinit var medicineDao: MedicineDao
     private var mediList: ArrayList<Medicine> = ArrayList<Medicine>()
     private lateinit var adapter: MedicineAdapter
+
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
 
     override fun onResume() {
         super.onResume()
@@ -37,6 +43,13 @@ class MedicineReadActivity : AppCompatActivity() {
         //db 인스턴스를 가져오고 db작업을 할 수 있는 dao를 가져옵니다.
         db = AppDatabase.getInstance(this)!!
         medicineDao = db.getMedicineDao()
+
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
 
         val insertBtn: FloatingActionButton = findViewById(R.id.insert_btn)
         insertBtn.setOnClickListener {
@@ -100,23 +113,19 @@ class MedicineReadActivity : AppCompatActivity() {
         //리스트 조회
         private fun getMedicineList() {
 
-            val mediList: ArrayList<Medicine> = db?.getMedicineDao()!!.getMediAll() as ArrayList<Medicine>
+            val mediList: ArrayList<Medicine> = db?.getMedicineDao()!!.getMediDateAsc(petId) as ArrayList<Medicine>
 
             if (mediList.isNotEmpty()) {
                 //데이터 적용
                 adapter.setMediList(mediList)
-
-                //val position: Int = todoList.size -1
-
-                //Toast.makeText(this, "저장 정보 :" + todoList.get(position).title, Toast.LENGTH_SHORT).show()
             } else {
-
+                adapter.setMediList(ArrayList())
             }
         }
 
         private fun getMediCheckList() {
 
-            val mediCheckList: ArrayList<Medicine> = db?.getMedicineDao()!!.getMediWithCheck() as ArrayList<Medicine>
+            val mediCheckList: ArrayList<Medicine> = db?.getMedicineDao()!!.getMediWithCheck(petId) as ArrayList<Medicine>
 
             if (mediCheckList.isNotEmpty()) {
                 //데이터 적용
