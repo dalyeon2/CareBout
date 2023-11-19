@@ -1,17 +1,12 @@
 package com.example.carebout.view.community
 
-import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import com.bumptech.glide.request.transition.Transition
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -131,46 +126,5 @@ class MyAdapter(
                 koreanDays.getOrNull(currentDayOfWeek - 1) ?: "표시되지 않음"
             }
         }
-    }
-}
-
-//리사이클러 뷰 꾸미기
-class MyDecoration(val context: Context) : RecyclerView.ItemDecoration() {
-    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        super.onDraw(c, parent, state)
-    }
-
-    //모든 항목이 출력된 후 호출
-    override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        super.onDrawOver(c, parent, state)
-        /*
-        //뷰 크기 계산
-        val width = parent.width
-        val height = parent.height
-        //이미지 크기 계산
-        val img: Drawable? = ResourcesCompat.getDrawable(context.resources, R.drawable.kbo, null)
-        val drWidth = img?.intrinsicWidth
-        val drHeight = img?.intrinsicHeight
-        //이미지가 그려질 위치 계산
-        val left = width / 2 - drWidth?.div(2) as Int
-        val top = height / 2 - drHeight?.div(2) as Int
-        //이미지 출력
-        c.drawBitmap(
-            BitmapFactory.decodeResource(context.resources, R.drawable.kbo),
-            left.toFloat(), top.toFloat(), null
-        )
-         */
-    }
-
-    //각 항목을 꾸미기 위해 호출
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        super.getItemOffsets(outRect, view, parent, state)
-
-        ViewCompat.setElevation(view, 20.0f)
     }
 }
