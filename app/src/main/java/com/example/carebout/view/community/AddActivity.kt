@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.database.DatabaseUtils
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
@@ -12,6 +13,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
@@ -27,10 +30,13 @@ import java.util.Calendar
 import java.util.Locale
 import android.view.View
 import android.view.ViewTreeObserver
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import java.util.Date
+import android.widget.TextView
 
 class AddActivity: AppCompatActivity() {
     lateinit var binding: ActivityAddBinding
@@ -111,28 +117,51 @@ class AddActivity: AppCompatActivity() {
 
         R.id.menu_add_save -> {
             val inputData = binding.addEditView.text.toString()
-            val db = DBHelper (this).writableDatabase
-            db.execSQL(
-                "insert into TODO_TB (content, date, day, image_uri) values (?, ?, ?, ?)",
-                arrayOf<String>(
-                    inputData,
-                    selectedDate ?: "",
-                    selectDay ?: "",
-                    selectedImageUri?.toString() ?: ""
-                )
-            )
-            db.close()
+            val db = DBHelper(this).writableDatabase
 
-            val intent = Intent().apply {
-                putExtra("result", inputData)
-                putExtra("imageUri", selectedImageUri)
-                putExtra("selectedDate", selectedDate)
-                putExtra("selectedDay", selectDay)
+            if (selectedDate == null) {
+                val currentDate = Calendar.getInstance().time
+                val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+                selectedDate = dateFormat.format(currentDate)
+                selectDay = getDayOfWeek(currentDate)
             }
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+
+            val existingEntryCount = DatabaseUtils.queryNumEntries(
+                db,
+                "TODO_TB",
+                "date = ?",
+                arrayOf(selectedDate)
+            )
+
+            if (existingEntryCount > 0) {
+                showCustomToast("이미 같은 날짜의 일기가 있습니다.")
+            } else {
+                db.execSQL(
+                    "insert into TODO_TB (content, date, day, image_uri) values (?, ?, ?, ?)",
+                    arrayOf(
+                        inputData,
+                        selectedDate,
+                        selectDay ?: "",
+                        selectedImageUri?.toString() ?: ""
+                    )
+                )
+
+                val intent = Intent().apply {
+                    putExtra("result", inputData)
+                    putExtra("imageUri", selectedImageUri)
+                    putExtra("selectedDate", selectedDate)
+                    putExtra("selectedDay", selectDay)
+                }
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+
+                showCustomToast("일기가 성공적으로 저장되었습니다.")
+            }
+
+            db.close()
             true
         }
+
         else -> true
     }
 
@@ -189,10 +218,36 @@ class AddActivity: AppCompatActivity() {
         return inSampleSize
     }
 
+    private fun showCustomToast(message: String) {
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout))
+
+        val text = layout.findViewById<TextView>(R.id.custom_toast_text)
+        text.text = message
+
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_LONG
+        toast.view = layout
+
+        val toastDurationInMilliSeconds: Long = 3000
+        toast.duration = if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+
+        toast.setGravity(Gravity.BOTTOM, 0, 250)
+
+        toast.show()
+    }
+
     private fun openGallery() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
 
         requestGalleryLauncher.launch(galleryIntent)
+    }
+
+    private fun getDayOfWeek(date: Date): String {
+        val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
+        val calendar = Calendar.getInstance().apply { time = date }
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        return koreanDays[dayOfWeek - 1]
     }
 }
