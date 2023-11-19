@@ -113,6 +113,9 @@ class InoculationAdapter(private val context: Context)
             intent.putExtra("uTagR", uTagR)
             intent.putExtra("uTagH", uTagH)
 
+//            Log.i("adpter in tag1", "${uTagDHPPL} ${uTagC} ${uTagKC} ${uTagCVRP.toString()}")
+//            Log.i("adpter in tag2", "${uTagFL} ${uTagFID} ${uTagR} ${uTagH.toString()}")
+
             context.startActivity(intent)
         }
 
