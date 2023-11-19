@@ -1,11 +1,14 @@
 package com.example.carebout.view.medical.Medicine
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -15,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityMedicineWriteBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Medicine
 import com.example.carebout.view.medical.db.MedicineDao
@@ -27,21 +32,34 @@ class MedicineWriteActivity : AppCompatActivity() {
     lateinit var db: AppDatabase
     lateinit var medicineDao: MedicineDao
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMedicineWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar3)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         db = AppDatabase.getInstance(applicationContext)!!
         medicineDao = db.getMedicineDao()
+
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
 
         val editTextM: EditText = findViewById(R.id.editTextM)
         val editTextStartD: EditText = findViewById(R.id.editTextStartD)
         val editTextEndD: EditText = findViewById(R.id.editTextEndD)
         val checkBox: CheckBox = findViewById(R.id.checkBox)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
-        val btn1: Button = findViewById(R.id.button)
+//        val btn1: Button = findViewById(R.id.button)
 
         val NowTime = System.currentTimeMillis()
         val DF = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
@@ -64,9 +82,9 @@ class MedicineWriteActivity : AppCompatActivity() {
             }
         }
 
-        btn1.setOnClickListener {
-            insertMedi()
-        }
+//        btn1.setOnClickListener {
+//            insertMedi()
+//        }
         // 숫자 입력 시 대시 "-" 자동 추가
         setupDateEditText(binding.editTextStartD)
         setupDateEditText(binding.editTextEndD)
@@ -105,7 +123,7 @@ class MedicineWriteActivity : AppCompatActivity() {
             return
         }
 
-        val Medi = Medicine(null, mediTitle, mediStartD, mediEndD, medicheckBox, mediEtc)
+        val Medi = Medicine(null, petId, mediTitle, mediStartD, mediEndD, medicheckBox, mediEtc)
 
         if (mediTitle.isBlank() || mediStartD.isBlank()) {
             Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
@@ -173,6 +191,28 @@ class MedicineWriteActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {}
         })
+    }
+
+    override fun onCreateOptionsMenu (menu: Menu?): Boolean {
+        menuInflater.inflate (R.menu.menu_add, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
+
+        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
+            finish()
+            true
+        }
+
+        R.id.menu_add_save -> {
+            insertMedi()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+            true
+        }
+        else -> true
     }
 
 }

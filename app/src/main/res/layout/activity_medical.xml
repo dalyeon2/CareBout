@@ -144,11 +144,12 @@
 
     <LinearLayout
         android:id="@+id/popup_menu"
-        android:layout_width="123dp"
-        android:layout_height="218dp"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
         android:layout_gravity="center|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
+        android:layout_weight="1"
         android:background="@drawable/rounded_menu"
         android:elevation="8dp"
         android:orientation="vertical"
@@ -165,7 +166,7 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="\uD83E\uDE7A🩺 검진 내역" />
+            android:text="\uD83E\uDE7A🩺 진료 내역" />
 
         <TextView
             android:id="@+id/menu_item_2"
@@ -176,7 +177,7 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="\uD83D\uDC8A💊 복용약" />
+            android:text="\uD83D\uDC8A💊 약처방" />
 
         <TextView
             android:id="@+id/menu_item_3"
@@ -187,7 +188,7 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="\uD83D\uDC89💉 접종 내역" />
+            android:text="\uD83D\uDC89💉 접종/구충 내역" />
 
         <TextView
             android:id="@+id/menu_item_4"

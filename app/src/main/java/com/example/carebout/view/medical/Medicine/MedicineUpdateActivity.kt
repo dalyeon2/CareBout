@@ -1,11 +1,14 @@
 package com.example.carebout.view.medical.Medicine
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -15,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityMedicineUpdateBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Medicine
 import com.example.carebout.view.medical.db.MedicineDao
@@ -28,14 +33,27 @@ class MedicineUpdateActivity : AppCompatActivity() {
     lateinit var mediDao: MedicineDao
     var id: Int = 0
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMedicineUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar8)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         db = AppDatabase.getInstance(applicationContext)!!
         mediDao = db.getMedicineDao()
+
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
 
         val mediText: TextView = findViewById(R.id.editTextM)
         val editTextStartD: TextView = findViewById(R.id.editTextStartD)
@@ -43,8 +61,8 @@ class MedicineUpdateActivity : AppCompatActivity() {
         val checkBox: CheckBox = findViewById(R.id.checkBox)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
 
-        val updateBtn: Button = findViewById(R.id.updateBtn)
-        val deleteBtn: Button = findViewById(R.id.deleteBtn)
+//        val updateBtn: Button = findViewById(R.id.updateBtn)
+//        val deleteBtn: Button = findViewById(R.id.deleteBtn)
 
         // 수정 페이지로 전달된 아이템 정보를 가져옴
         val mediId = intent.getIntExtra("mediId", -1)
@@ -95,13 +113,13 @@ class MedicineUpdateActivity : AppCompatActivity() {
             }
         }
 
-        updateBtn.setOnClickListener{
-            updateMedi()
-        }
-
-        deleteBtn.setOnClickListener {
-            deletMedi()
-        }
+//        updateBtn.setOnClickListener{
+//            updateMedi()
+//        }
+//
+//        deleteBtn.setOnClickListener {
+//            deletMedi()
+//        }
 
         // 숫자 입력 시 대시 "-" 자동 추가
         setupDateEditText(binding.editTextStartD)
@@ -142,7 +160,7 @@ class MedicineUpdateActivity : AppCompatActivity() {
             return
         }
 
-        val Medi = Medicine(id, mediTitle, mediStart, mediEnd, medicheckBox, mediEtc)
+        val Medi = Medicine(id, petId, mediTitle, mediStart, mediEnd, medicheckBox, mediEtc)
 
         //데이터 수정
         //db?.getTodoDao()?.updateTodo(Todo)
@@ -174,7 +192,7 @@ class MedicineUpdateActivity : AppCompatActivity() {
         // 삭제 기능 구현
         // 해당 ID에 해당하는 할 일 데이터를 삭제하도록 todoDao를 사용합니다.
         Thread {
-            val mediToDelete = mediDao.getMediById(id)
+            val mediToDelete = mediDao.getMediById(id, petId)
             if (mediToDelete != null) {
                 mediDao.deleteMedi(mediToDelete)
                 runOnUiThread {
@@ -237,4 +255,33 @@ class MedicineUpdateActivity : AppCompatActivity() {
         })
     }
 
+    override fun onCreateOptionsMenu (menu: Menu?): Boolean {
+        menuInflater.inflate (R.menu.menu_story, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
+
+        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
+            finish()
+            true
+        }
+
+        R.id.menu_edit -> {
+            updateMedi()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+            true
+        }
+
+        R.id.menu_remove -> {
+            deletMedi()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+            true
+        }
+        else -> true
+    }
 }

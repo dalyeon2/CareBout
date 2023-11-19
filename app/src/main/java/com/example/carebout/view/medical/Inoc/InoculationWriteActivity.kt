@@ -1,12 +1,15 @@
 package com.example.carebout.view.medical.Inoc
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -14,6 +17,8 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityInoculationWriteBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Inoculation
 import com.example.carebout.view.medical.db.InoculationDao
@@ -26,20 +31,33 @@ class InoculationWriteActivity : AppCompatActivity() {
     lateinit var db: AppDatabase
     lateinit var inocDao: InoculationDao
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInoculationWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar4)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         db = AppDatabase.getInstance(applicationContext)!!
         inocDao = db.getInocDao()
+
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
 
         val editTextList: EditText = findViewById(R.id.editTextList)
         val editTextDate: EditText = findViewById(R.id.editTextDate)
         val editTextDue: EditText = findViewById(R.id.editTextDue)
         val editTextH: EditText = findViewById(R.id.editTextH)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
-        val btn1: Button = findViewById(R.id.button)
+//        val btn1: Button = findViewById(R.id.button)
 
 //        val tagDHPPL: ToggleButton = findViewById(R.id.toggleButton1)
 //        val tagC: ToggleButton = findViewById(R.id.toggleButton2)
@@ -65,9 +83,10 @@ class InoculationWriteActivity : AppCompatActivity() {
         val result = DF.format(NowTime)
         editTextDate.setText(result)
 
-        btn1.setOnClickListener {
-            insertInoc()
-        }
+
+//        btn1.setOnClickListener {
+//            insertInoc()
+//        }
 
 //        tag1.setOnCheckedChangeListener { _, isChecked ->
 //            if (isChecked) {
@@ -177,7 +196,7 @@ class InoculationWriteActivity : AppCompatActivity() {
             return
         }
 
-        val Inoc = Inoculation(null, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocTag, inocDate, inocDue, inocH, inocEtc)
+        val Inoc = Inoculation(null, petId, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocTag, inocDate, inocDue, inocH, inocEtc)
 
         if ((!tagDHPPL && !tagC && !tagKC && !tagCVRP && !tagFL && !tagFID && !tagR && !tagH) || inocDate.isBlank()) {
             Toast.makeText(this, "필수 항목을 채워주세요", Toast.LENGTH_SHORT).show()
@@ -245,5 +264,27 @@ class InoculationWriteActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {}
         })
+    }
+
+    override fun onCreateOptionsMenu (menu: Menu?): Boolean {
+        menuInflater.inflate (R.menu.menu_add, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
+
+        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
+            finish()
+            true
+        }
+
+        R.id.menu_add_save -> {
+            insertInoc()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+            true
+        }
+        else -> true
     }
 }

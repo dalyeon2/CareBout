@@ -21,6 +21,11 @@ import com.example.carebout.databinding.ActivityHomeBinding
 import com.example.carebout.databinding.CustomDialogBinding
 import com.example.carebout.view.home.db.Weight
 import com.example.carebout.view.home.db.WeightDao
+import com.example.carebout.view.medical.Clinic.ClinicWriteActivity
+import com.example.carebout.view.medical.Inoc.InoculationWriteActivity
+import com.example.carebout.view.medical.Medicine.MedicineWriteActivity
+import com.example.carebout.view.medical.MyPid
+import com.example.carebout.view.medical.Todo.TodoWriteActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.ClinicDao
 import com.example.carebout.view.medical.db.InoculationDao
@@ -245,7 +250,7 @@ class HomeActivity : AppCompatActivity() {
             }
         }
     }
-
+    
     fun getProfileList(): ArrayList<String> {
         val profileList = arrayListOf<String>()
         

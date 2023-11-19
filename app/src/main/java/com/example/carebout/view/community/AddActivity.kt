@@ -5,7 +5,9 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,55 +27,42 @@ import java.util.Calendar
 import java.util.Locale
 import android.view.View
 import android.view.ViewTreeObserver
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 
 class AddActivity: AppCompatActivity() {
     lateinit var binding: ActivityAddBinding
     private var selectedImageUri: Uri? = null
-    /*
-    private val requestLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val newData = result.data?.getStringExtra("result")
-            val selectedImageUri = result.data?.data
-
-            // 데이터와 이미지 URI를 CommunityActivity로 전달
-            val intent = Intent()
-                .putExtra("result", newData)
-                .putExtra("imageUri", selectedImageUri)
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-        }
-    }
-    */
+    private var selectedDate: String? = null
+    private var selectDay: String? = null
     private val requestGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 try {
-                    // inSampleSize 비율 계산, 지정
-                    val calRatio = calculateInSampleSize(
-                        result.data!!.data!!,
-                        resources.getDimensionPixelSize(R.dimen.imgSize),
-                        resources.getDimensionPixelSize(R.dimen.imgSize)
-                    )
-                    val option = BitmapFactory.Options()
-                    option.inSampleSize = calRatio
+                    result.data?.data?.let { fileUri ->
+                        Glide.with(this)
+                            .asBitmap()
+                            .load(fileUri)
+                            .apply(RequestOptions().fitCenter())
+                            .into(object : CustomTarget<Bitmap>() {
+                                override fun onResourceReady(
+                                    resource: Bitmap,
+                                    transition: Transition<in Bitmap>?
+                                ) {
+                                    binding.userImageView.setImageBitmap(resource)
+                                    binding.userImageView.visibility = View.VISIBLE
+                                    selectedImageUri = fileUri
+                                }
 
-                    // 이미지 로딩
-                    var inputStream = contentResolver.openInputStream(result.data!!.data!!)
-                    val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
-                    inputStream?.close()
-                    inputStream = null
+                                override fun onLoadCleared(placeholder: Drawable?) {
 
-                    bitmap?.let {
-                        binding.userImageView.setImageBitmap(bitmap)
-                        binding.userImageView.visibility = View.VISIBLE
-                        selectedImageUri = result.data!!.data
-                    } ?: let {
-                        selectedImageUri = null
+                                }
+                            })
                     }
                 } catch (e: Exception) {
-
+                    e.printStackTrace()
                 }
             }
         }
@@ -94,17 +83,12 @@ class AddActivity: AppCompatActivity() {
         // 현재 날짜 표기
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
-
-        val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault())
         val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
-
         val calendar = Calendar.getInstance()
         calendar.time = currentDate
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-
         val formattedDay = koreanDays[dayOfWeek - 1]
         val formattedDate = dateFormat.format(currentDate)
-
         binding.date.text = formattedDate
         binding.day.text = formattedDay
 
@@ -134,9 +118,9 @@ class AddActivity: AppCompatActivity() {
 
             val intent = Intent().apply {
                 putExtra("result", inputData)
-                selectedImageUri?.let {
-                    putParcelableArrayListExtra("imageUris", arrayListOf(it))
-                }
+                putExtra("imageUri", selectedImageUri)
+                putExtra("selectedDate", selectedDate)
+                putExtra("selectedDay", selectDay)
             }
             setResult(Activity.RESULT_OK, intent)
             finish()
@@ -159,10 +143,12 @@ class AddActivity: AppCompatActivity() {
                 val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
                 val formattedDate = dateFormat.format(calendar.time)
                 binding.date.text = formattedDate
+                selectedDate = formattedDate
 
                 val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
                 val formattedDay = koreanDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]
                 binding.day.text = formattedDay
+                selectDay = formattedDay
             },
             year, month, dayOfMonth
         )
@@ -199,6 +185,7 @@ class AddActivity: AppCompatActivity() {
     private fun openGallery() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
+
         requestGalleryLauncher.launch(galleryIntent)
     }
 }

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/main_content"
@@ -52,12 +53,12 @@
             android:id="@+id/main_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="25dp"
-            android:layout_marginBottom="80dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="86dp"
             android:backgroundTint="#6EC677"
             app:icon="@drawable/ic_pencil"
             app:iconTint="@color/bgWhite"
-            app:iconSize="30dp"
+            app:iconSize="25dp"
             app:layout_anchor="@id/bottomTapBarOuter"
             app:layout_anchorGravity="bottom|right"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
