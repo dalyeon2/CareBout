@@ -9,7 +9,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.carebout.databinding.ActivityAddPetBinding
 import com.example.carebout.view.home.db.PersonalInfo
-import com.example.carebout.view.home.db.PersonalInfoDB
 import com.example.carebout.view.home.db.Weight
 import com.example.carebout.view.medical.db.AppDatabase
 import java.text.SimpleDateFormat
@@ -20,7 +19,6 @@ class AddPetActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityAddPetBinding
     private lateinit var db: AppDatabase
-    //private lateinit var db: PersonalInfoDB
     private lateinit var imageUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,9 +27,20 @@ class AddPetActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         db = AppDatabase.getInstance(this)!!
-            //PersonalInfoDB.getInstance(this)!!
 
         setClickListener()
+    }
+
+    private fun getSex(): String {
+        if (binding.maleRadio.isChecked)
+            return "male"
+        return "female"
+    }
+
+    private fun getAnimal(): String {
+        if (binding.dogRadio.isChecked)
+            return "dog"
+        return "cat"
     }
 
     private fun setClickListener(){
@@ -54,14 +63,18 @@ class AddPetActivity : AppCompatActivity() {
             if(!isValid())
                 return@setOnClickListener
 
-            var fileName = ImageUtil().save(this@AddPetActivity, imageUri)
+            var fileName = ""
+
+            if(::imageUri.isInitialized)
+                fileName = ImageUtil().save(this@AddPetActivity, imageUri)
+
 
             val pid = db.personalInfoDao().insertInfo(PersonalInfo(
                 binding.editName.text.toString(),
-                binding.editSex.text.toString(),
+                getSex(),
                 binding.editBirth.text.toString(),
                 binding.editBreed.text.toString(),
-                binding.editAnimal.text.toString(),
+                getAnimal(),
                 fileName
             )).toInt()
 
@@ -82,7 +95,6 @@ class AddPetActivity : AppCompatActivity() {
             }
 
             var home = HomeActivity.homeActivity
-
             home?.finish()
             home?.startActivity(Intent(this@AddPetActivity, HomeActivity::class.java))
             finish()
@@ -100,25 +112,15 @@ class AddPetActivity : AppCompatActivity() {
 
     fun isValid(): Boolean{
         val name = binding.editName
-        val sex = binding.editSex
         val birth = binding.editBirth
-        val weight = binding.editWeight
         val breed = binding.editBreed
-        val animal = binding.editAnimal
-        val image = binding.profileImage
 
         if(name.text.isNullOrBlank())
             name.error = ""
-        else if(sex.text.isNullOrBlank())
-            sex.error = ""
         else if(birth.text.isNullOrBlank())
             birth.error = ""
-        else if(weight.text.isNullOrBlank())
-            weight.error = ""
         else if(breed.text.isNullOrBlank())
-            breed.error = ""
-        else if(animal.text.isNullOrBlank())
-            animal.error = ""
+            breed.error = "모르면 '모름'이라고 입력 해주세요"
         else
             return true
 

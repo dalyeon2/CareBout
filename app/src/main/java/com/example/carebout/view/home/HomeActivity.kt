@@ -1,11 +1,13 @@
 package com.example.carebout.view.home
 
+import android.app.Dialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -16,8 +18,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.carebout.R
 import com.example.carebout.base.bottomTabClick
 import com.example.carebout.databinding.ActivityHomeBinding
-import com.example.carebout.view.home.db.PersonalInfoDB
-import com.example.carebout.view.home.db.PersonalInfoDao
+import com.example.carebout.databinding.CustomDialogBinding
+import com.example.carebout.view.home.db.Weight
 import com.example.carebout.view.home.db.WeightDao
 import com.example.carebout.view.medical.Clinic.ClinicWriteActivity
 import com.example.carebout.view.medical.Inoc.InoculationWriteActivity
@@ -26,6 +28,7 @@ import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.Todo.TodoWriteActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.ClinicDao
+import com.example.carebout.view.medical.db.InoculationDao
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -34,7 +37,10 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.jetbrains.annotations.NotNull
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -49,9 +55,11 @@ class HomeActivity : AppCompatActivity() {
     private val MIN_ALPHA = 0.5f // 어두워지는 정도를 나타낸 듯 하다.
 
     private lateinit var db: AppDatabase
-            //PersonalInfoDB
     private lateinit var weight: WeightDao
     private lateinit var clinicDao: ClinicDao
+    private lateinit var inoculationDao: InoculationDao
+
+    private lateinit var dialog: Dialog
 
     private var nowPid: Int = 0
 
@@ -62,19 +70,10 @@ class HomeActivity : AppCompatActivity() {
 
         homeActivity = this
 
-        // 현재 클릭 중인 탭 tint
-        binding.bottomTapBarOuter.homeImage.imageTintList = ColorStateList.valueOf(Color.parseColor("#6EC677"))
-        binding.bottomTapBarOuter.homeText.setTextColor(Color.parseColor("#6EC677"))
-
-        // 하단 탭바 클릭시 이동
-        bottomTabClick(binding.bottomTapBarOuter, this)
-
-        //의료탭 데이터 베이스로 db 합쳐 수정됨
         db = AppDatabase.getInstance(this)!!
-            //PersonalInfoDB.getInstance(this)!!
         weight = db.weightDao()
-        clinicDao = db.getClinicDao()
-            //AppDatabase.getInstance(this)!!.getClinicDao()
+        clinicDao = AppDatabase.getInstance(this)!!.getClinicDao()
+        inoculationDao = AppDatabase.getInstance(this)!!.getInocDao()
 
         // DB에 아무것도 없을 때 바로 반려동물 등록 페이지로
         if(db.personalInfoDao().getAllInfo().size == 0) {
@@ -83,47 +82,17 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
-//        val checkDataSet: MutableList<Pair<String, String>> = mutableListOf()
-//        val dataSet2: MutableList<Pair<String, String>> = mutableListOf()
+        // 현재 클릭 중인 탭 tint
+        binding.bottomTapBarOuter.homeImage.imageTintList = ColorStateList.valueOf(Color.parseColor("#6EC677"))
+        binding.bottomTapBarOuter.homeText.setTextColor(Color.parseColor("#6EC677"))
 
-//        for(c in clinicDao.getClinicAll()){
-//            if(c.tag_blood == true)
-//                checkDataSet.add(Pair("피검사", c.date!!))
-//            if(c.tag_ct == true)
-//                checkDataSet.add(Pair("CT", c.date!!))
-//            if(c.tag_checkup == true)
-//                checkDataSet.add(Pair("정기검진", c.date!!))
-//            if(c.tag_mri == true)
-//                checkDataSet.add(Pair("MRI", c.date!!))
-//            if(c.tag_xray == true)
-//                checkDataSet.add(Pair("X-Ray", c.date!!))
-//            if(c.tag_ultrasonic == true)
-//                checkDataSet.add(Pair("초음파", c.date!!))
-//        }
-//
-//        for(c in clinicDao.getClinicAll()){
-//            if(c.tag_blood == true)
-//                dataSet2.add(Pair("피검사", c.date!!))
-//            if(c.tag_ct == true)
-//                dataSet2.add(Pair("CT", c.date!!))
-//            if(c.tag_checkup == true)
-//                dataSet2.add(Pair("접종", c.date!!))
-//        }
-//    }
+        // 하단 탭바 클릭시 이동
+        bottomTabClick(binding.bottomTapBarOuter, this)
 
-
-//        checkDataSet.sortBy { it.second }
-//        dataSet2.sortBy { it.second }
-
-//        val recyclerAdapter = RecyclerAdapter(checkDataSet)
-//        binding.checkGraph.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-//        binding.checkGraph.adapter = recyclerAdapter
-
-        // 플로팅버튼 클릭시 반려동물 추가 액티비티로
+        // 플로팅버튼 클릭시 메뉴 세개 보여줌(반려동물 추가, 정보 수정, 체중 기록)
         binding.floatingPopup.setOnClickListener {
             toggleFloatingPopup()
         }
-
         binding.homePopupMenuContainer.setOnClickListener {
             toggleFloatingPopup()
         }
@@ -131,7 +100,7 @@ class HomeActivity : AppCompatActivity() {
         val profile = binding.profileViewPager
 
         profile.offscreenPageLimit = 1 // 앞뒤로 1개씩 미리 로드해놓기
-        profile.adapter = MyViewPagerAdapter(this, getProfileList(db)) // 어댑터 연결 (이미지 리스트도 보냄)
+        profile.adapter = MyViewPagerAdapter(this, getProfileList(), nowPid) // 어댑터 연결 (이미지 리스트도 보냄)
         profile.orientation = ViewPager2.ORIENTATION_HORIZONTAL  // 가로로 페이지 증가
         profile.setPageTransformer(ZoomOutPageTransformer())   // 다음과 같은 애니메이션 효과 적용
         binding.profileIndicator.setViewPager2(binding.profileViewPager)    // 인디케이터와 뷰페이저 연결
@@ -142,17 +111,106 @@ class HomeActivity : AppCompatActivity() {
                 val p = db.personalInfoDao().getAllInfo()
                 nowPid = p[position].pid
                 setWeightGraph(nowPid)
+
+                val clinicAdapter = RecyclerAdapter(getClinicDataSet())
+                binding.clinicRecycler.layoutManager = LinearLayoutManager(this@HomeActivity, RecyclerView.HORIZONTAL, false)
+                binding.clinicRecycler.adapter = clinicAdapter
+
+                val inoculationAdapter = RecyclerAdapter(getInoculationDataSet())
+                binding.inoculationRecycler.layoutManager = LinearLayoutManager(this@HomeActivity, RecyclerView.HORIZONTAL, false)
+                binding.inoculationRecycler.adapter = inoculationAdapter
+
                 binding.helloName.text = "반가워, " + p[position].name + "!"
-                binding.sex.text = p[position].sex
-                binding.birth.text = p[position].birth
+                if (p[position].sex == "male") {
+                    binding.sex.text = "♂"
+                    binding.sex.setTextColor(Color.parseColor("#0099ff"))
+                } else {
+                    binding.sex.text = "♀"
+                    binding.sex.setTextColor(Color.parseColor("#ff005d"))
+                }
+                binding.birth.text = getAge(p[position].birth)
                 binding.breed.text = p[position].breed
-
-                updateClinic()
-
-                MyPid.setPid(nowPid)
-                Log.i("home_pid", MyPid.getPid().toString())
+                binding.weight.text = db.weightDao().getWeightById(nowPid).last().weight.toString() + "kg"
             }
         })
+
+        dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.custom_dialog)
+
+        setOnHomeMenuItemClick()
+
+    }
+
+    private fun getAge(birth: String): String {
+        val nowDate = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(Date())
+        val nowList = nowDate.split("-")
+        val birthList = birth.split("-")
+        var yyyy = nowList[0].toInt() - birthList[0].toInt()
+        var MM = nowList[1].toInt() - birthList[1].toInt()
+        var dd = nowList[2].toInt() - birthList[2].toInt()
+        var age: String = ""
+
+        if (MM > 0) // 생일달 지났으면
+            age = yyyy.toString() + "년 " + MM.toString() + "개월"
+        else if (MM < 0)    // 생일달 안 지났으면
+            age = (yyyy-1).toString() + "년 " + (12+MM).toString() + "개월"
+        else if (dd >= 0)   // 생일달 && 날짜 지남
+            age = yyyy.toString() + "년 " + MM.toString() + "개월"
+        else    // 생일달 && 날짜 안 지남
+            age = (yyyy-1).toString() + "년 " + (MM).toString() + "개월"
+
+        return age
+    }
+
+    private fun getInoculationDataSet(): ArrayList<Pair<String, String>> {
+        val inoculationDS: ArrayList<Pair<String, String>> = arrayListOf()
+
+        for(i in inoculationDao.getInoculationAll()) {
+            if(i.tag_DHPPL == true)
+                inoculationDS.add(Pair("DHPPL", i.date!!))
+            if(i.tag_Corona == true)
+                inoculationDS.add(Pair("코로나", i.date!!))
+            if(i.tag_KC == true)
+                inoculationDS.add(Pair("켄넬코프", i.date!!))
+            if(i.tag_CVRP == true)
+                inoculationDS.add(Pair("CVRP", i.date!!))
+            if(i.tag_Heartworm == true)
+                inoculationDS.add(Pair("심장사상충", i.date!!))
+            if(i.tag_FID == true)
+                inoculationDS.add(Pair("FID", i.date!!))
+            if(i.tag_FL == true)
+                inoculationDS.add(Pair("백혈병", i.date!!))
+            if(i.tag_Rabies == true)
+                inoculationDS.add(Pair("광견병", i.date!!))
+        }
+
+        inoculationDS.sortBy { it.second }
+
+        return inoculationDS
+    }
+
+    private fun getClinicDataSet(): ArrayList<Pair<String, String>> {
+        val clinicDS: ArrayList<Pair<String, String>> = arrayListOf()
+
+        for(c in clinicDao.getClinicAll()) {
+            if(c.tag_blood == true)
+                clinicDS.add(Pair("피검사", c.date!!))
+            if(c.tag_ct == true)
+                clinicDS.add(Pair("CT", c.date!!))
+            if(c.tag_checkup == true)
+                clinicDS.add(Pair("정기검진", c.date!!))
+            if(c.tag_mri == true)
+                clinicDS.add(Pair("MRI", c.date!!))
+            if(c.tag_xray == true)
+                clinicDS.add(Pair("X-Ray", c.date!!))
+            if(c.tag_ultrasonic == true)
+                clinicDS.add(Pair("초음파", c.date!!))
+        }
+
+        clinicDS.sortBy { it.second }
+
+        return clinicDS
     }
 
     inner class ZoomOutPageTransformer() : ViewPager2.PageTransformer {
@@ -192,54 +250,8 @@ class HomeActivity : AppCompatActivity() {
             }
         }
     }
-
-    fun updateClinic(){
-
-        val checkDataSet: MutableList<Pair<String, String>> = mutableListOf()
-        val dataSet2: MutableList<Pair<String, String>> = mutableListOf()
-
-        Log.i("home_all_info_size", db.personalInfoDao().getAllInfo().size.toString())
-        Log.i("home_now_pid", nowPid.toString())
-
-        if(db.personalInfoDao().getAllInfo().size != 0){
-
-            Log.i("home_clinic", nowPid.toString())
-            for(c in clinicDao.getClinicAll(nowPid)){
-                if(c.tag_blood == true)
-                    checkDataSet.add(Pair("피검사", c.date!!))
-                if(c.tag_ct == true)
-                    checkDataSet.add(Pair("CT", c.date!!))
-                if(c.tag_checkup == true)
-                    checkDataSet.add(Pair("정기검진", c.date!!))
-                if(c.tag_mri == true)
-                    checkDataSet.add(Pair("MRI", c.date!!))
-                if(c.tag_xray == true)
-                    checkDataSet.add(Pair("X-Ray", c.date!!))
-                if(c.tag_ultrasonic == true)
-                    checkDataSet.add(Pair("초음파", c.date!!))
-            }
-
-            for(c in clinicDao.getClinicAll(nowPid)){
-                if(c.tag_blood == true)
-                    dataSet2.add(Pair("피검사", c.date!!))
-                if(c.tag_ct == true)
-                    dataSet2.add(Pair("CT", c.date!!))
-                if(c.tag_checkup == true)
-                    dataSet2.add(Pair("접종", c.date!!))
-            }
-        }
-
-        checkDataSet.sortBy { it.second }
-        dataSet2.sortBy { it.second }
-
-        val recyclerAdapter = RecyclerAdapter(checkDataSet)
-        binding.checkGraph.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        binding.checkGraph.adapter = recyclerAdapter
-    }
-
-    //PersonalInfoDB
-    //의료탭 데이터 베이스로 db 합쳐 수정됨
-    fun getProfileList(db: AppDatabase): ArrayList<String> {
+    
+    fun getProfileList(): ArrayList<String> {
         val profileList = arrayListOf<String>()
         
         for (p in db.personalInfoDao().getAllInfo()) {
@@ -336,12 +348,12 @@ class HomeActivity : AppCompatActivity() {
     private fun toggleFloatingPopup() {
         val rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward)
         val rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward)
-        val fab: FloatingActionButton = binding.floatingPopup
+        val fPopup: FloatingActionButton = binding.floatingPopup
 
         if (isFoatingPopupOpen) {
-            fab.startAnimation(rotateBackward)
+            fPopup.startAnimation(rotateBackward)
         } else {
-            fab.startAnimation(rotateForward)
+            fPopup.startAnimation(rotateForward)
         }
 
         isFoatingPopupOpen = !isFoatingPopupOpen
@@ -372,19 +384,55 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    fun onHomeMenuItemClick(view: View) {
-        when (view) {
-            binding.menuAddPet -> {
-                val intent = Intent(this, AddPetActivity::class.java)
-                toggleFloatingPopup() // 메뉴 팝업 창을 닫습니다.
-                startActivity(intent)
+    private fun setOnHomeMenuItemClick() {
+        binding.menuAddPet.setOnClickListener {
+            val intent = Intent(this, AddPetActivity::class.java)
+            toggleFloatingPopup() // 메뉴 팝업 창을 닫습니다.
+            startActivity(intent)
+        }
+        binding.menuAddWeight.setOnClickListener {
+            val intent = Intent(this, AddWeightActivity::class.java)
+            toggleFloatingPopup() // 메뉴 팝업 창을 닫습니다.
+            intent.putExtra("pid", nowPid)
+            startActivity(intent)
+        }
+        binding.menuEditPet.setOnClickListener {
+            val intent = Intent(this, EditPetActivity::class.java)
+            toggleFloatingPopup() // 메뉴 팝업 창을 닫습니다.
+            intent.putExtra("pid", nowPid)
+            startActivity(intent)
+        }
+        binding.menuDeletePet.setOnClickListener{
+            toggleFloatingPopup() // 메뉴 팝업 창을 닫습니다.
+            showDialog()
+        }
+    }
+
+    private fun showDialog() {
+        val cdBinding = CustomDialogBinding.inflate(layoutInflater)
+        dialog.show()
+
+        // 아니오 버튼
+        cdBinding.btnNo.setOnClickListener {
+            dialog.dismiss()
+        }
+        // 예 버튼
+        cdBinding.btnYes.setOnClickListener {
+            Log.e("Yes", "Asdfa")
+            val weightList = weight.getWeightById(nowPid)
+
+            for (w in weightList) {
+                val delW = Weight(w.pid, w.weight, w.date)
+                delW.weightId = w.weightId
+                weight.deleteInfo(delW)
             }
-            binding.menuAddWeight -> {
-                val intent = Intent(this, AddWeightActivity::class.java)
-                toggleFloatingPopup() // 메뉴 팝업 창을 닫습니다.
-                intent.putExtra("pid", nowPid)
-                startActivity(intent)
-            }
+
+            val delP = db.personalInfoDao().getInfoById(nowPid)!!
+            delP.pid = nowPid
+            db.personalInfoDao().deleteInfo(delP)
+
+            this@HomeActivity.finish()
+            this@HomeActivity.startActivity(Intent(this@HomeActivity, HomeActivity::class.java))
         }
     }
 }
