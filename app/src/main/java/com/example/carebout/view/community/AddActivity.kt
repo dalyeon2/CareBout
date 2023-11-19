@@ -205,6 +205,8 @@ class AddActivity: AppCompatActivity() {
             year, month, dayOfMonth
         )
 
+        datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+
         datePickerDialog.show()
     }
 
