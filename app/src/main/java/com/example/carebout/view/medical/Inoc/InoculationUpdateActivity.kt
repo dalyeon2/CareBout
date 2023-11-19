@@ -138,7 +138,6 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
         tagCVRP.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                Log.i("in2", "${tagCVRP.isChecked}")
                 val otherTags = listOf(tagDHPPL, tagC, tagKC, tagFL, tagFID, tagR, tagH)
                 otherTags.forEach { it.isChecked = false }
             }
