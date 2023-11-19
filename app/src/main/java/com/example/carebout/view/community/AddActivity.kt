@@ -112,8 +112,15 @@ class AddActivity: AppCompatActivity() {
         R.id.menu_add_save -> {
             val inputData = binding.addEditView.text.toString()
             val db = DBHelper (this).writableDatabase
-            db.execSQL ("insert into TODO_TB (todo) values (?)",
-                arrayOf<String>(inputData))
+            db.execSQL(
+                "insert into TODO_TB (content, date, day, image_uri) values (?, ?, ?, ?)",
+                arrayOf<String>(
+                    inputData,
+                    selectedDate ?: "",
+                    selectDay ?: "",
+                    selectedImageUri?.toString() ?: ""
+                )
+            )
             db.close()
 
             val intent = Intent().apply {

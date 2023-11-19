@@ -6,7 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.transition.Transition
+import com.bumptech.glide.request.transition.Transition
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -75,7 +75,7 @@ class MyAdapter(
 
         // 이미지를 추가했을 때만 보이도록 처리
         val itemImageUri = imageUris?.getOrNull(position)
-        if (itemImageUri != null) {
+        if (itemImageUri != null && itemImageUri != Uri.EMPTY) {
             binding.itemImage.visibility = View.VISIBLE
 
             Glide.with(holder.itemView.context).clear(binding.itemImage)
@@ -89,7 +89,7 @@ class MyAdapter(
                 .load(itemImageUri)
                 .apply(requestOptions)
                 .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(resource: Bitmap, transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?) {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                         // Bitmap이 준비되면 ImageView에 설정
                         binding.itemImage.setImageBitmap(resource)
                     }
