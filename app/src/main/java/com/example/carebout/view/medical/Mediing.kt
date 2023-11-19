@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.carebout.R
-import com.example.carebout.view.home.db.PersonalInfoDB
 import com.example.carebout.view.home.db.PersonalInfoDao
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Medicine
