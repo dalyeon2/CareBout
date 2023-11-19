@@ -21,11 +21,6 @@ import com.example.carebout.databinding.ActivityHomeBinding
 import com.example.carebout.databinding.CustomDialogBinding
 import com.example.carebout.view.home.db.Weight
 import com.example.carebout.view.home.db.WeightDao
-import com.example.carebout.view.medical.Clinic.ClinicWriteActivity
-import com.example.carebout.view.medical.Inoc.InoculationWriteActivity
-import com.example.carebout.view.medical.Medicine.MedicineWriteActivity
-import com.example.carebout.view.medical.MyPid
-import com.example.carebout.view.medical.Todo.TodoWriteActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.ClinicDao
 import com.example.carebout.view.medical.db.InoculationDao
@@ -166,7 +161,7 @@ class HomeActivity : AppCompatActivity() {
     private fun getInoculationDataSet(): ArrayList<Pair<String, String>> {
         val inoculationDS: ArrayList<Pair<String, String>> = arrayListOf()
 
-        for(i in inoculationDao.getInoculationAll()) {
+        for(i in inoculationDao.getInoculationAll(nowPid)) {
             if(i.tag_DHPPL == true)
                 inoculationDS.add(Pair("DHPPL", i.date!!))
             if(i.tag_Corona == true)
@@ -193,7 +188,7 @@ class HomeActivity : AppCompatActivity() {
     private fun getClinicDataSet(): ArrayList<Pair<String, String>> {
         val clinicDS: ArrayList<Pair<String, String>> = arrayListOf()
 
-        for(c in clinicDao.getClinicAll()) {
+        for(c in clinicDao.getClinicAll(nowPid)) {
             if(c.tag_blood == true)
                 clinicDS.add(Pair("피검사", c.date!!))
             if(c.tag_ct == true)
