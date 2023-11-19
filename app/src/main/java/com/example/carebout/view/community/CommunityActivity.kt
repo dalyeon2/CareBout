@@ -2,30 +2,20 @@ package com.example.carebout.view.community
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.carebout.R
 import com.example.carebout.base.bottomTabClick
-import com.google.android.material.tabs.TabLayoutMediator
 import com.example.carebout.databinding.ActivityCommunityBinding
 import com.example.carebout.view.IntroActivity
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -96,19 +86,27 @@ class CommunityActivity : AppCompatActivity() {
 
                     // DB에서 데이터 삭제
                     val db = DBHelper(this).writableDatabase
-                    val idToRemove = position
-                    val rowsAffected = db.delete("TODO_TB", "_id=?", arrayOf(idToRemove.toString()))
-                    db.close()
+                    val idToRemove = getIdFromDatabase(this, position)
+                    val whereClause = "_id=?"
+                    val whereArgs = arrayOf(idToRemove.toString())
 
-                    if (rowsAffected > 0) {
+                    try {
+                        val rowsAffected = db.delete("TODO_TB", whereClause, whereArgs)
+                        db.close()
 
+                        if (rowsAffected > 0) {
+                            contents?.removeAt(position)
+                            selectedDates.removeAt(position)
+                            selectedDay.removeAt(position)
+                            imageUris?.removeAt(position)
+
+                            adapter.notifyItemRemoved(position)
+                        } else {
+                            Log.e("MyApp", "Failed to delete from database")
+                        }
+                    } catch (e: Exception) {
+                        Log.e("MyApp", "Exception while deleting from database: ${e.message}")
                     }
-                    imageUris?.removeAt(position)
-                    contents?.removeAt(position)
-                    selectedDates.removeAt(position)
-                    selectedDay.removeAt(position)
-                    adapter.notifyItemRemoved(position)
-
                 } else {
                     Log.e("MyApp", "Invalid positionToRemove: $position")
                 }
@@ -122,15 +120,6 @@ class CommunityActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        // Navigation Drawer 토글 동작 설정
-        val toggle = ActionBarDrawerToggle(this, binding.drawer, R.string.drawer_opened, R.string.drawer_closed)
-        toggle.syncState()
-
-        binding.mainDrawerView.setNavigationItemSelectedListener {
-
-            true
-        }
 
         binding.mainFab.setOnClickListener {
             val intent = Intent(this, AddActivity::class.java)
@@ -230,12 +219,6 @@ class CommunityActivity : AppCompatActivity() {
         outState.putParcelableArrayList("imageUris", ArrayList(imageUris))
     }
 
-    // 옵션 메뉴
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.title) {
             "logout" -> {
@@ -259,5 +242,31 @@ class CommunityActivity : AppCompatActivity() {
         val currentDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
         val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
         return koreanDays.getOrNull(currentDayOfWeek - 1) ?: "표시되지 않음"
+    }
+
+    private fun getIdFromDatabase(context: Context, position: Int): Long {
+        if (position >= 0 && position < contents?.size ?: 0) {
+            val db = DBHelper(context).readableDatabase
+            val selectQuery = "SELECT _id FROM TODO_TB ORDER BY _id DESC LIMIT 1 OFFSET $position"
+            val cursor = db.rawQuery(selectQuery, null)
+            var actualId = -1L
+
+            cursor.use {
+                if (it.moveToFirst()) {
+                    val idIndex = it.getColumnIndex("_id")
+                    if (idIndex != -1) {
+                        actualId = it.getLong(idIndex)
+                    } else {
+
+                    }
+                }
+            }
+
+            db.close()
+
+            return actualId
+        } else {
+            return -1L
+        }
     }
 }
