@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 
-class RecyclerAdapter(private val dataSet: MutableList<Pair<String, String>>) :
+class RecyclerAdapter(private val dataSet: ArrayList<Pair<String, String>>) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     /**
