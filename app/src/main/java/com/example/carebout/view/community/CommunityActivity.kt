@@ -1,6 +1,7 @@
 package com.example.carebout.view.community
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -26,6 +27,7 @@ import com.example.carebout.base.bottomTabClick
 import com.google.android.material.tabs.TabLayoutMediator
 import com.example.carebout.databinding.ActivityCommunityBinding
 import com.example.carebout.view.IntroActivity
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -34,7 +36,7 @@ class CommunityActivity : AppCompatActivity() {
     lateinit var binding: ActivityCommunityBinding
     lateinit var adapter: MyAdapter
     var contents: MutableList<String>? = null
-    var imageUris: MutableList<Uri>? = null
+    var imageUris: MutableList<Uri>? = mutableListOf()
     var selectedDates: MutableList<String?> = mutableListOf()
     var selectedDay: MutableList<String?> = mutableListOf()
 
@@ -49,11 +51,23 @@ class CommunityActivity : AppCompatActivity() {
 
             newData?.let {
                 contents?.add(0, it)
-                selectedImageUri?.let {
-                    imageUris?.add(0, it)
-                }
+
+                val uriToDisplay = selectedImageUri ?: Uri.EMPTY
+                imageUris?.add(0, uriToDisplay)
+
                 selectedDates.add(0, selectedDateResult)
                 selectedDay.add(0, selectedDayResult)
+                // DB에 데이터 추가
+                val db = DBHelper(this).writableDatabase
+                val contentValues = ContentValues().apply {
+                    put("content", it)
+                    put("date", selectedDateResult)
+                    put("day", selectedDayResult)
+                    put("image_uri", uriToDisplay?.toString() ?: "")
+                }
+                db.insert("TODO_TB", null, contentValues)
+                db.close()
+
                 adapter.notifyDataSetChanged()
 
                 // 데이터가 추가되면 RecyclerView를 보이도록 설정
@@ -74,11 +88,28 @@ class CommunityActivity : AppCompatActivity() {
             val positionToRemove = result.data?.getIntExtra("positionToRemove", -1)
 
             positionToRemove?.let { position ->
-                if (position in 0 until (contents?.size ?: 0)) {
+                if (contents?.isNotEmpty() == true && position in 0 until contents!!.size) {
+                    // 이미지 파일 삭제
+                    val imageUriToRemove = imageUris?.getOrNull(position)
+                    imageUriToRemove?.let { uri ->
+                        val file = File(uri.path)
+                        if (file.exists()) {
+                            file.delete()
+                        }
+                    }
+
+                    // DB에서 데이터 삭제
+                    val db = DBHelper(this).writableDatabase
+                    val idToRemove = position + 1
+                    db.delete("TODO_TB", "_id=?", arrayOf(idToRemove.toString()))
+                    db.close()
+
+                    imageUris?.removeAt(position)
                     contents?.removeAt(position)
                     selectedDates.removeAt(position)
                     selectedDay.removeAt(position)
                     adapter.notifyItemRemoved(position)
+
                 } else {
                     Log.e("MyApp", "Invalid positionToRemove: $position")
                 }
@@ -150,12 +181,30 @@ class CommunityActivity : AppCompatActivity() {
         })
 
         val db = DBHelper(this).readableDatabase
-        db.execSQL("DELETE FROM TODO_TB") // 데이터 초기화
+        // db.execSQL("DELETE FROM TODO_TB") // 데이터 초기화
         val cursor = db.rawQuery("select * from TODO_TB", null)
         cursor.run {
+            val contentIndex = getColumnIndex("content")
+            val dateIndex = getColumnIndex("date")
+            val dayIndex = getColumnIndex("day")
+            val imageUriIndex = getColumnIndex("image_uri")
+
             while (moveToNext()) {
-                // 최근에 추가된 아이템을 리스트의 맨 앞에 추가
-                contents?.add(0, cursor.getString(1))
+                if (contentIndex != -1 && dateIndex != -1 && dayIndex != -1 && imageUriIndex != -1) {
+                    val content = getString(contentIndex)
+                    val date = getString(dateIndex)
+                    val day = getString(dayIndex)
+                    val imageUriString = getString(imageUriIndex)
+                    val imageUri = Uri.parse(imageUriString)
+
+                    // Add data to the lists
+                    contents?.add(0, content)
+                    selectedDates.add(0, date)
+                    selectedDay.add(0, day)
+                    imageUris?.add(0, imageUri)
+                } else {
+
+                }
             }
         }
         db.close()
@@ -201,10 +250,6 @@ class CommunityActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-        if (item.itemId == R.id.menu_main_setting) {
-            val intent = Intent(this, SettingActivity::class.java)
-            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }

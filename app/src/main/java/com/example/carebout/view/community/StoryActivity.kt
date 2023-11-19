@@ -3,6 +3,8 @@ package com.example.carebout.view.community
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityStoryBinding
 import com.example.carebout.view.IntroActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 
 class StoryActivity : AppCompatActivity() {
     lateinit var binding: ActivityStoryBinding
@@ -38,8 +44,7 @@ class StoryActivity : AppCompatActivity() {
         binding.day.text = receivedDay
 
         if (receivedImageUri != null) {
-            binding.userImage.setImageURI(receivedImageUri)
-            binding.userImage.visibility = View.VISIBLE
+            loadWithGlide(receivedImageUri)
         } else {
             binding.userImage.visibility = View.GONE
         }
@@ -72,6 +77,25 @@ class StoryActivity : AppCompatActivity() {
         }
 
         else -> true
+    }
+
+    private fun loadWithGlide(imageUri: Uri) {
+        Glide.with(this)
+            .asBitmap()
+            .load(imageUri)
+            .apply(RequestOptions().fitCenter())
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(
+                    resource: Bitmap,
+                    transition: Transition<in Bitmap>?
+                ) {
+                    binding.userImage.setImageBitmap(resource)
+                    binding.userImage.visibility = View.VISIBLE
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                }
+            })
     }
     private fun showConfirmationDialog() {
         val builder = AlertDialog.Builder(this)

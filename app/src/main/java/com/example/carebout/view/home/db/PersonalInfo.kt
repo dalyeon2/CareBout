@@ -12,7 +12,7 @@ data class PersonalInfo (
     @ColumnInfo(name = "birth") var birth: String,  // 생일
     @ColumnInfo(name = "breed") var breed: String,   // (동물의) 품종
     @ColumnInfo(name = "animal") var animal: String, // 동물 종류 = 강아지 or 고양이
-    @ColumnInfo(name = "image") var image: String?   // 프로필 사진
+    @ColumnInfo(name = "image") var image: String   // 프로필 사진
 ){
 
     @PrimaryKey(autoGenerate = true) var pid: Int = 0   // id

@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.carebout.databinding.ActivityAddWeightBinding
-import com.example.carebout.view.home.db.PersonalInfoDB
 import com.example.carebout.view.home.db.Weight
 import com.example.carebout.view.home.db.WeightDao
 import com.example.carebout.view.medical.db.AppDatabase
@@ -20,7 +19,6 @@ class AddWeightActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         weight = AppDatabase.getInstance(this)!!.weightDao()
-            //PersonalInfoDB.getInstance(this)!!.weightDao()
 
         binding.topBarOuter.activityTitle.text = "체중 기록"
 

@@ -1,11 +1,9 @@
 package com.example.carebout.view.home
 
 import android.content.Context
-import android.content.res.Resources
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.net.toUri
-import com.example.carebout.R
 import java.io.File
 
 class ImageUtil{
@@ -26,7 +24,7 @@ class ImageUtil{
         return fileName
     }
 
-    fun get(context: HomeActivity, fileName: String): Uri{
+    fun get(context: Context, fileName: String): Uri{
         return File(context.filesDir, fileName).toUri()
     }
 }

@@ -1,15 +1,21 @@
 package com.example.carebout.view.community
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Rect
+import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.transition.Transition
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
 import com.example.carebout.databinding.ItemRecyclerviewBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -71,15 +77,36 @@ class MyAdapter(
         val itemImageUri = imageUris?.getOrNull(position)
         if (itemImageUri != null) {
             binding.itemImage.visibility = View.VISIBLE
-            binding.itemImage.setImageURI(itemImageUri)
+
+            Glide.with(holder.itemView.context).clear(binding.itemImage)
+
+            // 이미지 로딩
+            val requestOptions = RequestOptions()
+                .fitCenter() // 이미지를 중앙에 맞게 조절
+
+            Glide.with(holder.itemView)
+                .asBitmap()
+                .load(itemImageUri)
+                .apply(requestOptions)
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(resource: Bitmap, transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?) {
+                        // Bitmap이 준비되면 ImageView에 설정
+                        binding.itemImage.setImageBitmap(resource)
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // 이미지가 로드 해제되면 할 작업이 있다면 여기에 추가
+                    }
+                })
         } else {
             binding.itemImage.visibility = View.GONE
+            binding.itemImage.setImageBitmap(null)
         }
 
         // 날짜 데이터
         val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
 
-        val itemDate = dates[position]
+        val itemDate = dates.getOrNull(position)
         binding.date.text = itemDate?.let {
             try {
                 val parsedDate = dateFormat.parse(it)
@@ -95,7 +122,7 @@ class MyAdapter(
             newDateFormat.format(currentDate)
         }
 
-        val itemDay = day[position]
+        val itemDay = day.getOrNull(position)
         binding.day.text = when (itemDay) {
             "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" -> itemDay
             else -> {
