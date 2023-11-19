@@ -136,15 +136,6 @@ class AddActivity: AppCompatActivity() {
             if (existingEntryCount > 0) {
                 showCustomToast("이미 같은 날짜의 일기가 있습니다.")
             } else {
-                db.execSQL(
-                    "insert into TODO_TB (content, date, day, image_uri) values (?, ?, ?, ?)",
-                    arrayOf(
-                        inputData,
-                        selectedDate,
-                        selectDay ?: "",
-                        selectedImageUri?.toString() ?: ""
-                    )
-                )
 
                 val intent = Intent().apply {
                     putExtra("result", inputData)
