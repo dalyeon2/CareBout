@@ -14,12 +14,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </ScrollView>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,48 +50,40 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="24dp"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/userImage"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:src="@drawable/square_shape"
-            android:visibility="gone"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:orientation="vertical">
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="3dp"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:id="@+id/userStory"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/userImage"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:typeface="monospace"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                android:maxLines="5"
-                android:text="오늘은 맑은 날씨에 강아지와 함께 한 산책이 기분 좋았다. 산책로를 따라 걸어가면서, 강아지는 새로운 냄새에 흥분하며 주위를 탐험했다.  작은 발자국 소리와 함께 나뭇가지 사이로 비추어지는 햇살은 우리 모두에게 활력을 불어넣어 주었다. 강아지는 주위의 모든 것에 호기심을 가지고, 꽃의 향기에도 흥분했다. \n함께 뛰어놀며 시간 가는 줄 모르고, 자연 속에서의 소중한 순간을 함께 나눴다. 집에 돌아와 강아지는 행복한 표정으로 피로를 풀며 쉬고 있었다. 오늘의 강아지와의 산책은 우리 둘에게 즐거운 기억으로 남을 것이다." />
+                android:layout_gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:src="@drawable/square_shape"
+                android:visibility="gone"/>
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/userStory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginBottom="80dp"
+                    android:typeface="monospace"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:text="오늘은 맑은 날씨에 강아지와 함께 한 산책이 기분 좋았다. 산책로를 따라 걸어가면서, 강아지는 새로운 냄새에 흥분하며 주위를 탐험했다.  작은 발자국 소리와 함께 나뭇가지 사이로 비추어지는 햇살은 우리 모두에게 활력을 불어넣어 주었다. 강아지는 주위의 모든 것에 호기심을 가지고, 꽃의 향기에도 흥분했다. \n함께 뛰어놀며 시간 가는 줄 모르고, 자연 속에서의 소중한 순간을 함께 나눴다. 집에 돌아와 강아지는 행복한 표정으로 피로를 풀며 쉬고 있었다. 오늘의 강아지와의 산책은 우리 둘에게 즐거운 기억으로 남을 것이다." />
 
-    </LinearLayout>
+            </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

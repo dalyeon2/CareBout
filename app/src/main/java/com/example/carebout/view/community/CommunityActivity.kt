@@ -66,7 +66,6 @@ class CommunityActivity : AppCompatActivity() {
                     put("image_uri", uriToDisplay?.toString() ?: "")
                 }
                 val newRowId = db.insert("TODO_TB", null, contentValues)
-                db.insert("TODO_TB", null, contentValues)
                 db.close()
 
                 if (newRowId != -1L) {
@@ -96,18 +95,10 @@ class CommunityActivity : AppCompatActivity() {
 
             positionToRemove?.let { position ->
                 if (contents?.isNotEmpty() == true && position in 0 until contents!!.size) {
-                    // 이미지 파일 삭제
-                    val imageUriToRemove = imageUris?.getOrNull(position)
-                    imageUriToRemove?.let { uri ->
-                        val file = File(uri.path)
-                        if (file.exists()) {
-                            file.delete()
-                        }
-                    }
 
                     // DB에서 데이터 삭제
                     val db = DBHelper(this).writableDatabase
-                    val idToRemove = position + 1
+                    val idToRemove = position
                     val rowsAffected = db.delete("TODO_TB", "_id=?", arrayOf(idToRemove.toString()))
                     db.close()
 
