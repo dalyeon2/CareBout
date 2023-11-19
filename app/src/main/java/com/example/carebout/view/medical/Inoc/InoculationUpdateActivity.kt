@@ -87,12 +87,12 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
             var uTagDHPPL: Boolean = intent.getBooleanExtra("uTagDHPPL", true)
             var uTagC: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagKC: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagCVRP: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagFL: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagFID: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagR: Boolean = intent.getBooleanExtra("uTagC", false)
-            var uTagH: Boolean = intent.getBooleanExtra("uTagC", false)
+            var uTagKC: Boolean = intent.getBooleanExtra("uTagKC", false)
+            var uTagCVRP: Boolean = intent.getBooleanExtra("uTagCVRP", false)
+            var uTagFL: Boolean = intent.getBooleanExtra("uTagFL", false)
+            var uTagFID: Boolean = intent.getBooleanExtra("uTagFID", false)
+            var uTagR: Boolean = intent.getBooleanExtra("uTagR", false)
+            var uTagH: Boolean = intent.getBooleanExtra("uTagH", false)
 
             //화면에 값 적용
             editTextList.setText(uTag)
@@ -110,6 +110,8 @@ class InoculationUpdateActivity : AppCompatActivity() {
             tagR.isChecked = uTagR
             tagH.isChecked = uTagH
 
+//            Log.i("in tag1", "${uTagDHPPL} ${uTagC} ${uTagKC} ${uTagCVRP.toString()}")
+//            Log.i("in tag2", "${uTagFL} ${uTagFID} ${uTagR} ${uTagH.toString()}")
             Log.i("in", uTag.toString())
         }
 
@@ -136,6 +138,7 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
         tagCVRP.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                Log.i("in2", "${tagCVRP.isChecked}")
                 val otherTags = listOf(tagDHPPL, tagC, tagKC, tagFL, tagFID, tagR, tagH)
                 otherTags.forEach { it.isChecked = false }
             }
