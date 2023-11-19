@@ -33,6 +33,25 @@ class MyAdapter(
     val day: MutableList<String?>
     ):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    fun updateData(newContents: List<String>?, newImageUris: List<Uri>?, newDates: List<String?>, newDay: List<String?>) {
+        contents?.clear()
+        contents?.addAll(newContents ?: emptyList())
+
+        imageUris?.clear()
+        imageUris?.addAll(newImageUris ?: emptyList())
+
+        dates.clear()
+        dates.addAll(newDates)
+
+        day.clear()
+        day.addAll(newDay)
+
+        contents?.sortByDescending { dates[contents.indexOf(it)] }
+        dates.sortByDescending { it }
+
+        notifyDataSetChanged()
+    }
+
     //항목 개수를 판단하기 위해 자동 호출
     override fun getItemCount(): Int {
         return contents?.size ?: 0

@@ -65,8 +65,15 @@ class CommunityActivity : AppCompatActivity() {
                     put("day", selectedDayResult)
                     put("image_uri", uriToDisplay?.toString() ?: "")
                 }
+                val newRowId = db.insert("TODO_TB", null, contentValues)
                 db.insert("TODO_TB", null, contentValues)
                 db.close()
+
+                if (newRowId != -1L) {
+                    adapter.notifyItemInserted(0)
+                } else {
+
+                }
 
                 adapter.notifyDataSetChanged()
 
@@ -101,9 +108,12 @@ class CommunityActivity : AppCompatActivity() {
                     // DB에서 데이터 삭제
                     val db = DBHelper(this).writableDatabase
                     val idToRemove = position + 1
-                    db.delete("TODO_TB", "_id=?", arrayOf(idToRemove.toString()))
+                    val rowsAffected = db.delete("TODO_TB", "_id=?", arrayOf(idToRemove.toString()))
                     db.close()
 
+                    if (rowsAffected > 0) {
+
+                    }
                     imageUris?.removeAt(position)
                     contents?.removeAt(position)
                     selectedDates.removeAt(position)
@@ -197,7 +207,6 @@ class CommunityActivity : AppCompatActivity() {
                     val imageUriString = getString(imageUriIndex)
                     val imageUri = Uri.parse(imageUriString)
 
-                    // Add data to the lists
                     contents?.add(0, content)
                     selectedDates.add(0, date)
                     selectedDay.add(0, day)
@@ -208,6 +217,8 @@ class CommunityActivity : AppCompatActivity() {
             }
         }
         db.close()
+
+        adapter.notifyDataSetChanged()
 
         // 데이터가 추가되면 RecyclerView를 보이도록 설정
         if (contents?.isNotEmpty() == true) {
