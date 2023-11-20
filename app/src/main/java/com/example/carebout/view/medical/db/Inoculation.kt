@@ -49,9 +49,6 @@ data class Inoculation (
     @ColumnInfo(name = "tag_Heartworm")
     var tag_Heartworm: Boolean?,
 
-    @ColumnInfo(name = "tag")
-    var tag: String?,
-
     @ColumnInfo(name = "date")
     var date: String?,
 

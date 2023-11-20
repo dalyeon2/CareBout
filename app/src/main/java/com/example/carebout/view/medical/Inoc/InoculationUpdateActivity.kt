@@ -59,7 +59,6 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
         updatePetTag()
 
-        val editTextList: EditText = findViewById(R.id.editTextList)
         val editTextDate: EditText = findViewById(R.id.editTextDate)
         val editTextDue: EditText = findViewById(R.id.editTextDue)
         val editTextH: EditText = findViewById(R.id.editTextH)
@@ -85,7 +84,6 @@ class InoculationUpdateActivity : AppCompatActivity() {
             // clinicId를 사용하여 데이터베이스에서 해당 아이템 정보를 가져와서 수정 페이지에서 사용할 수 있음
             // 수정 기능을 구현하는 코드 추가
             //넘어온 데이터 변수에 담기
-            var uTag: String? = intent.getStringExtra("uTag")
             var uDate: String? = intent.getStringExtra("uDate")
             var uDue: String? = intent.getStringExtra("uDue")
             var uHospital: String? = intent.getStringExtra("uHospital")
@@ -101,7 +99,6 @@ class InoculationUpdateActivity : AppCompatActivity() {
             var uTagH: Boolean = intent.getBooleanExtra("uTagH", false)
 
             //화면에 값 적용
-            editTextList.setText(uTag)
             editTextDate.setText(uDate)
             editTextDue.setText(uDue)
             editTextH.setText(uHospital)
@@ -118,7 +115,6 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
 //            Log.i("in tag1", "${uTagDHPPL} ${uTagC} ${uTagKC} ${uTagCVRP.toString()}")
 //            Log.i("in tag2", "${uTagFL} ${uTagFID} ${uTagR} ${uTagH.toString()}")
-            Log.i("in", uTag.toString())
         }
 
         tagDHPPL.setOnCheckedChangeListener { _, isChecked ->
@@ -206,7 +202,6 @@ class InoculationUpdateActivity : AppCompatActivity() {
     }
 
     private fun updateInoc() {
-        val inocTag = binding.editTextList.text.toString()
         val inocDate = binding.editTextDate.text.toString()
         val inocDue = binding.editTextDue.text.toString()
         val inocH = binding.editTextH.text.toString()
@@ -244,7 +239,7 @@ class InoculationUpdateActivity : AppCompatActivity() {
             return
         }
 
-        val Inoc = Inoculation(id, petId, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocTag, inocDate, inocDue, inocH, inocEtc)
+        val Inoc = Inoculation(id, petId, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocDate, inocDue, inocH, inocEtc)
 
         if ((!tagDHPPL && !tagC && !tagKC && !tagCVRP && !tagFL && !tagFID && !tagR && !tagH) || inocDate.isBlank()) {
             Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
