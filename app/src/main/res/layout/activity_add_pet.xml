@@ -84,8 +84,7 @@
                 android:layout_marginTop="5dp"
                 android:paddingHorizontal="10dp"
                 android:background="@drawable/edittext_rounded_corner_rectangle"
-                android:digits="0123456789-"
-                android:inputType="date"
+                android:focusableInTouchMode="false"
                 android:hint="ex) 0000-00-00"
                 app:layout_constraintTop_toBottomOf="@id/birthTitle"/>
 
@@ -108,6 +107,7 @@
                 android:digits="0123456789."
                 android:inputType="numberDecimal"
                 android:hint="ex) 3.5"
+
                 app:layout_constraintTop_toBottomOf="@id/weightTitle"/>
 
             <TextView
