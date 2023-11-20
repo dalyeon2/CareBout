@@ -76,6 +76,8 @@ class AddActivity: AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_left_arrow)
+
         binding.bottomIcon.setOnClickListener {
             openGallery()
         }
