@@ -31,6 +31,8 @@ class StoryActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_left_arrow)
+
         val receivedData = intent.getStringExtra("result")
         val receivedImageUri = intent.getParcelableExtra<Uri>("imageUri")
         val receivedDate = intent.getStringExtra("selectedDate")
