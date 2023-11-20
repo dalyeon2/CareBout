@@ -45,6 +45,45 @@
                     android:textSize="12sp" />
 
                 <ToggleButton
+                    android:id="@+id/toggleButton4"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="CVRP"
+                    android:textColor="@color/medi_tab"
+                    android:textOff="CVRP"
+                    android:textOn="CVRP"
+                    android:textSize="12sp" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButton8"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="심장사상충"
+                    android:textColor="@color/medi_tab"
+                    android:textOff="심장사상충"
+                    android:textOn="심장사상충"
+                    android:textSize="12sp" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButton7"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="광견병"
+                    android:textColor="@color/medi_tab"
+                    android:textOff="광견병"
+                    android:textOn="광견병"
+                    android:textSize="12sp" />
+
+                <ToggleButton
                     android:id="@+id/toggleButton2"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="70dp"
@@ -71,19 +110,6 @@
                     android:textSize="12sp" />
 
                 <ToggleButton
-                    android:id="@+id/toggleButton4"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/togglebtn_check"
-                    android:text="CVRP"
-                    android:textColor="@color/medi_tab"
-                    android:textOff="CVRP"
-                    android:textOn="CVRP"
-                    android:textSize="12sp" />
-
-                <ToggleButton
                     android:id="@+id/toggleButton5"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="70dp"
@@ -107,32 +133,6 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="FID"
                     android:textOn="FID"
-                    android:textSize="12sp" />
-
-                <ToggleButton
-                    android:id="@+id/toggleButton7"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/togglebtn_check"
-                    android:text="광견병"
-                    android:textColor="@color/medi_tab"
-                    android:textOff="광견병"
-                    android:textOn="광견병"
-                    android:textSize="12sp" />
-
-                <ToggleButton
-                    android:id="@+id/toggleButton8"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="85dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/togglebtn_check"
-                    android:text="심장사상충"
-                    android:textColor="@color/medi_tab"
-                    android:textOff="심장사상충"
-                    android:textOn="심장사상충"
                     android:textSize="12sp" />
 
             </LinearLayout>
