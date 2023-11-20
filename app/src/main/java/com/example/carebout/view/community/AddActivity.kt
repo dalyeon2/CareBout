@@ -111,23 +111,28 @@ class AddActivity: AppCompatActivity() {
 
             selectedDate = intent.getStringExtra("existingDate")
             selectDay = intent.getStringExtra("existingDay")
+
+            binding.date.text = selectedDate
+            binding.day.text = selectDay
         }
 
-        // 현재 날짜 표기
-        val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
-        val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
-        val calendar = Calendar.getInstance()
-        calendar.time = currentDate
-        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-        val formattedDay = koreanDays[dayOfWeek - 1]
-        val formattedDate = dateFormat.format(currentDate)
-        binding.date.text = formattedDate
-        binding.day.text = formattedDay
+        if (selectedDate == null) {
+            // 현재 날짜 표기
+            val currentDate = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+            val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
+            val calendar = Calendar.getInstance()
+            calendar.time = currentDate
+            val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+            val formattedDay = koreanDays[dayOfWeek - 1]
+            val formattedDate = dateFormat.format(currentDate)
+            binding.date.text = formattedDate
+            binding.day.text = formattedDay
 
-        binding.dateClick.setOnClickListener {
-            if (!intent.getBooleanExtra("isEdit", false)) {
-                showDatePickerDialog()
+            binding.dateClick.setOnClickListener {
+                if (!intent.getBooleanExtra("isEdit", false)) {
+                    showDatePickerDialog()
+                }
             }
         }
     }
@@ -186,7 +191,6 @@ class AddActivity: AppCompatActivity() {
                 val contentValues = ContentValues().apply {
                     put("content", inputData)
                     put("image_uri", selectedImageUri?.toString() ?: "")
-                    // Add other fields you want to update
                 }
 
                 setResult(Activity.RESULT_OK, intent)
@@ -201,8 +205,8 @@ class AddActivity: AppCompatActivity() {
 
                 if (rowsAffected > 0) {
                     showCustomToast("일기가 성공적으로 수정되었습니다.")
-                    setResult(Activity.RESULT_OK)
-                    finish()
+                    val resultIntent = Intent()
+                    setResult(Activity.RESULT_OK, resultIntent)
                 } else {
                     showCustomToast("일기 수정에 실패했습니다.")
                 }
