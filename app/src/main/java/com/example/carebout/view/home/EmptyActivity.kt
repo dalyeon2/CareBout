@@ -36,4 +36,13 @@ class EmptyActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (db.personalInfoDao().getAllInfo().isNotEmpty()) {
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+        }
+    }
+
 }

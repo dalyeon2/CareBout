@@ -3,7 +3,7 @@ package com.example.carebout.view.home
 import MyAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View.GONE
+import android.view.View.INVISIBLE
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +20,7 @@ class AddWeightActivity : AppCompatActivity() {
     private lateinit var weight: WeightDao
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: MyAdapter
+    private lateinit var wAdapter: MyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,20 +33,19 @@ class AddWeightActivity : AppCompatActivity() {
         // 상단바 타이틀
         binding.topBarOuter.activityTitle.text = "체중 기록"
         // 상단바 우측 버튼 사용 안함
-        binding.topBarOuter.CompleteBtn.visibility = GONE
+        binding.topBarOuter.CompleteBtn.visibility = INVISIBLE
 
         val dataList: MutableList<Pair<Float, String>> = getWeightDataSet(nowPid)
 
         recyclerView = findViewById(R.id.weightRecycler)
-        adapter = MyAdapter(this, dataList)
+        wAdapter = MyAdapter(this, dataList)
 
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = adapter
+        recyclerView.adapter = wAdapter
 
         // 뒤로가기 버튼
         binding.topBarOuter.backToActivity.setOnClickListener {
-
             finish()
         }
 
@@ -58,7 +57,13 @@ class AddWeightActivity : AppCompatActivity() {
             if (!isValid(w, d))
                 return@setOnClickListener
 
-            adapter.addItem(Pair(w.text.toString().toFloat(), d.text.toString()))
+            weight.insertInfo(Weight(
+                nowPid,
+                w.text.toString().toFloat(),
+                d.text.toString()
+            ))
+
+            wAdapter.addItem(Pair(w.text.toString().toFloat(), d.text.toString()))
         }
     }
 
@@ -70,17 +75,6 @@ class AddWeightActivity : AppCompatActivity() {
         }
 
         return weightDS
-    }
-
-    private fun saveWeight(wList: ArrayList<Weight>) {
-        val intt = intent
-        val pid = intt.getIntExtra("pid", 0)
-
-        weight.insertInfo(Weight(
-            pid,
-            3.5f,
-            "2023-12-12"
-        ))
     }
 
     private fun isValid(weight: EditText, date: EditText) : Boolean {

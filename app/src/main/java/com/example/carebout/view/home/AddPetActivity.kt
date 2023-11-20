@@ -17,7 +17,7 @@ import java.util.Locale
 
 class AddPetActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityAddPetBinding
+    private lateinit var binding: ActivityAddPetBinding
     private lateinit var db: AppDatabase
     private lateinit var imageUri: Uri
 
@@ -87,16 +87,6 @@ class AddPetActivity : AppCompatActivity() {
                 currentDate
             ))
 
-            var empty = EmptyActivity()
-
-            if (!intent.getBooleanExtra("addedPet", true)) {
-                empty?.startActivity(Intent(empty, HomeActivity::class.java))
-                empty?.finish()
-            }
-
-            var home = HomeActivity()
-            home?.finish()
-            home?.startActivity(Intent(this@AddPetActivity, HomeActivity::class.java))
             finish()
         }
 
@@ -114,6 +104,7 @@ class AddPetActivity : AppCompatActivity() {
         val name = binding.editName
         val birth = binding.editBirth
         val breed = binding.editBreed
+        val weight = binding.editWeight
 
         if(name.text.isNullOrBlank())
             name.error = ""
@@ -121,6 +112,8 @@ class AddPetActivity : AppCompatActivity() {
             birth.error = ""
         else if(breed.text.isNullOrBlank())
             breed.error = "모르면 '모름'이라고 입력 해주세요"
+        else if(weight.text.isNullOrBlank())
+            weight.error = ""
         else {
             return true
         }
