@@ -28,8 +28,6 @@ import com.example.carebout.view.medical.Todo.TodoReadActivity
 import com.example.carebout.view.medical.Todo.TodoWriteActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 
 class MedicalActivity : AppCompatActivity() {

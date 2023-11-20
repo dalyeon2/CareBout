@@ -19,13 +19,11 @@ class RecyclerAdapter(private val dataSet: ArrayList<Pair<String, String>>) :
         val dateText: TextView
 
         init {
-            // Define click listener for the ViewHolder's View.
             headText = view.findViewById(R.id.inspection)
             dateText = view.findViewById(R.id.date)
         }
     }
 
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
@@ -34,7 +32,6 @@ class RecyclerAdapter(private val dataSet: ArrayList<Pair<String, String>>) :
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
@@ -43,7 +40,16 @@ class RecyclerAdapter(private val dataSet: ArrayList<Pair<String, String>>) :
         viewHolder.dateText.text = data.second
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
+
+    public fun addItem(a: Pair<String, String>){
+        dataSet.add(a)
+        notifyItemInserted(dataSet.size-1)
+    }
+    public fun removeItem(index: Int){
+        dataSet.removeAt(index)
+        notifyItemRemoved(index)
+        //notifyDataSetChanged()
+    }
 }

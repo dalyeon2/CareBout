@@ -12,11 +12,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityStoryBinding
-import com.example.carebout.view.IntroActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
@@ -34,6 +31,8 @@ class StoryActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_left_arrow)
 
         val receivedData = intent.getStringExtra("result")
         val receivedImageUri = intent.getParcelableExtra<Uri>("imageUri")
@@ -66,7 +65,15 @@ class StoryActivity : AppCompatActivity() {
         }
 
         R.id.menu_edit -> {
-
+            val editIntent = Intent(this, AddActivity::class.java).apply {
+                putExtra("isEdit", true)
+                putExtra("position", intent.getIntExtra("position", -1))
+                putExtra("existingContent", intent.getStringExtra("result"))
+                putExtra("existingImageUri", intent.getParcelableExtra<Uri>("imageUri"))
+                putExtra("existingDate", intent.getStringExtra("selectedDate"))
+                putExtra("existingDay", intent.getStringExtra("selectedDay"))
+            }
+            startActivity(editIntent)
             finish()
             true
         }

@@ -87,14 +87,14 @@ class AddPetActivity : AppCompatActivity() {
                 currentDate
             ))
 
-            var empty = EmptyActivity.emptyActivity
+            var empty = EmptyActivity()
 
             if (!intent.getBooleanExtra("addedPet", true)) {
                 empty?.startActivity(Intent(empty, HomeActivity::class.java))
                 empty?.finish()
             }
 
-            var home = HomeActivity.homeActivity
+            var home = HomeActivity()
             home?.finish()
             home?.startActivity(Intent(this@AddPetActivity, HomeActivity::class.java))
             finish()
@@ -121,8 +121,9 @@ class AddPetActivity : AppCompatActivity() {
             birth.error = ""
         else if(breed.text.isNullOrBlank())
             breed.error = "모르면 '모름'이라고 입력 해주세요"
-        else
+        else {
             return true
+        }
 
         return false
     }
