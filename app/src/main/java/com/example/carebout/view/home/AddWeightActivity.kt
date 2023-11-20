@@ -37,12 +37,17 @@ class AddWeightActivity : AppCompatActivity() {
         // 상단바 우측 버튼 사용 안함
         binding.topBarOuter.CompleteBtn.visibility = INVISIBLE
 
+
         val dataList: MutableList<Pair<Float, String>> = getWeightDataSet(nowPid)
+        dataList.sortBy { it.second }
 
         recyclerView = findViewById(R.id.weightRecycler)
         wAdapter = MyAdapter(this, dataList)
 
-        val layoutManager = LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this).apply {
+            stackFromEnd = true
+            reverseLayout = true
+        }
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = wAdapter
 
@@ -81,6 +86,9 @@ class AddWeightActivity : AppCompatActivity() {
             ))
 
             wAdapter.addItem(Pair(w.text.toString().toFloat(), d.text.toString()))
+
+            w.setText("")
+            d.setText("")
         }
     }
 
