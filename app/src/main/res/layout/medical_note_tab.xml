@@ -18,14 +18,15 @@
             android:layout_height="wrap_content"
             android:background="@drawable/dailycare_background"
             android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
 
             <RadioGroup
                 android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="13dp"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -41,7 +42,7 @@
                 android:id="@+id/dailycareBG"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="13dp"
                 android:background="@drawable/tab_radius"
                 android:padding="5dp">
 
@@ -152,7 +153,7 @@
                     <LinearLayout
                         android:id="@+id/mediingFrame"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignTop="@+id/emptyView"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
@@ -161,7 +162,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="0dp"
                         android:layout_marginBottom="10dp"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:orientation="vertical">
 
                         <TextView
@@ -169,6 +170,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginTop="15dp"
                             android:gravity="center"
                             android:text="&quot;현재 복용약이 없습니다&quot;"
                             android:textSize="16dp"
@@ -185,7 +187,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="13dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="13dp"
                     android:background="@drawable/tab_radius">
 
                 </RelativeLayout>

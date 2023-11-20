@@ -10,7 +10,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -51,7 +50,6 @@ class ClinicWriteActivity : AppCompatActivity() {
             //(application as PidApplication).petId
         Log.i("petId_app", petId.toString())
 
-        val editTextList: EditText = findViewById(R.id.editTextList)
         val editTextDate: EditText = findViewById(R.id.editTextDate)
         val editTextH: EditText = findViewById(R.id.editTextH)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
@@ -83,8 +81,6 @@ class ClinicWriteActivity : AppCompatActivity() {
 
     private fun insertClinic() {
 
-
-        val clinicTag = binding.editTextList.text.toString()
         val clinicDate = binding.editTextDate.text.toString()
         val clinicH = binding.editTextH.text.toString()
         val clinicEtc = binding.editTextMultiLine.text.toString()
@@ -120,7 +116,7 @@ class ClinicWriteActivity : AppCompatActivity() {
             return
         }
 
-        val Clinic = Clinic(null, petId, tag1, tag2, tag3, tag4, tag5, tag6, clinicTag, clinicDate, clinicH, clinicEtc)
+        val Clinic = Clinic(null, petId, tag1, tag2, tag3, tag4, tag5, tag6, clinicDate, clinicH, clinicEtc)
 
         if ((!tag1 && !tag2 && !tag3 && !tag4 && !tag5 && !tag6) || clinicDate.isBlank()) {
             Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()

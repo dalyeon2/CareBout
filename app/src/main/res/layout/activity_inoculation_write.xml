@@ -66,8 +66,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton1"
-                                android:layout_width="75dp"
-                                android:layout_height="30dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="DHPPL"
@@ -75,9 +75,39 @@
                                 android:textOn="DHPPL" />
 
                             <ToggleButton
+                                android:id="@+id/toggleButton4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/togglebtn_check"
+                                android:text="CVRP"
+                                android:textOff="CVRP"
+                                android:textOn="CVRP" />
+
+                            <ToggleButton
+                                android:id="@+id/toggleButton8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/togglebtn_check"
+                                android:text="심장사상충"
+                                android:textOff="심장사상충"
+                                android:textOn="심장사상충" />
+
+                            <ToggleButton
+                                android:id="@+id/toggleButton7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/togglebtn_check"
+                                android:text="광견병"
+                                android:textOff="광견병"
+                                android:textOn="광견병" />
+
+                            <ToggleButton
                                 android:id="@+id/toggleButton2"
-                                android:layout_width="75dp"
-                                android:layout_height="30dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="코로나"
@@ -86,8 +116,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton3"
-                                android:layout_width="75dp"
-                                android:layout_height="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="켄넬코프"
@@ -95,19 +125,9 @@
                                 android:textOn="켄넬코프" />
 
                             <ToggleButton
-                                android:id="@+id/toggleButton4"
-                                android:layout_width="75dp"
-                                android:layout_height="30dp"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/togglebtn_check"
-                                android:text="CVRP"
-                                android:textOff="CVRP"
-                                android:textOn="CVRP" />
-
-                            <ToggleButton
                                 android:id="@+id/toggleButton5"
-                                android:layout_width="75dp"
-                                android:layout_height="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="백혈병"
@@ -116,33 +136,13 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton6"
-                                android:layout_width="75dp"
-                                android:layout_height="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="FID"
                                 android:textOff="FID"
                                 android:textOn="FID" />
-
-                            <ToggleButton
-                                android:id="@+id/toggleButton7"
-                                android:layout_width="75dp"
-                                android:layout_height="35dp"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/togglebtn_check"
-                                android:text="광견병"
-                                android:textOff="광견병"
-                                android:textOn="광견병" />
-
-                            <ToggleButton
-                                android:id="@+id/toggleButton8"
-                                android:layout_width="75dp"
-                                android:layout_height="35dp"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/togglebtn_check"
-                                android:text="심장사상충"
-                                android:textOff="심장사상충"
-                                android:textOn="심장사상충" />
 
                         </LinearLayout>
                     </HorizontalScrollView>
@@ -150,7 +150,7 @@
                     <EditText
                         android:id="@+id/editTextList"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="48dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/edittext_rounded_corner_rectangle"
                         android:ems="10"
@@ -173,7 +173,7 @@
                 <EditText
                     android:id="@+id/editTextDate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="접종/구충 날짜 작성"
@@ -194,7 +194,7 @@
                 <EditText
                     android:id="@+id/editTextDue"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="접종/구충 예정일 작성"
@@ -215,7 +215,7 @@
                 <EditText
                     android:id="@+id/editTextH"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="병원 이름 작성"

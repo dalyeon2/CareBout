@@ -2,17 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/topBar"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
+    android:layout_height="65dp"
     android:background="@color/white">
 
-    <Button
+    <FrameLayout
         android:id="@+id/backToActivity"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="←"
-        android:textSize="18dp"
-        android:background="@color/transparent" />
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_back" />
+
+    </FrameLayout>
     <TextView
         android:id="@+id/activityTitle"
         android:layout_width="0dp"
@@ -23,15 +29,20 @@
         android:textColor="@color/black"
         android:gravity="center"
         android:background="@color/transparent"/>
-    <Button
+    <FrameLayout
         android:id="@+id/CompleteBtn"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="등록"
-        android:textSize="18dp"
-        android:textColor="#6EC677"
-        android:textStyle="bold"
-        android:background="@color/transparent"/>
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:tint="#6EC677"
+            android:src="@drawable/ic_checked"/>
+
+    </FrameLayout>
 
 </LinearLayout>

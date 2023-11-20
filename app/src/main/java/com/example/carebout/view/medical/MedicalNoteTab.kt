@@ -11,15 +11,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.RelativeLayout
-import android.widget.TableLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.marginRight
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.carebout.R
-import com.example.carebout.databinding.ActivityMedicalBinding
-import com.example.carebout.databinding.MedicalNoteTabBinding
 import com.example.carebout.view.home.db.PersonalInfoDao
 import com.example.carebout.view.medical.Medicine.MedicineReadActivity
 import com.example.carebout.view.medical.Todo.TodoReadActivity
@@ -139,6 +136,8 @@ class MedicalNoteTab : Fragment() {
 //        }
 //    }
 
+
+
     private fun updatePetSelection() {
         // 라디오 그룹 초기화
         petRadioGroup.removeAllViews()
@@ -153,11 +152,14 @@ class MedicalNoteTab : Fragment() {
             // 라디오 버튼 동적 생성
             for (pet in petList) {
                 val radioButton = RadioButton(requireContext())
-                radioButton.text = pet.name
+                var sex: String = if (pet.sex=="male") "♂" else "♀"
+                radioButton.text = pet.name + sex
+                radioButton.setPadding(0, 5, 30, 5)
                 radioButton.tag = pet.pid  // pid 태그에 저장
-                radioButton.background = getResources().getDrawable(R.drawable.togglebtn_check)
-                radioButton.setTextColor(getResources().getColor(R.color.medi_tab))
+                radioButton.textSize = 18.0f
+                radioButton.buttonDrawable = getResources().getDrawable(R.drawable.medical_radio_selector)
                 petRadioGroup.addView(radioButton)
+                Log.i("pid_animal", pet.animal)
 
                 // 가져온 petId 값과 현재 라디오 버튼의 tag가 일치하면 선택
                 if (petId != 0 && pet.pid == MyPid.getPid()) {
@@ -173,6 +175,9 @@ class MedicalNoteTab : Fragment() {
 //            // 첫 번째 라디오 버튼을 디폴트로 선택
 //            val firstRadioButton = petRadioGroup.getChildAt(0) as? RadioButton
 //            firstRadioButton?.isChecked = true
+        } else {
+            petRadioGroup.removeAllViews()
+            MyPid.setPid(0)
         }
     }
 
@@ -308,3 +313,4 @@ class MedicalNoteTab : Fragment() {
         return medicalNoteTabView
     }
 }
+

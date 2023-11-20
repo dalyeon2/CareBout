@@ -10,40 +10,35 @@ import com.example.carebout.R
 class RecyclerAdapter(private val dataSet: ArrayList<Pair<String, String>>) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
-     */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val headText: TextView
-        val dateText: TextView
-
-        init {
-            // Define click listener for the ViewHolder's View.
-            headText = view.findViewById(R.id.inspection)
-            dateText = view.findViewById(R.id.date)
-        }
-    }
-
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.text_item, viewGroup, false)
 
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        val data: Pair<String, String> = dataSet[position]
-        viewHolder.headText.text = data.first
-        viewHolder.dateText.text = data.second
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bindData(dataSet[position])
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val headText = view.findViewById<TextView>(R.id.inspection)
+        val dateText = view.findViewById<TextView>(R.id.date)
+
+        fun bindData(item: Pair<String, String>) {
+            headText.text = item.first
+            dateText.text = item.second
+        }
+    }
+
+    fun addItem(item: Pair<String, String>){
+        dataSet.add(item)
+        notifyItemInserted(dataSet.size-1)
+    }
+    fun removeItem(position: Int){
+        dataSet.removeAt(position)
+        notifyItemRemoved(position)
+    }
 }

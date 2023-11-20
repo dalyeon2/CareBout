@@ -10,7 +10,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -53,7 +52,6 @@ class ClinicUpdateActivity : AppCompatActivity() {
             //(application as PidApplication).petId
         Log.i("petId_app", petId.toString())
 
-        val editTextList: EditText = findViewById(R.id.editTextList)
         val editTextDate: EditText = findViewById(R.id.editTextDate)
         val editTextH: EditText = findViewById(R.id.editTextH)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
@@ -69,7 +67,6 @@ class ClinicUpdateActivity : AppCompatActivity() {
             // clinicId를 사용하여 데이터베이스에서 해당 아이템 정보를 가져와서 수정 페이지에서 사용할 수 있음
             // 수정 기능을 구현하는 코드 추가
             //넘어온 데이터 변수에 담기
-            var uTag: String? = intent.getStringExtra("uTag")
             var uDate: String? = intent.getStringExtra("uDate")
             var uHospital: String? = intent.getStringExtra("uHospital")
             var uEtc: String? = intent.getStringExtra("uEtc")
@@ -82,7 +79,6 @@ class ClinicUpdateActivity : AppCompatActivity() {
             var uTagCheckup: Boolean = intent.getBooleanExtra("uTagCheckup", false)
 
             //화면에 값 적용
-            editTextList.setText(uTag)
             editTextDate.setText(uDate)
             editTextH.setText(uHospital)
             editTextMultiLine.setText(uEtc)
@@ -93,8 +89,6 @@ class ClinicUpdateActivity : AppCompatActivity() {
             binding.toggleButton4.isChecked = uTagC
             binding.toggleButton5.isChecked = uTagM
             binding.toggleButton6.isChecked = uTagCheckup
-
-            Log.i("in", uTag.toString())
         }
 
 //        updateBtn.setOnClickListener{
@@ -112,7 +106,6 @@ class ClinicUpdateActivity : AppCompatActivity() {
 
     private fun updateClinic() {
 
-        val clinicTag = binding.editTextList.text.toString()
         val clinicDate = binding.editTextDate.text.toString() // 할일 제목
         val clinicH = binding.editTextH.text.toString()
         val clinicEtc = binding.editTextMultiLine.text.toString()
@@ -147,7 +140,7 @@ class ClinicUpdateActivity : AppCompatActivity() {
             return
         }
 
-        val Clinic = Clinic(id, petId, tag1, tag2, tag3, tag4, tag5, tag6, clinicTag, clinicDate, clinicH, clinicEtc)
+        val Clinic = Clinic(id, petId, tag1, tag2, tag3, tag4, tag5, tag6, clinicDate, clinicH, clinicEtc)
 
         if ((!tag1 && !tag2 && !tag3 && !tag4 && !tag5 && !tag6) || clinicDate.isBlank()) {
             Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()

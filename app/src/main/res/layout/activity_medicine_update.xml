@@ -50,7 +50,7 @@
                 <EditText
                     android:id="@+id/editTextM"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="약 이름 작성"
@@ -70,7 +70,7 @@
                 <EditText
                     android:id="@+id/editTextStartD"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="2023-03-03"
@@ -90,7 +90,7 @@
                 <EditText
                     android:id="@+id/editTextEndD"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="복용 종료일 작성"
@@ -102,7 +102,7 @@
                 <CheckBox
                     android:id="@+id/checkBox"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:text="현재 복용 중"
                     android:textSize="14sp"
 

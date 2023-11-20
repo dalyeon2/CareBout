@@ -17,8 +17,8 @@
         <ToggleButton
             android:id="@+id/toggle"
             style="?android:attr/borderlessButtonStyle"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
 
@@ -65,9 +65,9 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="13dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="60dp"
-            android:layout_marginEnd="13dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginBottom="13dp">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -85,79 +85,79 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="0dp" />
 
-<!--            <TableLayout-->
-<!--                android:id="@+id/mediTableLay"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_alignParentStart="true"-->
-<!--                android:layout_alignParentTop="true"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:layout_marginStart="0dp"-->
-<!--                android:layout_marginTop="0dp"-->
-<!--                android:layout_marginEnd="0dp"-->
-<!--                android:layout_marginBottom="0dp"-->
-<!--                android:stretchColumns="*">-->
+            <!--            <TableLayout-->
+            <!--                android:id="@+id/mediTableLay"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:layout_alignParentStart="true"-->
+            <!--                android:layout_alignParentTop="true"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:layout_marginStart="0dp"-->
+            <!--                android:layout_marginTop="0dp"-->
+            <!--                android:layout_marginEnd="0dp"-->
+            <!--                android:layout_marginBottom="0dp"-->
+            <!--                android:stretchColumns="*">-->
 
-<!--                <TableRow-->
-<!--                    android:id="@+id/mediTableRow"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="120dp"-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:layout_marginBottom="5dp">-->
+            <!--                <TableRow-->
+            <!--                    android:id="@+id/mediTableRow"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="120dp"-->
+            <!--                    android:layout_marginTop="5dp"-->
+            <!--                    android:layout_marginBottom="5dp">-->
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/mediName"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="약 이름"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textStyle="bold" />-->
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/mediName"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:text="약 이름"-->
+            <!--                        android:textAlignment="center"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        android:textStyle="bold" />-->
 
-                    <!--                    <TextView-->
-                    <!--                        android:id="@+id/gumjinName"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_weight="1"-->
-                    <!--                        android:text="복용 기간"-->
-                    <!--                        android:textAlignment="center"-->
-                    <!--                        android:textSize="16sp"-->
-                    <!--                        android:textStyle="bold" />-->
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/gumjinName"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:text="복용 기간"-->
+            <!--                        android:textAlignment="center"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        android:textStyle="bold" />-->
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/start_text"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="복용 시작일"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textStyle="bold" />-->
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/start_text"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:text="복용 시작일"-->
+            <!--                        android:textAlignment="center"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        android:textStyle="bold" />-->
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/end_text"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="복용 종료일"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textStyle="bold" />-->
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/end_text"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:text="복용 종료일"-->
+            <!--                        android:textAlignment="center"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        android:textStyle="bold" />-->
 
-<!--                </TableRow>-->
+            <!--                </TableRow>-->
 
-                <!--구분선-->
-<!--                <View-->
-<!--                    android:id="@+id/lineView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="2dp"-->
-<!--                    android:layout_below="@+id/mediTableRow"-->
-<!--                    android:layout_marginHorizontal="10dp"-->
-<!--                    android:background="@color/main_color" />-->
+            <!--구분선-->
+            <!--                <View-->
+            <!--                    android:id="@+id/lineView"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="2dp"-->
+            <!--                    android:layout_below="@+id/mediTableRow"-->
+            <!--                    android:layout_marginHorizontal="10dp"-->
+            <!--                    android:background="@color/main_color" />-->
 
-<!--            </TableLayout>-->
+            <!--            </TableLayout>-->
         </RelativeLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

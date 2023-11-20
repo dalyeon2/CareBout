@@ -26,18 +26,18 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@+id/toolbar11"
+      android:layout_marginLeft="30dp"
       android:layout_marginTop="0dp"
+      android:layout_marginRight="30dp"
       android:gravity="center_vertical"
       android:orientation="horizontal"
-      android:paddingLeft="20dp"
       android:paddingTop="10dp"
-      android:paddingRight="20dp"
       android:paddingBottom="10dp">
 
     <ToggleButton
         android:id="@+id/toggle"
-        android:layout_width="75dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:background="@drawable/togglebtn_check"
         android:text="복용중"
@@ -48,7 +48,7 @@
 
   </LinearLayout>
 
-  <LinearLayout
+<!--  <LinearLayout
       android:id="@+id/title_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
         android:textColor="#000"
         android:textSize="16sp" />
 
-    <!--상태 메시지-->
+    &lt;!&ndash;상태 메시지&ndash;&gt;
     <TextView
         android:id="@+id/start_v"
         android:layout_width="0dp"
@@ -106,7 +106,7 @@
         android:textSize="16sp" />
   </LinearLayout>
 
-  <!--구분선-->
+  &lt;!&ndash;구분선&ndash;&gt;
   <View
       android:id="@+id/lineView"
       android:layout_width="match_parent"
@@ -117,13 +117,15 @@
       android:layout_marginLeft="20dp"
       android:layout_marginEnd="20dp"
       android:layout_marginRight="20dp"
-      android:background="#262626" />
+      android:background="#262626" />-->
 
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recyclerView"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_below="@+id/lineView"
+      android:layout_below="@+id/tag_layout"
+      android:layout_marginLeft="30dp"
+      android:layout_marginRight="30dp"
       android:paddingLeft="20dp"
       android:paddingRight="20dp" />
 

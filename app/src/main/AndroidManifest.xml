@@ -14,6 +14,9 @@
         android:theme="@style/Theme.CareBout"
         tools:targetApi="31">
         <activity
+            android:name=".view.home.EditWeightActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.home.EditPetActivity"
             android:exported="false" />
         <activity
@@ -58,7 +61,7 @@
             android:name=".view.community.AddActivity"
             android:exported="false"
             android:label=" "
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.medical.Todo.TodoReadActivity"
             android:exported="false"
@@ -77,28 +80,35 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".view.medical.Todo.TodoWriteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Inoc.InoculationWriteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Medicine.MedicineWriteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Clinic.ClinicWriteActivity"
             android:exported="false" />
         <activity
             android:name=".view.medical.Todo.TodoUpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Inoc.InoculationUpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Medicine.MedicineUpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Clinic.ClinicUpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

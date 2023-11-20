@@ -38,10 +38,7 @@ class ClinicAdapter2(private val context: Context)
 
         val clinicData = clinicList[position]
 
-        holder.tagText.text = clinicData.tag
-
         //데이터 변수에 담기
-        var uTag = clinicList[holder.bindingAdapterPosition].tag
         var uDate = clinicList[holder.bindingAdapterPosition].date
         var uHospital = clinicList[holder.bindingAdapterPosition].hospital
         var uEtc = clinicList[holder.bindingAdapterPosition].etc
@@ -54,14 +51,9 @@ class ClinicAdapter2(private val context: Context)
         var uTagCheckup = clinicList[holder.bindingAdapterPosition].tag_checkup //정기
 
         //데이터 적용
-        holder.tagText.text = uTag
         holder.dateText.text = uDate
         holder.hospitalText.text = uHospital
 //        holder.etcText.text = uEtc
-
-
-        holder.tagText.text = clinicData.tag
-        //holder
 
         var data = ArrayList<String>()
 
@@ -101,7 +93,6 @@ class ClinicAdapter2(private val context: Context)
             intent.putExtra("clinicId", clinicList[holder.bindingAdapterPosition].clinicId) // 아이템의 고유 ID 전달
             Log.i("id", clinicList[holder.bindingAdapterPosition].clinicId.toString())
             //값 담기
-            intent.putExtra("uTag", uTag)
             intent.putExtra("uDate", uDate)
             intent.putExtra("uHospital", uHospital)
             intent.putExtra("uEtc", uEtc)

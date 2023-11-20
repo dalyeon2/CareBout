@@ -34,8 +34,8 @@
                 <ToggleButton
                     android:id="@+id/toggleButton1"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/togglebtn_check"
                     android:text="DHPPL"
@@ -45,10 +45,49 @@
                     android:textSize="12sp" />
 
                 <ToggleButton
+                    android:id="@+id/toggleButton4"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="CVRP"
+                    android:textColor="@color/medi_tab"
+                    android:textOff="CVRP"
+                    android:textOn="CVRP"
+                    android:textSize="12sp" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButton8"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="심장사상충"
+                    android:textColor="@color/medi_tab"
+                    android:textOff="심장사상충"
+                    android:textOn="심장사상충"
+                    android:textSize="12sp" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButton7"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/togglebtn_check"
+                    android:text="광견병"
+                    android:textColor="@color/medi_tab"
+                    android:textOff="광견병"
+                    android:textOn="광견병"
+                    android:textSize="12sp" />
+
+                <ToggleButton
                     android:id="@+id/toggleButton2"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/togglebtn_check"
                     android:text="코로나"
@@ -60,8 +99,8 @@
                 <ToggleButton
                     android:id="@+id/toggleButton3"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="75dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/togglebtn_check"
                     android:text="켄넬코프"
@@ -71,23 +110,10 @@
                     android:textSize="12sp" />
 
                 <ToggleButton
-                    android:id="@+id/toggleButton4"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/togglebtn_check"
-                    android:text="CVRP"
-                    android:textColor="@color/medi_tab"
-                    android:textOff="CVRP"
-                    android:textOn="CVRP"
-                    android:textSize="12sp" />
-
-                <ToggleButton
                     android:id="@+id/toggleButton5"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/togglebtn_check"
                     android:text="백혈병"
@@ -99,40 +125,14 @@
                 <ToggleButton
                     android:id="@+id/toggleButton6"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/togglebtn_check"
                     android:text="FID"
                     android:textColor="@color/medi_tab"
                     android:textOff="FID"
                     android:textOn="FID"
-                    android:textSize="12sp" />
-
-                <ToggleButton
-                    android:id="@+id/toggleButton7"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/togglebtn_check"
-                    android:text="광견병"
-                    android:textColor="@color/medi_tab"
-                    android:textOff="광견병"
-                    android:textOn="광견병"
-                    android:textSize="12sp" />
-
-                <ToggleButton
-                    android:id="@+id/toggleButton8"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="85dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/togglebtn_check"
-                    android:text="심장사상충"
-                    android:textColor="@color/medi_tab"
-                    android:textOff="심장사상충"
-                    android:textOn="심장사상충"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -170,9 +170,9 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="13dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="60dp"
-            android:layout_marginEnd="13dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginBottom="13dp">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -190,68 +190,68 @@
                 android:layout_marginRight="0dp"
                 android:layout_marginBottom="0dp" />
 
-<!--            <TableLayout-->
-<!--                android:id="@+id/innoTableLay"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_alignParentStart="true"-->
-<!--                android:layout_alignParentTop="true"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:layout_marginStart="0dp"-->
-<!--                android:layout_marginTop="0dp"-->
-<!--                android:layout_marginEnd="0dp"-->
-<!--                android:layout_marginBottom="0dp"-->
-<!--                android:stretchColumns="*">-->
+            <!--            <TableLayout-->
+            <!--                android:id="@+id/innoTableLay"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:layout_alignParentStart="true"-->
+            <!--                android:layout_alignParentTop="true"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:layout_marginStart="0dp"-->
+            <!--                android:layout_marginTop="0dp"-->
+            <!--                android:layout_marginEnd="0dp"-->
+            <!--                android:layout_marginBottom="0dp"-->
+            <!--                android:stretchColumns="*">-->
 
-<!--                <TableRow-->
-<!--                    android:id="@+id/innoTableRow"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="120dp"-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:layout_marginBottom="5dp">-->
+            <!--                <TableRow-->
+            <!--                    android:id="@+id/innoTableRow"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="120dp"-->
+            <!--                    android:layout_marginTop="5dp"-->
+            <!--                    android:layout_marginBottom="5dp">-->
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/gumjinName"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="접종 항목"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textStyle="bold" />-->
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/gumjinName"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="match_parent"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:text="접종 항목"-->
+            <!--                        android:textAlignment="center"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        android:textStyle="bold" />-->
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/mediName"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="접종 날짜"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textStyle="bold" />-->
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/mediName"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="match_parent"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:text="접종 날짜"-->
+            <!--                        android:textAlignment="center"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        android:textStyle="bold" />-->
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/hName"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:text="예정일"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textStyle="bold" />-->
-<!--                </TableRow>-->
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/hName"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="match_parent"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:text="예정일"-->
+            <!--                        android:textAlignment="center"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        android:textStyle="bold" />-->
+            <!--                </TableRow>-->
 
-<!--                &lt;!&ndash;구분선&ndash;&gt;-->
-<!--                <View-->
-<!--                    android:id="@+id/lineView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="2dp"-->
-<!--                    android:layout_below="@+id/innoTableRow"-->
-<!--                    android:layout_marginHorizontal="10dp"-->
-<!--                    android:background="@color/main_color" />-->
+            <!--                &lt;!&ndash;구분선&ndash;&gt;-->
+            <!--                <View-->
+            <!--                    android:id="@+id/lineView"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="2dp"-->
+            <!--                    android:layout_below="@+id/innoTableRow"-->
+            <!--                    android:layout_marginHorizontal="10dp"-->
+            <!--                    android:background="@color/main_color" />-->
 
-<!--            </TableLayout>-->
+            <!--            </TableLayout>-->
         </RelativeLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

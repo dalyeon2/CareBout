@@ -66,8 +66,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton6"
-                                android:layout_width="75dp"
-                                android:layout_height="30dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="정기"
@@ -76,8 +76,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton1"
-                                android:layout_width="75dp"
-                                android:layout_height="30dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="혈액"
@@ -87,8 +87,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton2"
-                                android:layout_width="75dp"
-                                android:layout_height="30dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="X-ray"
@@ -98,8 +98,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton3"
-                                android:layout_width="75dp"
-                                android:layout_height="30dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="초음파"
@@ -108,8 +108,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton4"
-                                android:layout_width="75dp"
-                                android:layout_height="30dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="CT"
@@ -119,8 +119,8 @@
 
                             <ToggleButton
                                 android:id="@+id/toggleButton5"
-                                android:layout_width="75dp"
-                                android:layout_height="30dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="MRI"
@@ -130,11 +130,10 @@
                         </LinearLayout>
                     </HorizontalScrollView>
 
-
                     <EditText
                         android:id="@+id/editTextList"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="48dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/edittext_rounded_corner_rectangle"
                         android:ems="10"
@@ -157,7 +156,7 @@
                 <EditText
                     android:id="@+id/editTextDate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="진료 날짜 작성"
@@ -178,7 +177,7 @@
                 <EditText
                     android:id="@+id/editTextH"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="병원 이름 작성"

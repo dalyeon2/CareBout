@@ -1,5 +1,6 @@
 package com.example.carebout.view.home
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import com.example.carebout.R
 import com.example.carebout.databinding.ActivityEditPetBinding
 import com.example.carebout.view.home.db.PersonalInfo
 import com.example.carebout.view.medical.db.AppDatabase
+import java.util.Calendar
 
 class EditPetActivity : AppCompatActivity() {
 
@@ -29,11 +31,7 @@ class EditPetActivity : AppCompatActivity() {
         
         // 액티비티에 표시할 정보 그리기
         setTextAll(pid)
-
         binding.topBarOuter.activityTitle.text = "정보 수정"
-        binding.topBarOuter.backToActivity.setOnClickListener {
-            finish()
-        }
 
         val galleryVariable: ActivityResultLauncher<Intent> =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -43,6 +41,27 @@ class EditPetActivity : AppCompatActivity() {
                 }
             }
 
+        // 날짜 입력 editText 클릭 시 캘린더 뜨도록
+        binding.editBirth.setOnClickListener {
+            var calendar = Calendar.getInstance()
+            var year = calendar.get(Calendar.YEAR)
+            var month = calendar.get(Calendar.MONTH)
+            var day = calendar.get(Calendar.DAY_OF_MONTH)
+            this@EditPetActivity.let { it ->
+                DatePickerDialog(it, { _, year, month, day ->
+                    run {
+                        binding.editBirth.setText(year.toString() + "-" + (month + 1).toString() + "-" + day.toString())
+                    }
+                }, year, month, day)
+            }?.show()
+        }
+
+        //뒤로가기 버튼
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
+
+        //
         binding.topBarOuter.CompleteBtn.setOnClickListener {
             //입력된 데이터의 유효성 검사
             if(!isValid())
@@ -64,7 +83,7 @@ class EditPetActivity : AppCompatActivity() {
             p.pid = pid
             db.personalInfoDao().updateInfo(p)
 
-            val home = HomeActivity.homeActivity
+            val home = HomeActivity()
             home?.finish()
             home?.startActivity(Intent(this@EditPetActivity, HomeActivity::class.java))
             finish()

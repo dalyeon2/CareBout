@@ -9,21 +9,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:alignmentMode="alignBounds"
-        app:columnCount="5"
-        app:orientation="horizontal" >
+        app:columnCount="3"
+        app:orientation="horizontal">
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_margin="5dp"
             android:gravity="center_horizontal"
             android:text="&#8226;"
             android:textAlignment="center"
             android:textColor="@color/main_color"
             android:textSize="20sp"
-            app:layout_columnWeight="0.5"
+            app:layout_gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="right|top"
+            android:text="검진 항목"
+            android:textColor="#444"
+            android:textSize="14sp"
+            app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
 
         <TextView
@@ -32,9 +42,22 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="검진 항목"
+            android:textColor="#000"
+            android:textSize="14sp"
+            app:layout_columnWeight="3.5"
+            app:layout_gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="right|top"
+            android:text="검진 날짜"
             android:textColor="#444"
             android:textSize="14sp"
-            app:layout_columnWeight="2"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
 
         <TextView
@@ -43,9 +66,23 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="검진 날짜"
+            android:textColor="#000"
+            android:textSize="14sp"
+            app:layout_columnWeight="3.5"
+            app:layout_gravity="center_vertical" />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="right|top"
+            android:text="병원 이름"
             android:textColor="#444"
             android:textSize="14sp"
-            app:layout_columnWeight="2"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
 
         <TextView
@@ -54,22 +91,35 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="병원 이름"
+            android:textColor="#000"
+            android:textSize="14sp"
+            app:layout_columnWeight="3.5"
+            app:layout_gravity="center_vertical" />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="right|top"
+            android:text="메모"
             android:textColor="#444"
             android:textSize="14sp"
-            app:layout_columnWeight="1.5"
-            app:layout_gravity="center_vertical" />
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_vertical" />
 
         <TextView
             android:id="@+id/etc_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="20dp"
             android:text="비고"
-            android:textColor="#444"
+            android:textColor="#000"
             android:textSize="14sp"
-            app:layout_columnWeight="3"
+            app:layout_columnWeight="3.5"
             app:layout_gravity="center_vertical" />
-
 
     </androidx.gridlayout.widget.GridLayout>
 

@@ -43,10 +43,7 @@ class InoculationAdapter(private val context: Context)
 
         val inocData = inocList[position]
 
-        holder.tagText.text = inocData.tag
-
         //데이터 변수에 담기
-        var uTag = inocList[holder.bindingAdapterPosition].tag
         var uDate = inocList[holder.bindingAdapterPosition].date
         var uDue = inocList[holder.bindingAdapterPosition].due
         var uHospital = inocList[holder.bindingAdapterPosition].hospital
@@ -62,27 +59,23 @@ class InoculationAdapter(private val context: Context)
         var uTagH = inocList[holder.bindingAdapterPosition].tag_Heartworm
 
         //데이터 적용
-        holder.tagText.text = uTag
         holder.dateText.text = uDate
         holder.dueText.text = uDue
         holder.hospitalText.text = uHospital
         holder.etcText.text = uEtc
 
-
-        holder.tagText.text = inocData.tag
-
         if (uTagDHPPL == true) {
-            holder.tagText.text = "혼합예방주사(DHPPL)"
+            holder.tagText.text = "DHPPL"
         } else if (uTagC == true) {
-            holder.tagText.text = "코로나바이러스성 장염"
+            holder.tagText.text = "코로나"
         } else if (uTagKC == true) {
             holder.tagText.text = "켄넬코프"
         } else if (uTagCVRP == true) {
-            holder.tagText.text = "혼합예방주사(CVRP)"
+            holder.tagText.text = "CVRP"
         } else if (uTagFL == true) {
             holder.tagText.text = "백혈병"
         } else if (uTagFID == true) {
-            holder.tagText.text = "전염성 복막염"
+            holder.tagText.text = "복막염"
         } else if (uTagR == true) {
             holder.tagText.text = "광견병"
         } else if (uTagH == true) {
@@ -98,7 +91,6 @@ class InoculationAdapter(private val context: Context)
             intent.putExtra("inocId", inocList[holder.bindingAdapterPosition].inocId) // 아이템의 고유 ID 전달
             Log.i("id", inocList[holder.bindingAdapterPosition].inocId.toString())
             //값 담기
-            intent.putExtra("uTag", uTag)
             intent.putExtra("uDate", uDate)
             intent.putExtra("uDue", uDue)
             intent.putExtra("uHospital", uHospital)

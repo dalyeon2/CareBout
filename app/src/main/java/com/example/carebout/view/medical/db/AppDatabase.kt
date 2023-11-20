@@ -11,7 +11,7 @@ import com.example.carebout.view.home.db.WeightDao
 
 @Database(entities = [DailyTodo::class, Medicine::class, Clinic::class, Inoculation::class,
     PersonalInfo::class, Weight::class]
-    , version = 3)
+    , version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getTodoDao() : TodoDao
     abstract fun getMedicineDao() : MedicineDao

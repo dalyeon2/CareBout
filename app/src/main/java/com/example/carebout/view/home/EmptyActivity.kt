@@ -11,10 +11,6 @@ import com.example.carebout.view.medical.db.AppDatabase
 
 class EmptyActivity : AppCompatActivity() {
 
-    companion object {
-        var emptyActivity: EmptyActivity? = null
-    }
-
     lateinit var binding: ActivityEmptyBinding
     lateinit var db: AppDatabase
     var addedPet = false
@@ -24,7 +20,6 @@ class EmptyActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         db = AppDatabase.getInstance(this)!!
-        emptyActivity = this
 
         // 현재 클릭 중인 탭 tint
         binding.bottomTapBarOuter.homeImage.imageTintList = ColorStateList.valueOf(Color.parseColor("#6EC677"))
@@ -38,6 +33,15 @@ class EmptyActivity : AppCompatActivity() {
             val intent = Intent(this, AddPetActivity::class.java)
             intent.putExtra("addedPet", addedPet)
             startActivity(intent)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (db.personalInfoDao().getAllInfo().isNotEmpty()) {
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
         }
     }
 
