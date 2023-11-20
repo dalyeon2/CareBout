@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityTodoWriteBinding
-import com.example.carebout.view.community.DBHelper
 import com.example.carebout.view.medical.MedicalActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.DailyTodo

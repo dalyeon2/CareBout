@@ -11,15 +11,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.RelativeLayout
-import android.widget.TableLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.carebout.R
-import com.example.carebout.databinding.ActivityMedicalBinding
-import com.example.carebout.databinding.MedicalNoteTabBinding
 import com.example.carebout.view.home.db.PersonalInfoDao
 import com.example.carebout.view.medical.Medicine.MedicineReadActivity
 import com.example.carebout.view.medical.Todo.TodoReadActivity

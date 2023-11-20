@@ -10,11 +10,9 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.ToggleButton
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityInoculationUpdateBinding
 import com.example.carebout.view.medical.MedicalViewModel

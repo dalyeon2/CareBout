@@ -10,7 +10,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast

@@ -64,7 +64,7 @@ class EditPetActivity : AppCompatActivity() {
             p.pid = pid
             db.personalInfoDao().updateInfo(p)
 
-            val home = HomeActivity.homeActivity
+            val home = HomeActivity()
             home?.finish()
             home?.startActivity(Intent(this@EditPetActivity, HomeActivity::class.java))
             finish()

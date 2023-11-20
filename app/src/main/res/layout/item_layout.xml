@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/wTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Label:"/>
+
+    <EditText
+        android:id="@+id/wItem"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:paddingHorizontal="10dp"
+        android:enabled="false"
+        android:background="@drawable/edittext_rounded_corner_rectangle"/>
+
+    <TextView
+        android:id="@+id/dTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Label:"/>
+
+    <EditText
+        android:id="@+id/dItem"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:paddingHorizontal="10dp"
+        android:enabled="false"
+        android:background="@drawable/edittext_rounded_corner_rectangle"/>
+
+</LinearLayout>
