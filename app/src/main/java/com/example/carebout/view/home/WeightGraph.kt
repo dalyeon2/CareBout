@@ -1,11 +1,9 @@
 package com.example.carebout.view.home
 
-import android.content.Context
 import android.graphics.Color
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityHomeBinding
-import com.example.carebout.view.home.db.WeightDao
-import com.example.carebout.view.medical.db.AppDatabase
+import com.example.carebout.view.home.db.Weight
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -14,12 +12,9 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
-class WeightGraph(binding: ActivityHomeBinding) {
+class WeightGraph(private val binding: ActivityHomeBinding) {
 
-    private val binding: ActivityHomeBinding = binding
-    private val weight: WeightDao = AppDatabase.getInstance(HomeActivity().getContext())!!.weightDao()
-
-    fun setWeightGraph(pid: Int) {
+    fun setWeightGraph(weightList: List<Weight>) {
 
         val xAxis: XAxis = binding.weightGraph.xAxis   //x축 가져오기
 
@@ -57,11 +52,11 @@ class WeightGraph(binding: ActivityHomeBinding) {
         val lineData = LineData()
         binding.weightGraph.data = lineData
 
-        for(wList in weight.getWeightById(pid)) {
-            addEntry(wList.weight)
+        val wList = weightList.sortedBy { it.date }
+
+        for(w in wList) {
+            addEntry(w.weight)
         }
-
-
     }
 
     private fun addEntry(weight: Float) {
@@ -76,7 +71,7 @@ class WeightGraph(binding: ActivityHomeBinding) {
             }
 
             data.addEntry(Entry(set!!.entryCount.toFloat(), weight), 0) // 데이터 엔트리 추가 Entry(x값, y값)
-            data.notifyDataChanged() //
+            data.notifyDataChanged() //데이터 변경 알림
             binding.weightGraph.apply {
                 notifyDataSetChanged() //
                 moveViewToX(data.entryCount.toFloat()) // 좌우 스크롤

@@ -312,18 +312,6 @@
             android:text="반려동물 등록" />
 
         <TextView
-            android:id="@+id/menuAddWeight"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="16dp"
-            android:gravity="center_vertical"
-            android:text="체중 기록" />
-
-        <TextView
             android:id="@+id/menuEditPet"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -334,6 +322,18 @@
             android:padding="16dp"
             android:gravity="center_vertical"
             android:text="정보 수정" />
+
+        <TextView
+            android:id="@+id/menuAddWeight"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:text="체중 기록" />
 
         <TextView
             android:id="@+id/menuDeletePet"
