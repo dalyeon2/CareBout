@@ -27,6 +27,7 @@ class CommunityActivity : AppCompatActivity() {
     var imageUris: MutableList<Uri>? = mutableListOf()
     var selectedDates: MutableList<String?> = mutableListOf()
     var selectedDay: MutableList<String?> = mutableListOf()
+    var currentYear: Int = Calendar.getInstance().get(Calendar.YEAR)
 
     private val requestLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -170,7 +171,7 @@ class CommunityActivity : AppCompatActivity() {
 
         val db = DBHelper(this).readableDatabase
         // db.execSQL("DELETE FROM TODO_TB") // 데이터 초기화
-        val cursor = db.rawQuery("select * from TODO_TB", null)
+        val cursor = db.rawQuery("SELECT * FROM TODO_TB ORDER BY date ASC", null)
         cursor.run {
             val contentIndex = getColumnIndex("content")
             val dateIndex = getColumnIndex("date")

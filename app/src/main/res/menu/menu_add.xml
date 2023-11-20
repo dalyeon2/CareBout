@@ -4,8 +4,7 @@
 
     <item android:id="@+id/menu_add_save"
         android:title="저장"
-        android:icon="@drawable/ic_check"
-        android:iconTint="#6EC677"
+        android:icon="@drawable/ic_checked"
         app:showAsAction="always" />
 
 </menu>

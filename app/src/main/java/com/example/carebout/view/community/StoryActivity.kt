@@ -62,7 +62,15 @@ class StoryActivity : AppCompatActivity() {
         }
 
         R.id.menu_edit -> {
-
+            val editIntent = Intent(this, AddActivity::class.java).apply {
+                putExtra("isEdit", true)
+                putExtra("position", intent.getIntExtra("position", -1))
+                putExtra("existingContent", intent.getStringExtra("result"))
+                putExtra("existingImageUri", intent.getParcelableExtra<Uri>("imageUri"))
+                putExtra("existingDate", intent.getStringExtra("selectedDate"))
+                putExtra("existingDay", intent.getStringExtra("selectedDay"))
+            }
+            startActivity(editIntent)
             finish()
             true
         }
