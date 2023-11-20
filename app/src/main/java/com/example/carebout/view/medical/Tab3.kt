@@ -145,17 +145,21 @@ class Tab3 : Fragment() {
     }
 
     private fun getClinicList() {
+        if(petId != 0){
+            val clinicList: ArrayList<Clinic> =
+                db?.getClinicDao()!!.getClinicDateAsc(petId) as ArrayList<Clinic>
 
-        val clinicList: ArrayList<Clinic> =
-            db?.getClinicDao()!!.getClinicDateAsc(petId) as ArrayList<Clinic>
+            if (clinicList.isNotEmpty()) {
+                //데이터 적용
+                adapter.setClinicList(clinicList)
 
-        if (clinicList.isNotEmpty()) {
-            //데이터 적용
-            adapter.setClinicList(clinicList)
-
+            } else {
+                adapter.setClinicList(ArrayList())
+            }
         } else {
             adapter.setClinicList(ArrayList())
         }
+
     }
 
     private fun getClinicTagBloodList() {

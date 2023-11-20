@@ -58,7 +58,6 @@ class InoculationWriteActivity : AppCompatActivity() {
 
         updatePetTag()
 
-        val editTextList: EditText = findViewById(R.id.editTextList)
         val editTextDate: EditText = findViewById(R.id.editTextDate)
         val editTextDue: EditText = findViewById(R.id.editTextDue)
         val editTextH: EditText = findViewById(R.id.editTextH)
@@ -179,7 +178,6 @@ class InoculationWriteActivity : AppCompatActivity() {
     }
 
     private fun insertInoc() {
-        val inocTag = binding.editTextList.text.toString()
         val inocDate = binding.editTextDate.text.toString()
         val inocDue = binding.editTextDue.text.toString()
         val inocH = binding.editTextH.text.toString()
@@ -216,7 +214,7 @@ class InoculationWriteActivity : AppCompatActivity() {
             ).show()
             return
         }
-        val Inoc = Inoculation(null, petId, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocTag, inocDate, inocDue, inocH, inocEtc)
+        val Inoc = Inoculation(null, petId, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocDate, inocDue, inocH, inocEtc)
 
         if ((!tagDHPPL && !tagC && !tagKC && !tagCVRP && !tagFL && !tagFID && !tagR && !tagH) || inocDate.isBlank()) {
             Toast.makeText(this, "필수 항목을 채워주세요", Toast.LENGTH_SHORT).show()

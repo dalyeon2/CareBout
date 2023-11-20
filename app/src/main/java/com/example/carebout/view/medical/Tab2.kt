@@ -177,7 +177,7 @@ class Tab2 : Fragment() {
 
         val petList = personalInfoDao.getInfoById(petId)
 
-        if (petList!!.animal == "dog") {
+        if (petId != 0 && petList!!.animal == "dog") {
             tagCVRP.visibility = View.GONE
             tagDHPPL.visibility = View.VISIBLE
         } else {
@@ -187,17 +187,21 @@ class Tab2 : Fragment() {
     }
 
     private fun getInocList() {
+        if(petId != 0) {
+            val inocList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocDateAsc(petId) as ArrayList<Inoculation>
+            //.getInoculationAll() as ArrayList<Inoculation>
 
-        val inocList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocDateAsc(petId) as ArrayList<Inoculation>
-        //.getInoculationAll() as ArrayList<Inoculation>
+            if (inocList.isNotEmpty()) {
+                //데이터 적용
+                adapter.setInoculationList(inocList)
 
-        if (inocList.isNotEmpty()) {
-            //데이터 적용
-            adapter.setInoculationList(inocList)
-
+            } else {
+                adapter.setInoculationList(ArrayList())
+            }
         } else {
             adapter.setInoculationList(ArrayList())
         }
+
     }
 
     private fun getInocTagDHPPLList() {

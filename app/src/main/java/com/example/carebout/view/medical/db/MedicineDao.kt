@@ -25,6 +25,12 @@ interface MedicineDao {
     @Delete
     fun deleteMedi(medi: Medicine)
 
+    @Query("SELECT * FROM table_medicine WHERE pid = :pid")
+    fun getMediByPid(pid: Int): Medicine?
+
+    @Query("DELETE FROM table_medicine WHERE pid = :pid")
+    fun deletePidMedi(pid: Int)
+
     @Query("SELECT * FROM table_medicine WHERE pid = :pid ORDER BY start DESC")
     fun getMediDateAsc(pid: Int): List<Medicine>
 

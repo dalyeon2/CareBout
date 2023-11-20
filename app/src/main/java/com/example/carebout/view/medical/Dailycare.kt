@@ -12,7 +12,9 @@ import android.widget.ToggleButton
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.example.carebout.R
+import com.example.carebout.view.home.db.PersonalInfoDao
 import com.example.carebout.view.medical.db.AppDatabase
+import com.example.carebout.view.medical.db.DailyTodo
 import com.example.carebout.view.medical.db.TodoDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,11 +24,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 
-
 class Dailycare : Fragment() {
 
     private lateinit var db: AppDatabase
     private lateinit var todoDao: TodoDao
+    private lateinit var personalInfoDao: PersonalInfoDao
 
     var nthDaily: Int = 0; // 데일리케어 개수
     var dailycareText = Array<String>(10, {"-"}) // 데일리케어 타이틀
@@ -158,17 +160,24 @@ class Dailycare : Fragment() {
 
         db = AppDatabase.getInstance(requireContext())!!
         todoDao = db.getTodoDao()
+        personalInfoDao = db.personalInfoDao()
+        val allList = personalInfoDao.getAllInfo()
 
         // Room 데이터베이스에서 모든 Daily Care 정보를 가져옵니다.
         CoroutineScope(Dispatchers.IO).launch {
-            val allTodoList = todoDao.getTodoAll()
-            withContext(Dispatchers.Main) {
-                for (dailyTodo in allTodoList) {
-                    // 가져온 Daily Care 정보를 UI에 표시
-                    insertDailycare(dailyTodo.title ?: "", dailyTodo.count?.toInt() ?: 0)
-                    lay.addView(makeSubLay())
-                    lay.addView(setBornIcon())
-                    nthDaily++
+            var allTodoList = todoDao.getTodoAll()
+                withContext(Dispatchers.Main) {
+                if(allList.isNotEmpty()){
+                    for (dailyTodo in allTodoList) {
+                        // 가져온 Daily Care 정보를 UI에 표시
+                        insertDailycare(dailyTodo.title ?: "", dailyTodo.count?.toInt() ?: 0)
+                        lay.addView(makeSubLay())
+                        lay.addView(setBornIcon())
+                        nthDaily++
+                    }
+                }else{
+                    lay.removeAllViews()
+                    todoDao.deleteAllTodos()
                 }
             }
         }

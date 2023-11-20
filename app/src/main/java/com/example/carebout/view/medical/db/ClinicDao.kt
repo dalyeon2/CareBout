@@ -21,6 +21,12 @@ interface ClinicDao {
     @Delete
     fun deleteClinic(clinic: Clinic)
 
+    @Query("SELECT * FROM table_clinic WHERE pid = :pid")
+    fun getClinicByPid(pid: Int): Clinic?
+
+    @Query("DELETE FROM table_clinic WHERE pid = :pid")
+    fun deletePidClinic(pid: Int)
+
     @Query("SELECT * FROM table_clinic WHERE clinicId = :id AND pid = :pid ORDER BY date DESC")
     fun getClinicById(id: Int, pid: Int): Clinic?
 

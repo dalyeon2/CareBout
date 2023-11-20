@@ -21,6 +21,12 @@ interface InoculationDao {
     @Delete
     fun deleteInoculation(inoc: Inoculation)
 
+    @Query("SELECT * FROM table_inoculation WHERE pid = :pid")
+    fun getInoculationByPid(pid: Int): Inoculation?
+
+    @Query("DELETE FROM table_inoculation WHERE pid = :pid")
+    fun deletePidInoc(pid: Int)
+
     @Query("SELECT * FROM table_inoculation WHERE inocId = :id AND pid = :pid ORDER BY date DESC")
     fun getInoculationById(id: Int, pid: Int): Inoculation?
 

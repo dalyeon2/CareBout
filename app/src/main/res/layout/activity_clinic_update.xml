@@ -128,17 +128,6 @@
                         </LinearLayout>
                     </HorizontalScrollView>
 
-
-                    <EditText
-                        android:id="@+id/editTextList"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/edittext_rounded_corner_rectangle"
-                        android:ems="10"
-                        android:hint="  + 직접 작성하기"
-                        android:inputType="text" />
-
                 </TableLayout>
 
                 <TextView
