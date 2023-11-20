@@ -30,6 +30,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import java.util.Date
 import android.widget.TextView
+import com.example.carebout.databinding.CustomDialogDeleteBinding
 import com.example.carebout.databinding.CustomDialogLayoutBinding
 
 class AddActivity: AppCompatActivity() {
@@ -142,28 +143,6 @@ class AddActivity: AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun showCustomDialog() {
-        val dialogBinding = CustomDialogLayoutBinding.inflate(layoutInflater)
-
-        val dialog = AlertDialog.Builder(this)
-            .setView(dialogBinding.root)
-            .create()
-
-        dialogBinding.dialogTitle.text = "일기 쓰기를 그만두시겠습니까?"
-        dialogBinding.dialogMessage.text = "작성한 내용은 저장되지 않아요!"
-
-        dialogBinding.btnExit.setOnClickListener {
-            dialog.dismiss()
-            super.onBackPressed()
-        }
-
-        dialogBinding.btnContinue.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
-    }
-
     override fun onBackPressed() {
         showCustomDialog()
     }
@@ -242,6 +221,28 @@ class AddActivity: AppCompatActivity() {
         }
 
         else -> true
+    }
+
+    private fun showCustomDialog() {
+        val dialogBinding = CustomDialogLayoutBinding.inflate(layoutInflater)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogBinding.root)
+            .create()
+
+        dialogBinding.dialogTitle.text = "일기 쓰기를 그만두시겠습니까?"
+        dialogBinding.dialogMessage.text = "작성한 내용은 저장되지 않아요!"
+
+        dialogBinding.btnExit.setOnClickListener {
+            dialog.dismiss()
+            super.onBackPressed()
+        }
+
+        dialogBinding.btnContinue.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     private fun showDatePickerDialog() {
