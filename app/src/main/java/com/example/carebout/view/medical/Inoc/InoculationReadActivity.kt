@@ -4,14 +4,19 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+<<<<<<< HEAD
 import android.view.Menu
 import android.view.MenuItem
+=======
+import android.view.View
+>>>>>>> e1d74bb4857a5dd64f50fd4d26e0d8ba40e5fe26
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityInoculationReadBinding
+import com.example.carebout.view.home.db.PersonalInfoDao
 import com.example.carebout.view.medical.MedicalViewModel
 import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
@@ -24,6 +29,8 @@ class InoculationReadActivity : AppCompatActivity() {
 
     private lateinit var db: AppDatabase
     private lateinit var inocDao: InoculationDao
+    private lateinit var personalInfoDao: PersonalInfoDao
+
     private var inocList: ArrayList<Inoculation> = ArrayList<Inoculation>()
     private lateinit var adapter: InoculationAdapter
 
@@ -51,6 +58,7 @@ class InoculationReadActivity : AppCompatActivity() {
         //db 인스턴스를 가져오고 db작업을 할 수 있는 dao를 가져옵니다.
         db = AppDatabase.getInstance(this)!!
         inocDao = db.getInocDao()
+        personalInfoDao = db.personalInfoDao()
 
 //        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
 //        petId = viewModel.getSelectedPetId().value
@@ -58,6 +66,8 @@ class InoculationReadActivity : AppCompatActivity() {
         petId = MyPid.getPid()
             //(application as PidApplication).petId
         Log.i("petId_app", petId.toString())
+
+        updatePetTag()
 
         val insertBtn: FloatingActionButton = findViewById(R.id.insert_btn)
 
@@ -198,6 +208,21 @@ class InoculationReadActivity : AppCompatActivity() {
             //들어온 값이 OK라면
             //리스트 조회
             getInocList()
+        }
+    }
+
+    private fun updatePetTag() {
+        val tagDHPPL = binding.toggleButton1
+        val tagCVRP = binding.toggleButton4
+
+        val petList = personalInfoDao.getInfoById(petId)
+
+        if (petList!!.animal == "dog") {
+            tagCVRP.visibility = View.GONE
+            tagDHPPL.visibility = View.VISIBLE
+        } else {
+            tagCVRP.visibility = View.VISIBLE
+            tagDHPPL.visibility = View.GONE
         }
     }
 

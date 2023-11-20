@@ -1,5 +1,6 @@
 package com.example.carebout.view.home
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -12,12 +13,13 @@ import com.example.carebout.view.home.db.PersonalInfo
 import com.example.carebout.view.home.db.Weight
 import com.example.carebout.view.medical.db.AppDatabase
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 class AddPetActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityAddPetBinding
+    private lateinit var binding: ActivityAddPetBinding
     private lateinit var db: AppDatabase
     private lateinit var imageUri: Uri
 
@@ -51,6 +53,21 @@ class AddPetActivity : AppCompatActivity() {
                     imageUri = it.data?.data!!
                 }
             }
+
+        // 날짜 입력 editText 클릭 시 캘린더 뜨도록
+        binding.editBirth.setOnClickListener {
+            var calendar = Calendar.getInstance()
+            var year = calendar.get(Calendar.YEAR)
+            var month = calendar.get(Calendar.MONTH)
+            var day = calendar.get(Calendar.DAY_OF_MONTH)
+            this@AddPetActivity.let { it ->
+                DatePickerDialog(it, { _, year, month, day ->
+                    run {
+                        binding.editBirth.setText(year.toString() + "-" + (month + 1).toString() + "-" + day.toString())
+                    }
+                }, year, month, day)
+            }?.show()
+        }
 
         // 뒤로가기 버튼 클릭시
         binding.topBarOuter.backToActivity.setOnClickListener {
@@ -87,16 +104,6 @@ class AddPetActivity : AppCompatActivity() {
                 currentDate
             ))
 
-            var empty = EmptyActivity()
-
-            if (!intent.getBooleanExtra("addedPet", true)) {
-                empty?.startActivity(Intent(empty, HomeActivity::class.java))
-                empty?.finish()
-            }
-
-            var home = HomeActivity()
-            home?.finish()
-            home?.startActivity(Intent(this@AddPetActivity, HomeActivity::class.java))
             finish()
         }
 
@@ -114,6 +121,7 @@ class AddPetActivity : AppCompatActivity() {
         val name = binding.editName
         val birth = binding.editBirth
         val breed = binding.editBreed
+        val weight = binding.editWeight
 
         if(name.text.isNullOrBlank())
             name.error = ""
@@ -121,6 +129,8 @@ class AddPetActivity : AppCompatActivity() {
             birth.error = ""
         else if(breed.text.isNullOrBlank())
             breed.error = "모르면 '모름'이라고 입력 해주세요"
+        else if(weight.text.isNullOrBlank())
+            weight.error = ""
         else {
             return true
         }

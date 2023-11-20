@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -30,6 +31,8 @@ class StoryActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_left_arrow)
 
         val receivedData = intent.getStringExtra("result")
         val receivedImageUri = intent.getParcelableExtra<Uri>("imageUri")
@@ -62,7 +65,15 @@ class StoryActivity : AppCompatActivity() {
         }
 
         R.id.menu_edit -> {
-
+            val editIntent = Intent(this, AddActivity::class.java).apply {
+                putExtra("isEdit", true)
+                putExtra("position", intent.getIntExtra("position", -1))
+                putExtra("existingContent", intent.getStringExtra("result"))
+                putExtra("existingImageUri", intent.getParcelableExtra<Uri>("imageUri"))
+                putExtra("existingDate", intent.getStringExtra("selectedDate"))
+                putExtra("existingDay", intent.getStringExtra("selectedDay"))
+            }
+            startActivity(editIntent)
             finish()
             true
         }

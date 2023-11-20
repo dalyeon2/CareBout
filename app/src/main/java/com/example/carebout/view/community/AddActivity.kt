@@ -3,6 +3,7 @@ package com.example.carebout.view.community
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.ContentValues
 import android.content.Intent
 import android.database.DatabaseUtils
 import android.graphics.Bitmap
@@ -75,24 +76,64 @@ class AddActivity: AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_left_arrow)
+
         binding.bottomIcon.setOnClickListener {
             openGallery()
         }
 
-        // 현재 날짜 표기
-        val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
-        val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
-        val calendar = Calendar.getInstance()
-        calendar.time = currentDate
-        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-        val formattedDay = koreanDays[dayOfWeek - 1]
-        val formattedDate = dateFormat.format(currentDate)
-        binding.date.text = formattedDate
-        binding.day.text = formattedDay
+        if (intent.getBooleanExtra("isEdit", false)) {
+            val existingContent = intent.getStringExtra("existingContent")
+            val existingImageUri = intent.getParcelableExtra<Uri>("existingImageUri")
 
-        binding.date.setOnClickListener {
-            showDatePickerDialog()
+            binding.addEditView.setText(existingContent)
+
+            existingImageUri?.let {
+                Glide.with(this)
+                    .asBitmap()
+                    .load(it)
+                    .apply(RequestOptions().fitCenter())
+                    .into(object : CustomTarget<Bitmap>() {
+                        override fun onResourceReady(
+                            resource: Bitmap,
+                            transition: Transition<in Bitmap>?
+                        ) {
+                            binding.userImageView.setImageBitmap(resource)
+                            binding.userImageView.visibility = View.VISIBLE
+                            selectedImageUri = it
+                        }
+
+                        override fun onLoadCleared(placeholder: Drawable?) {
+
+                        }
+                    })
+            }
+
+            selectedDate = intent.getStringExtra("existingDate")
+            selectDay = intent.getStringExtra("existingDay")
+
+            binding.date.text = selectedDate
+            binding.day.text = selectDay
+        }
+
+        if (selectedDate == null) {
+            // 현재 날짜 표기
+            val currentDate = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+            val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
+            val calendar = Calendar.getInstance()
+            calendar.time = currentDate
+            val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+            val formattedDay = koreanDays[dayOfWeek - 1]
+            val formattedDate = dateFormat.format(currentDate)
+            binding.date.text = formattedDate
+            binding.day.text = formattedDay
+
+            binding.dateClick.setOnClickListener {
+                if (!intent.getBooleanExtra("isEdit", false)) {
+                    showDatePickerDialog()
+                }
+            }
         }
     }
 
@@ -130,25 +171,46 @@ class AddActivity: AppCompatActivity() {
     override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
 
         android.R.id.home -> { // 뒤로가기 버튼을 누를 때
-            finish()
+            showCustomDialog()
             true
         }
 
         R.id.menu_add_save -> {
             val inputData = binding.addEditView.text.toString().trim()
 
-            if (inputData.isEmpty()) {
-                showCustomToast("내용을 입력해주세요.")
-            } else {
-                val db = DBHelper(this).writableDatabase
+            if (selectedDate == null) {
+                val currentDate = Calendar.getInstance().time
+                val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+                selectedDate = dateFormat.format(currentDate)
+                selectDay = getDayOfWeek(currentDate)
+            }
 
-                if (selectedDate == null) {
-                    val currentDate = Calendar.getInstance().time
-                    val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
-                    selectedDate = dateFormat.format(currentDate)
-                    selectDay = getDayOfWeek(currentDate)
+            val db = DBHelper(this).writableDatabase
+
+            if (intent.getBooleanExtra("isEdit", false)) {
+                val contentValues = ContentValues().apply {
+                    put("content", inputData)
+                    put("image_uri", selectedImageUri?.toString() ?: "")
                 }
 
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+
+                val rowsAffected = db.update(
+                    "TODO_TB",
+                    contentValues,
+                    "date = ?",
+                    arrayOf(selectedDate)
+                )
+
+                if (rowsAffected > 0) {
+                    showCustomToast("일기가 성공적으로 수정되었습니다.")
+                    val resultIntent = Intent()
+                    setResult(Activity.RESULT_OK, resultIntent)
+                } else {
+                    showCustomToast("일기 수정에 실패했습니다.")
+                }
+            } else {
                 val existingEntryCount = DatabaseUtils.queryNumEntries(
                     db,
                     "TODO_TB",
@@ -158,6 +220,8 @@ class AddActivity: AppCompatActivity() {
 
                 if (existingEntryCount > 0) {
                     showCustomToast("이미 같은 날짜의 일기가 있습니다.")
+                } else if (inputData.isEmpty()) {
+                    showCustomToast("내용을 입력해주세요.")
                 } else {
                     val intent = Intent().apply {
                         putExtra("result", inputData)
@@ -171,10 +235,9 @@ class AddActivity: AppCompatActivity() {
 
                     showCustomToast("일기가 성공적으로 저장되었습니다.")
                 }
-
-                db.close()
             }
 
+            db.close()
             true
         }
 
@@ -210,7 +273,10 @@ class AddActivity: AppCompatActivity() {
         datePickerDialog.show()
     }
 
+    private var currentToast: Toast? = null
     private fun showCustomToast(message: String) {
+        currentToast?.cancel()
+
         val inflater = layoutInflater
         val layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout))
 
@@ -222,9 +288,12 @@ class AddActivity: AppCompatActivity() {
         toast.view = layout
 
         val toastDurationInMilliSeconds: Long = 3000
-        toast.duration = if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+        toast.duration =
+            if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
 
-        toast.setGravity(Gravity.BOTTOM, 0, 250)
+        toast.setGravity(Gravity.BOTTOM, 0, 200)
+
+        currentToast = toast
 
         toast.show()
     }
