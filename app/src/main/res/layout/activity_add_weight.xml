@@ -4,16 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".view.home.AddWeightActivity">
 
     <include layout="@layout/top_bar"
         android:id="@+id/topBarOuter"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        app:layout_constraintTop_toBottomOf="@id/topBarOuter">
 
+        <TextView
+            android:id="@+id/editAreaTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="몸무게 추가"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/editArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/editAreaTitle">
+
+            <EditText
+                android:id="@+id/editW"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:paddingHorizontal="10dp"
+                android:hint="몸무게"
+                android:digits="0123456789."
+                android:textAlignment="center"
+                android:background="@drawable/edittext_rounded_corner_rectangle"/>
+
+            <EditText
+                android:id="@+id/editD"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:layout_marginEnd="5dp"
+                android:paddingHorizontal="10dp"
+                android:hint="측정일"
+                android:digits="0123456789-"
+                android:background="@drawable/edittext_rounded_corner_rectangle"/>
+
+            <Button
+                android:id="@+id/addMoreBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="추가"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_corner_fill_color_rectangle"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/weightRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/editArea"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
