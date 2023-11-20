@@ -1,11 +1,9 @@
 package com.example.carebout.view.home
 
-import android.content.Context
 import android.graphics.Color
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityHomeBinding
-import com.example.carebout.view.home.db.WeightDao
-import com.example.carebout.view.medical.db.AppDatabase
+import com.example.carebout.view.home.db.Weight
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -14,14 +12,15 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
-class WeightGraph(binding: ActivityHomeBinding) {
+class WeightGraph(private val binding: ActivityHomeBinding) {
 
-    private val binding: ActivityHomeBinding = binding
-    private val weight: WeightDao = AppDatabase.getInstance(HomeActivity().getContext())!!.weightDao()
-
-    fun setWeightGraph(pid: Int) {
-
+    fun setWeightGraph(weightList: List<Weight>) {
+        val wList = weightList.sortedBy { it.date }
+        val minWeight = wList.minBy { it.weight - 1 }.weight
+        val maxWeight = wList.maxBy { it.weight + 1 }.weight
         val xAxis: XAxis = binding.weightGraph.xAxis   //x축 가져오기
+
+
 
         xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM   //x축은 아래에 위치
@@ -38,8 +37,8 @@ class WeightGraph(binding: ActivityHomeBinding) {
             axisRight.isEnabled = false //y축 오른쪽 비활성화
             axisLeft.isEnabled = false  //y축 왼쪽 비활성화
             axisLeft.axisLineColor = resources.getColor(R.color.white)  // 다크모드를 위해 배경색이랑 같게 설정
-            axisLeft.axisMinimum = 2f   //y축 왼쪽 표시 데이터 최솟값
-            axisLeft.axisMaximum = 7.2f //y축 왼쪽 표시 데이터 최댓값
+            axisLeft.axisMinimum = minWeight   //y축 왼쪽 표시 데이터 최솟값
+            axisLeft.axisMaximum = maxWeight //y축 왼쪽 표시 데이터 최댓값
             axisLeft.setLabelCount(4, true)
             axisLeft.setDrawLabels(false)
             axisLeft.setDrawGridLines(true)
@@ -57,11 +56,9 @@ class WeightGraph(binding: ActivityHomeBinding) {
         val lineData = LineData()
         binding.weightGraph.data = lineData
 
-        for(wList in weight.getWeightById(pid)) {
-            addEntry(wList.weight)
+        for(w in wList) {
+            addEntry(w.weight)
         }
-
-
     }
 
     private fun addEntry(weight: Float) {
@@ -76,7 +73,7 @@ class WeightGraph(binding: ActivityHomeBinding) {
             }
 
             data.addEntry(Entry(set!!.entryCount.toFloat(), weight), 0) // 데이터 엔트리 추가 Entry(x값, y값)
-            data.notifyDataChanged() //
+            data.notifyDataChanged() //데이터 변경 알림
             binding.weightGraph.apply {
                 notifyDataSetChanged() //
                 moveViewToX(data.entryCount.toFloat()) // 좌우 스크롤

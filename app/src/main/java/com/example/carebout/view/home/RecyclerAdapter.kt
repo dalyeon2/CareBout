@@ -10,46 +10,35 @@ import com.example.carebout.R
 class RecyclerAdapter(private val dataSet: ArrayList<Pair<String, String>>) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
-     */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val headText: TextView
-        val dateText: TextView
-
-        init {
-            headText = view.findViewById(R.id.inspection)
-            dateText = view.findViewById(R.id.date)
-        }
-    }
-
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.text_item, viewGroup, false)
 
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        val data: Pair<String, String> = dataSet[position]
-        viewHolder.headText.text = data.first
-        viewHolder.dateText.text = data.second
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bindData(dataSet[position])
     }
 
     override fun getItemCount() = dataSet.size
 
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val headText = view.findViewById<TextView>(R.id.inspection)
+        val dateText = view.findViewById<TextView>(R.id.date)
 
-    public fun addItem(a: Pair<String, String>){
-        dataSet.add(a)
+        fun bindData(item: Pair<String, String>) {
+            headText.text = item.first
+            dateText.text = item.second
+        }
+    }
+
+    fun addItem(item: Pair<String, String>){
+        dataSet.add(item)
         notifyItemInserted(dataSet.size-1)
     }
-    public fun removeItem(index: Int){
-        dataSet.removeAt(index)
-        notifyItemRemoved(index)
-        //notifyDataSetChanged()
+    fun removeItem(position: Int){
+        dataSet.removeAt(position)
+        notifyItemRemoved(position)
     }
 }

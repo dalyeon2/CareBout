@@ -44,4 +44,9 @@ class MyAdapter(private val context: Context, private val dataList: MutableList<
         dataList.add(item)
         notifyItemInserted(dataList.size-1)
     }
+
+    fun removeItem(position: Int){
+        dataList.removeAt(position)
+        notifyItemRemoved(position)
+    }
 }
