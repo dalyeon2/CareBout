@@ -3,9 +3,14 @@ package com.example.carebout.view.medical
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TableLayout
+import android.widget.TableRow
+import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -13,6 +18,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
+import com.example.carebout.view.home.db.PersonalInfoDao
+import com.example.carebout.view.medical.Inoc.InoculationAdapter
 import com.example.carebout.view.medical.Inoc.InoculationAdapter2
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Inoculation
@@ -21,6 +28,7 @@ import com.example.carebout.view.medical.db.InoculationDao
 class Tab2 : Fragment() {
     private lateinit var db: AppDatabase
     private lateinit var inocDao: InoculationDao
+    private lateinit var personalInfoDao: PersonalInfoDao
     private var inocList: ArrayList<Inoculation> = ArrayList<Inoculation>()
     private lateinit var adapter: InoculationAdapter2
 
@@ -47,6 +55,7 @@ class Tab2 : Fragment() {
 
         db = AppDatabase.getInstance(requireContext())!!
         inocDao = db.getInocDao()
+        personalInfoDao = db.personalInfoDao()
 
         // RecyclerView 설정
         recyclerView = tab2View.findViewById(R.id.recyclerView)
@@ -71,6 +80,7 @@ class Tab2 : Fragment() {
             //MyPid.setPid(petId)
             //application.petId = mpid
             getInocList()
+            updatePetTag()
         })
 
 
@@ -161,6 +171,19 @@ class Tab2 : Fragment() {
         }
 
         return tab2View
+    }
+
+    private fun updatePetTag() {
+
+        val petList = personalInfoDao.getInfoById(petId)
+
+        if (petList!!.animal == "dog") {
+            tagCVRP.visibility = View.GONE
+            tagDHPPL.visibility = View.VISIBLE
+        } else {
+            tagCVRP.visibility = View.VISIBLE
+            tagDHPPL.visibility = View.GONE
+        }
     }
 
     private fun getInocList() {

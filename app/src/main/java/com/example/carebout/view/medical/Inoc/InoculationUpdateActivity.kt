@@ -10,11 +10,15 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.ToggleButton
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityInoculationUpdateBinding
+import com.example.carebout.view.home.db.PersonalInfoDao
 import com.example.carebout.view.medical.MedicalViewModel
 import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
@@ -28,6 +32,7 @@ class InoculationUpdateActivity : AppCompatActivity() {
     lateinit var binding: ActivityInoculationUpdateBinding
     lateinit var db: AppDatabase
     lateinit var inocDao: InoculationDao
+    lateinit var personalInfoDao: PersonalInfoDao
     var id: Int = 0
 
     private lateinit var viewModel: MedicalViewModel
@@ -43,6 +48,7 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
         db = AppDatabase.getInstance(applicationContext)!!
         inocDao = db.getInocDao()
+        personalInfoDao = db.personalInfoDao()
 
 //        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
 //        petId = viewModel.getSelectedPetId().value
@@ -50,6 +56,8 @@ class InoculationUpdateActivity : AppCompatActivity() {
         petId = MyPid.getPid()
             //(application as PidApplication).petId
         Log.i("petId_app", petId.toString())
+
+        updatePetTag()
 
         val editTextList: EditText = findViewById(R.id.editTextList)
         val editTextDate: EditText = findViewById(R.id.editTextDate)
@@ -182,6 +190,20 @@ class InoculationUpdateActivity : AppCompatActivity() {
         setupDateEditText(binding.editTextDue)
     }
 
+    private fun updatePetTag() {
+        val tagDHPPL = binding.toggleButton1
+        val tagCVRP = binding.toggleButton4
+
+        val petList = personalInfoDao.getInfoById(petId)
+
+        if (petList!!.animal == "dog") {
+            tagCVRP.visibility = View.GONE
+            tagDHPPL.visibility = View.VISIBLE
+        } else {
+            tagCVRP.visibility = View.VISIBLE
+            tagDHPPL.visibility = View.GONE
+        }
+    }
 
     private fun updateInoc() {
         val inocTag = binding.editTextList.text.toString()
