@@ -8,25 +8,42 @@
     tools:context=".view.medical.Inoc.InoculationReadActivity"
     android:id="@+id/parent_layout">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/inoToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
     <HorizontalScrollView
         android:id="@+id/tag_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/inoToolbar"
+        android:layout_marginTop="0dp"
         android:gravity="center_vertical"
-        android:padding="10dp">
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp">
 
         <LinearLayout
 
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:orientation="horizontal">
 
             <ToggleButton
                 android:id="@+id/toggleButton1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="75dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="DHPPL"
@@ -35,8 +52,8 @@
 
             <ToggleButton
                 android:id="@+id/toggleButton2"
-                android:layout_width="80dp"
-                android:layout_height="48dp"
+                android:layout_width="75dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="코로나"
@@ -45,8 +62,8 @@
 
             <ToggleButton
                 android:id="@+id/toggleButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="75dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="켄넬코프"
@@ -55,8 +72,8 @@
 
             <ToggleButton
                 android:id="@+id/toggleButton4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="75dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="CVRP"
@@ -65,8 +82,8 @@
 
             <ToggleButton
                 android:id="@+id/toggleButton5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="75dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="백혈병"
@@ -75,8 +92,8 @@
 
             <ToggleButton
                 android:id="@+id/toggleButton6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="75dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="FID"
@@ -85,8 +102,8 @@
 
             <ToggleButton
                 android:id="@+id/toggleButton7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="75dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="광견병"
@@ -95,8 +112,8 @@
 
             <ToggleButton
                 android:id="@+id/toggleButton8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="85dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="심장사상충"
@@ -122,14 +139,17 @@
         android:layout_below="@+id/tag_layout"
 
         android:gravity="center_vertical"
-        android:padding="10dp">
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp">
 
         <TextView
             android:id="@+id/tag_v"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:text="태그"
             android:textColor="#000"
             android:textSize="16sp" />
@@ -139,43 +159,43 @@
             android:id="@+id/date_v"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:maxLines="1"
             android:text="접종일"
-            android:textColor="#444"
+            android:textColor="#000"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/due_v"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:maxLines="1"
             android:text="예정일"
-            android:textColor="#444"
+            android:textColor="#000"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/hospital_v"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:maxLines="1"
             android:text="병원"
-            android:textColor="#444"
+            android:textColor="#000"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/etc_v"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="비고"
-            android:textColor="#444"
+            android:text="메모"
+            android:textColor="#000"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -184,16 +204,19 @@
         android:id="@+id/lineView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@+id/title_layout"
         android:layout_marginHorizontal="10dp"
-        android:background="#262626"
-        android:layout_below="@+id/title_layout"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#262626" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lineView"
-        />
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/insert_btn"

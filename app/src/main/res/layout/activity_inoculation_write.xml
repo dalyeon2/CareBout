@@ -20,7 +20,9 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar4">
@@ -39,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="태그"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TableLayout
@@ -148,12 +150,13 @@
                     <EditText
                         android:id="@+id/editTextList"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="40dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/edittext_rounded_corner_rectangle"
                         android:ems="10"
                         android:hint="  + 직접 작성하기"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:textSize="14sp" />
 
                 </TableLayout>
 
@@ -164,19 +167,19 @@
                     android:layout_marginTop="30dp"
 
                     android:text="접종/구충 날짜"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/editTextDate"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="접종/구충 날짜 작성"
                     android:inputType="date"
 
-                    />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/due_date"
@@ -185,19 +188,19 @@
                     android:layout_marginTop="30dp"
 
                     android:text="접종/구충 예정일"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/editTextDue"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="접종/구충 예정일 작성"
                     android:inputType="date"
 
-                    />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/text_hosptial"
@@ -206,17 +209,18 @@
                     android:layout_marginTop="30dp"
 
                     android:text="병원 이름"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/editTextH"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="병원 이름 작성"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/text_acc"
@@ -224,8 +228,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
 
-                    android:text="비고"
-                    android:textSize="16sp"
+                    android:text="메모"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -236,8 +240,9 @@
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:hint="비고"
-                    android:inputType="textMultiLine" />
+                    android:hint="메모"
+                    android:inputType="textMultiLine"
+                    android:textSize="14sp" />
             </LinearLayout>
         </ScrollView>
 

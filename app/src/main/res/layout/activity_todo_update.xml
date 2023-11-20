@@ -21,7 +21,9 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar7">
@@ -42,18 +44,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
 
-                    android:text="데일리 일정"
-                    android:textSize="16sp"
+                    android:text="데일리 케어"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/TodoEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
-                    android:hint="데일리 일정 작성"
-                    android:inputType="text" />
+                    android:hint="데일리 케어 작성"
+                    android:inputType="text"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/text_count"
@@ -62,7 +65,7 @@
                     android:layout_marginTop="30dp"
 
                     android:text="횟수"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
 
@@ -89,7 +92,7 @@
                         android:layout_weight="1"
                         android:text="0"
                         android:textAlignment="center"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <Button
@@ -110,8 +113,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
 
-                    android:text="비고"
-                    android:textSize="16sp"
+                    android:text="메모"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -122,8 +125,9 @@
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:hint="비고"
-                    android:inputType="textMultiLine" />
+                    android:hint="메모"
+                    android:inputType="textMultiLine"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
