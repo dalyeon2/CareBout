@@ -16,7 +16,6 @@ import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Clinic
 import com.example.carebout.view.medical.db.ClinicDao
-import com.example.carebout.view.medical.db.Inoculation
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ClinicReadActivity : AppCompatActivity() {
