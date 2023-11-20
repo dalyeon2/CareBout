@@ -74,17 +74,17 @@ class InoculationAdapter2(private val context: Context)
         holder.tagText.text = inocData.tag
 
         if (uTagDHPPL == true) {
-            holder.tagText.text = "혼합예방주사(DHPPL)"
+            holder.tagText.text = "DHPPL"
         } else if (uTagC == true) {
-            holder.tagText.text = "코로나바이러스성 장염"
+            holder.tagText.text = "코로나"
         } else if (uTagKC == true) {
             holder.tagText.text = "켄넬코프"
         } else if (uTagCVRP == true) {
-            holder.tagText.text = "혼합예방주사(CVRP)"
+            holder.tagText.text = "CVRP"
         } else if (uTagFL == true) {
             holder.tagText.text = "백혈병"
         } else if (uTagFID == true) {
-            holder.tagText.text = "전염성 복막염"
+            holder.tagText.text = "복막염"
         } else if (uTagR == true) {
             holder.tagText.text = "광견병"
         } else if (uTagH == true) {
