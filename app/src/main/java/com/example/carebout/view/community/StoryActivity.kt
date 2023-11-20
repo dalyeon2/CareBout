@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.carebout.databinding.CustomDialogDeleteBinding
 
 class StoryActivity : AppCompatActivity() {
     lateinit var binding: ActivityStoryBinding
@@ -79,11 +80,42 @@ class StoryActivity : AppCompatActivity() {
         }
 
         R.id.menu_remove -> {
-            showConfirmationDialog()
+            showDeleteCustomDialog()
             true
         }
 
         else -> true
+    }
+
+    private fun showDeleteCustomDialog() {
+        val dialogBinding = CustomDialogDeleteBinding.inflate(layoutInflater)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogBinding.root)
+            .create()
+
+        dialogBinding.dialogTitle.text = "정말 삭제하시겠습니까?"
+        dialogBinding.dialogMessage.text = "삭제한 글은 복원할 수 없어요"
+
+        dialogBinding.btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialogBinding.btnDelete.setOnClickListener {
+            val position = intent.getIntExtra("position", -1)
+
+            if (position != -1) {
+                dialog.dismiss()
+
+                val resultIntent = Intent().apply {
+                    putExtra("positionToRemove", position)
+                }
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+            }
+        }
+
+        dialog.show()
     }
 
     private fun loadWithGlide(imageUri: Uri) {
@@ -103,24 +135,5 @@ class StoryActivity : AppCompatActivity() {
                 override fun onLoadCleared(placeholder: Drawable?) {
                 }
             })
-    }
-    private fun showConfirmationDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("삭제")
-        builder.setMessage("일기를 삭제하시겠습니까?")
-
-        builder.setNegativeButton("아니요") { _, _ ->
-            // 사용자가 취소한 경우 아무 작업 없이 다이얼로그만 닫기
-        }
-
-        builder.setPositiveButton("예") { _, _ ->
-            val intent = Intent().apply {
-                putExtra("positionToRemove", intent.getIntExtra("position", -1))
-            }
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-        }
-
-        builder.show()
     }
 }
