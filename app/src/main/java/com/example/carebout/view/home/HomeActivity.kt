@@ -177,33 +177,6 @@ class HomeActivity : AppCompatActivity() {
         return age
     }
 
-    private fun getInoculationDataSet(): ArrayList<Pair<String, String>> {
-        val inoculationDS: ArrayList<Pair<String, String>> = arrayListOf()
-
-        for(i in inoculationDao.getInoculationAll(nowPid)) {
-            if(i.tag_DHPPL == true)
-                inoculationDS.add(Pair("DHPPL", i.date!!))
-            if(i.tag_Corona == true)
-                inoculationDS.add(Pair("코로나", i.date!!))
-            if(i.tag_KC == true)
-                inoculationDS.add(Pair("켄넬코프", i.date!!))
-            if(i.tag_CVRP == true)
-                inoculationDS.add(Pair("CVRP", i.date!!))
-            if(i.tag_Heartworm == true)
-                inoculationDS.add(Pair("심장사상충", i.date!!))
-            if(i.tag_FID == true)
-                inoculationDS.add(Pair("전염성복막염", i.date!!))
-            if(i.tag_FL == true)
-                inoculationDS.add(Pair("백혈병", i.date!!))
-            if(i.tag_Rabies == true)
-                inoculationDS.add(Pair("광견병", i.date!!))
-        }
-
-        inoculationDS.sortBy { it.second }
-
-        return inoculationDS
-    }
-
     private fun getClinicDataSet(): ArrayList<Pair<String, String>> {
         val clinicDS: ArrayList<Pair<String, String>> = arrayListOf()
 
@@ -226,6 +199,34 @@ class HomeActivity : AppCompatActivity() {
 
         return clinicDS
     }
+
+    private fun getInoculationDataSet(): ArrayList<Pair<String, String>> {
+        val inoculationDS: ArrayList<Pair<String, String>> = arrayListOf()
+
+        for(i in inoculationDao.getInoculationAll(nowPid)) {
+            if(i.tag_DHPPL == true)
+                inoculationDS.add(Pair("DHPPL", i.date!!))
+            if(i.tag_Corona == true)
+                inoculationDS.add(Pair("코로나", i.date!!))
+            if(i.tag_KC == true)
+                inoculationDS.add(Pair("켄넬코프", i.date!!))
+            if(i.tag_CVRP == true)
+                inoculationDS.add(Pair("CVRP", i.date!!))
+            if(i.tag_Heartworm == true)
+                inoculationDS.add(Pair("심장사상충", i.date!!))
+            if(i.tag_FID == true)
+                inoculationDS.add(Pair("복막염", i.date!!))
+            if(i.tag_FL == true)
+                inoculationDS.add(Pair("백혈병", i.date!!))
+            if(i.tag_Rabies == true)
+                inoculationDS.add(Pair("광견병", i.date!!))
+        }
+
+        inoculationDS.sortBy { it.second }
+
+        return inoculationDS
+    }
+
 
     private fun getProfileList(): ArrayList<String> {
         val profileList = arrayListOf<String>()

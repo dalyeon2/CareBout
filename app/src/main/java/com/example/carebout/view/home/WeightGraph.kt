@@ -15,8 +15,12 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 class WeightGraph(private val binding: ActivityHomeBinding) {
 
     fun setWeightGraph(weightList: List<Weight>) {
-
+        val wList = weightList.sortedBy { it.date }
+        val minWeight = wList.minBy { it.weight - 1 }.weight
+        val maxWeight = wList.maxBy { it.weight + 1 }.weight
         val xAxis: XAxis = binding.weightGraph.xAxis   //x축 가져오기
+
+
 
         xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM   //x축은 아래에 위치
@@ -33,8 +37,8 @@ class WeightGraph(private val binding: ActivityHomeBinding) {
             axisRight.isEnabled = false //y축 오른쪽 비활성화
             axisLeft.isEnabled = false  //y축 왼쪽 비활성화
             axisLeft.axisLineColor = resources.getColor(R.color.white)  // 다크모드를 위해 배경색이랑 같게 설정
-            axisLeft.axisMinimum = 2f   //y축 왼쪽 표시 데이터 최솟값
-            axisLeft.axisMaximum = 7.2f //y축 왼쪽 표시 데이터 최댓값
+            axisLeft.axisMinimum = minWeight   //y축 왼쪽 표시 데이터 최솟값
+            axisLeft.axisMaximum = maxWeight //y축 왼쪽 표시 데이터 최댓값
             axisLeft.setLabelCount(4, true)
             axisLeft.setDrawLabels(false)
             axisLeft.setDrawGridLines(true)
@@ -51,8 +55,6 @@ class WeightGraph(private val binding: ActivityHomeBinding) {
 
         val lineData = LineData()
         binding.weightGraph.data = lineData
-
-        val wList = weightList.sortedBy { it.date }
 
         for(w in wList) {
             addEntry(w.weight)

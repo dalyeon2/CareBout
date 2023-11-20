@@ -1,6 +1,7 @@
 package com.example.carebout.view.home
 
 import MyAdapter
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.INVISIBLE
@@ -12,6 +13,7 @@ import com.example.carebout.databinding.ActivityAddWeightBinding
 import com.example.carebout.view.home.db.Weight
 import com.example.carebout.view.home.db.WeightDao
 import com.example.carebout.view.medical.db.AppDatabase
+import java.util.Calendar
 
 class AddWeightActivity : AppCompatActivity() {
 
@@ -35,14 +37,34 @@ class AddWeightActivity : AppCompatActivity() {
         // 상단바 우측 버튼 사용 안함
         binding.topBarOuter.CompleteBtn.visibility = INVISIBLE
 
+
         val dataList: MutableList<Pair<Float, String>> = getWeightDataSet(nowPid)
+        dataList.sortBy { it.second }
 
         recyclerView = findViewById(R.id.weightRecycler)
         wAdapter = MyAdapter(this, dataList)
 
-        val layoutManager = LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this).apply {
+            stackFromEnd = true
+            reverseLayout = true
+        }
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = wAdapter
+
+        // 날짜 입력 editText 클릭 시 캘린더 뜨도록
+        binding.editD.setOnClickListener {
+            var calendar = Calendar.getInstance()
+            var year = calendar.get(Calendar.YEAR)
+            var month = calendar.get(Calendar.MONTH)
+            var day = calendar.get(Calendar.DAY_OF_MONTH)
+            this@AddWeightActivity.let { it ->
+                DatePickerDialog(it, { _, year, month, day ->
+                    run {
+                        binding.editD.setText(year.toString() + "-" + (month + 1).toString() + "-" + day.toString())
+                    }
+                }, year, month, day)
+            }?.show()
+        }
 
         // 뒤로가기 버튼
         binding.topBarOuter.backToActivity.setOnClickListener {
@@ -64,6 +86,9 @@ class AddWeightActivity : AppCompatActivity() {
             ))
 
             wAdapter.addItem(Pair(w.text.toString().toFloat(), d.text.toString()))
+
+            w.setText("")
+            d.setText("")
         }
     }
 
