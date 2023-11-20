@@ -95,15 +95,20 @@ class Tab1 : Fragment() {
 
     private fun getMedicineList() {
 
-        val mediList: ArrayList<Medicine> = db?.getMedicineDao()!!.getMediDateAsc(petId) as ArrayList<Medicine>
+        if(petId != 0){
+            val mediList: ArrayList<Medicine> = db?.getMedicineDao()!!.getMediDateAsc(petId) as ArrayList<Medicine>
 
-        if (mediList.isNotEmpty()) {
-            //데이터 적용
-            adapter2.setMediList(mediList)
+            if (mediList.isNotEmpty()) {
+                //데이터 적용
+                adapter2.setMediList(mediList)
 
+            } else {
+                adapter2.setMediList(ArrayList())
+            }
         } else {
             adapter2.setMediList(ArrayList())
         }
+
     }
 
     private fun getMediCheckList() {
