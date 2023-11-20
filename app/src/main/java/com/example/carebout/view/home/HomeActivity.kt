@@ -22,6 +22,7 @@ import com.example.carebout.databinding.ActivityHomeBinding
 import com.example.carebout.databinding.CustomDialogBinding
 import com.example.carebout.view.home.db.Weight
 import com.example.carebout.view.home.db.WeightDao
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.ClinicDao
 import com.example.carebout.view.medical.db.InoculationDao
@@ -94,6 +95,9 @@ class HomeActivity : AppCompatActivity() {
                 val p = db.personalInfoDao().getAllInfo()
                 nowPid = p[position].pid
                 WeightGraph(binding).setWeightGraph(nowPid)
+
+                //현재 화면의 pid 저장해 공유하는 것, 별로라도 일단 지우지 말아주세요ㅜㅠ
+                MyPid.setPid(nowPid)
 
                 val clinicAdapter = RecyclerAdapter(getClinicDataSet())
                 binding.checkRecycler.layoutManager = LinearLayoutManager(this@HomeActivity, RecyclerView.HORIZONTAL, false)
