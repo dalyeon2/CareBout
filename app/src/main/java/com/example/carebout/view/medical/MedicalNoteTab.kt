@@ -152,6 +152,7 @@ class MedicalNoteTab : Fragment() {
                 radioButton.text = pet.name
                 radioButton.tag = pet.pid  // pid 태그에 저장
                 petRadioGroup.addView(radioButton)
+                Log.i("pid_animal", pet.animal)
 
                 // 가져온 petId 값과 현재 라디오 버튼의 tag가 일치하면 선택
                 if (petId != 0 && pet.pid == MyPid.getPid()) {

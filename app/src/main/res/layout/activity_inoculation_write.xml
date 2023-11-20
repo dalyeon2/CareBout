@@ -73,6 +73,36 @@
                                 android:textOn="DHPPL" />
 
                             <ToggleButton
+                                android:id="@+id/toggleButton4"
+                                android:layout_width="75dp"
+                                android:layout_height="30dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/togglebtn_check"
+                                android:text="CVRP"
+                                android:textOff="CVRP"
+                                android:textOn="CVRP" />
+
+                            <ToggleButton
+                                android:id="@+id/toggleButton8"
+                                android:layout_width="75dp"
+                                android:layout_height="35dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/togglebtn_check"
+                                android:text="심장사상충"
+                                android:textOff="심장사상충"
+                                android:textOn="심장사상충" />
+
+                            <ToggleButton
+                                android:id="@+id/toggleButton7"
+                                android:layout_width="75dp"
+                                android:layout_height="35dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/togglebtn_check"
+                                android:text="광견병"
+                                android:textOff="광견병"
+                                android:textOn="광견병" />
+
+                            <ToggleButton
                                 android:id="@+id/toggleButton2"
                                 android:layout_width="75dp"
                                 android:layout_height="30dp"
@@ -93,16 +123,6 @@
                                 android:textOn="켄넬코프" />
 
                             <ToggleButton
-                                android:id="@+id/toggleButton4"
-                                android:layout_width="75dp"
-                                android:layout_height="30dp"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/togglebtn_check"
-                                android:text="CVRP"
-                                android:textOff="CVRP"
-                                android:textOn="CVRP" />
-
-                            <ToggleButton
                                 android:id="@+id/toggleButton5"
                                 android:layout_width="75dp"
                                 android:layout_height="35dp"
@@ -121,26 +141,6 @@
                                 android:text="FID"
                                 android:textOff="FID"
                                 android:textOn="FID" />
-
-                            <ToggleButton
-                                android:id="@+id/toggleButton7"
-                                android:layout_width="75dp"
-                                android:layout_height="35dp"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/togglebtn_check"
-                                android:text="광견병"
-                                android:textOff="광견병"
-                                android:textOn="광견병" />
-
-                            <ToggleButton
-                                android:id="@+id/toggleButton8"
-                                android:layout_width="75dp"
-                                android:layout_height="35dp"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/togglebtn_check"
-                                android:text="심장사상충"
-                                android:textOff="심장사상충"
-                                android:textOn="심장사상충" />
 
                         </LinearLayout>
                     </HorizontalScrollView>
