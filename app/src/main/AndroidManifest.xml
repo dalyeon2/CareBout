@@ -80,28 +80,35 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".view.medical.Todo.TodoWriteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Inoc.InoculationWriteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Medicine.MedicineWriteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Clinic.ClinicWriteActivity"
             android:exported="false" />
         <activity
             android:name=".view.medical.Todo.TodoUpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Inoc.InoculationUpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Medicine.MedicineUpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Clinic.ClinicUpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

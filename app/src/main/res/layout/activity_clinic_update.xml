@@ -130,6 +130,7 @@
                         </LinearLayout>
                     </HorizontalScrollView>
 
+<<<<<<< HEAD
 
                     <EditText
                         android:id="@+id/editTextList"
@@ -142,6 +143,8 @@
                         android:inputType="text"
                         android:textSize="14sp" />
 
+=======
+>>>>>>> 03fdfab774fd24104038fd50b2c38bb72fb3fc16
                 </TableLayout>
 
                 <TextView

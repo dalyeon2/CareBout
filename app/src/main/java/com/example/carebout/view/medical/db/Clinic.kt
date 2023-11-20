@@ -41,9 +41,6 @@ data class Clinic(
     @ColumnInfo(name = "tag_checkup")
     var tag_checkup: Boolean?,
 
-    @ColumnInfo(name = "tag")
-    var tag: String?,
-
     @ColumnInfo(name = "date")
     var date: String?,
 

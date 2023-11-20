@@ -323,6 +323,22 @@ class HomeActivity : AppCompatActivity() {
                 weightDao.deleteInfo(delW)
             }
 
+            //해당 반려동물의 의료 내용도 삭제
+            val clin = db.getClinicDao().getClinicByPid(nowPid)
+            if (clin != null) {
+                db.getClinicDao().deletePidClinic(nowPid)
+            }
+
+            val inoc = db.getInocDao().getInoculationByPid(nowPid)
+            if (inoc != null) {
+                db.getInocDao().deletePidInoc(nowPid)
+            }
+
+            val medi = db.getMedicineDao().getMediByPid(nowPid)
+            if (medi != null) {
+                db.getMedicineDao().deletePidMedi(nowPid)
+            }
+
             val delP = db.personalInfoDao().getInfoById(nowPid)!!
             delP.pid = nowPid
             db.personalInfoDao().deleteInfo(delP)

@@ -129,6 +129,7 @@
                         </LinearLayout>
                     </HorizontalScrollView>
 
+<<<<<<< HEAD
                     <EditText
                         android:id="@+id/editTextList"
                         android:layout_width="match_parent"
@@ -139,6 +140,8 @@
                         android:hint="  + 직접 작성하기"
                         android:inputType="text" />
 
+=======
+>>>>>>> 03fdfab774fd24104038fd50b2c38bb72fb3fc16
                 </TableLayout>
 
                 <TextView

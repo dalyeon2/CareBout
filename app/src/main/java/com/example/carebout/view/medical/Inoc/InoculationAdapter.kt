@@ -43,10 +43,7 @@ class InoculationAdapter(private val context: Context)
 
         val inocData = inocList[position]
 
-        holder.tagText.text = inocData.tag
-
         //데이터 변수에 담기
-        var uTag = inocList[holder.bindingAdapterPosition].tag
         var uDate = inocList[holder.bindingAdapterPosition].date
         var uDue = inocList[holder.bindingAdapterPosition].due
         var uHospital = inocList[holder.bindingAdapterPosition].hospital
@@ -62,14 +59,10 @@ class InoculationAdapter(private val context: Context)
         var uTagH = inocList[holder.bindingAdapterPosition].tag_Heartworm
 
         //데이터 적용
-        holder.tagText.text = uTag
         holder.dateText.text = uDate
         holder.dueText.text = uDue
         holder.hospitalText.text = uHospital
         holder.etcText.text = uEtc
-
-
-        holder.tagText.text = inocData.tag
 
         if (uTagDHPPL == true) {
             holder.tagText.text = "DHPPL"
@@ -98,7 +91,6 @@ class InoculationAdapter(private val context: Context)
             intent.putExtra("inocId", inocList[holder.bindingAdapterPosition].inocId) // 아이템의 고유 ID 전달
             Log.i("id", inocList[holder.bindingAdapterPosition].inocId.toString())
             //값 담기
-            intent.putExtra("uTag", uTag)
             intent.putExtra("uDate", uDate)
             intent.putExtra("uDue", uDue)
             intent.putExtra("uHospital", uHospital)

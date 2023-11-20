@@ -170,6 +170,9 @@ class MedicalNoteTab : Fragment() {
 //            // 첫 번째 라디오 버튼을 디폴트로 선택
 //            val firstRadioButton = petRadioGroup.getChildAt(0) as? RadioButton
 //            firstRadioButton?.isChecked = true
+        } else {
+            petRadioGroup.removeAllViews()
+            MyPid.setPid(0)
         }
     }
 
