@@ -34,11 +34,12 @@
             <TextView
                 android:id="@+id/titleText"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="64dp"
                 android:gravity="center_vertical"
-                android:text="CARE'BOUT"
-                android:textSize="24dp"
-                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:text="CARE 'BOUT"
+                android:textSize="22dp"
+                android:fontFamily="@font/black"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -47,10 +48,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="30dp"
-                android:paddingBottom="70dp"
-                android:text="반가워, 쿵이!"
+                android:paddingBottom="30dp"
+                android:text="반가워, 쿵이 !"
                 android:textColor="@color/black"
-                android:textSize="18dp"
+                android:fontFamily="@font/noto"
+                android:textSize="19dp"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 app:layout_constraintTop_toBottomOf="@id/titleText" />
@@ -84,11 +86,10 @@
                 android:id="@+id/sexAndBirth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/profileIndicator">
-
 
                 <TextView
                     android:id="@+id/sex"
@@ -105,7 +106,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0년 11개월"
-                    android:textSize="14dp"/>
+                    android:fontFamily="@font/medium"
+                    android:textSize="15dp"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -116,7 +118,6 @@
                 android:layout_marginEnd="5dp"
                 android:text="코리안 숏헤어"
                 android:textSize="16dp"
-                android:textStyle="bold"
                 android:textAlignment="center"
                 app:layout_constraintTop_toBottomOf="@id/sexAndBirth"/>
 
@@ -125,8 +126,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="5.1kg"
-                android:textSize="16dp"
-                android:textStyle="bold"
+                android:textSize="18dp"
+                android:fontFamily="@font/bold"
                 android:textAlignment="center"
                 app:layout_constraintTop_toBottomOf="@id/breed"/>
 
@@ -134,7 +135,7 @@
                 android:id="@+id/weightGraphTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="20dp"
                 android:paddingHorizontal="5dp"
                 android:text="체중 그래프"
                 android:textSize="18dp"
@@ -157,7 +158,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:divider="#ccc"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/square_shape3">
 
                     <View
                         android:layout_width="match_parent"
@@ -196,7 +198,7 @@
                 android:id="@+id/checkGraphTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:paddingHorizontal="5dp"
                 android:text="검사 일지"
                 android:textSize="18dp"
@@ -220,14 +222,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="75dp"
                     android:paddingHorizontal="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:background="@drawable/square_shape3"/>
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/inoculationTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:paddingHorizontal="5dp"
                 android:text="접종 및 구충 일지"
                 android:textSize="18dp"
@@ -251,7 +254,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="75dp"
                     android:paddingHorizontal="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:background="@drawable/square_shape3"/>
             </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

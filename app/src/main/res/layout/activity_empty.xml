@@ -21,12 +21,12 @@
             <TextView
                 android:id="@+id/titleText"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="64dp"
                 android:gravity="center_vertical"
-                android:text="CARE'BOUT"
-                android:textSize="24dp"
-                android:textStyle="bold"
+                android:text="CARE 'BOUT"
+                android:textSize="22dp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/black"
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <FrameLayout
@@ -46,11 +46,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:layout_marginTop="5dp"
                         android:text="반려동물을 등록하고\n다양한 서비스를 이용해보세요"
-                        android:textSize="18dp"
+                        android:textSize="20dp"
+                        android:fontFamily="@font/light"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
                         android:gravity="center_vertical"
+                        android:lineSpacingExtra="4dp"
                         app:layout_constraintTop_toBottomOf="@id/titleText"/>
 
                     <View
@@ -93,6 +95,7 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginHorizontal="20dp"
                         android:layout_weight="1.5">
 
                         <Button
@@ -100,16 +103,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:background="@drawable/button_round"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/square_shape3"
                             android:text="반려동물 등록하기"
                             android:textSize="18dp"
-                            android:textStyle="bold"
-                            android:textColor="#535863"
+                            android:textColor="#494B4F"
                             android:paddingHorizontal="10dp"
                             app:layout_constraintTop_toBottomOf="@id/sampleIndicator"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                        </Button>
 
                     </FrameLayout>
 

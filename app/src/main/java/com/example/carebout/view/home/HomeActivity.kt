@@ -118,7 +118,7 @@ class HomeActivity : AppCompatActivity() {
                 setClinicRecycler()
                 setInoculationRecycler()
 
-                binding.helloName.text = "반가워, " + p[nowPosition].name + "!"
+                binding.helloName.text = "반가워, " + p[nowPosition].name + " !"
                 if (p[nowPosition].sex == "male") {
                     binding.sex.text = "♂"
                     binding.sex.setTextColor(Color.parseColor("#0099ff"))
