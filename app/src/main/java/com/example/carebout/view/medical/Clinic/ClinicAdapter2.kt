@@ -88,7 +88,7 @@ class ClinicAdapter2(private val context: Context)
 
             Log.i("size", clinicList.size.toString())
 
-            var intent: Intent = Intent(context, ClinicUpdateActivity::class.java)
+            var intent: Intent = Intent(context, ClinicReadActivity::class.java)
 
             intent.putExtra("clinicId", clinicList[holder.bindingAdapterPosition].clinicId) // 아이템의 고유 ID 전달
             Log.i("id", clinicList[holder.bindingAdapterPosition].clinicId.toString())

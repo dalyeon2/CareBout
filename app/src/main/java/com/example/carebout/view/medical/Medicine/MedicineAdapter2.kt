@@ -81,7 +81,7 @@ class MedicineAdapter2(private val context: Context)
 
             Log.i("size", mediList.size.toString())
 
-            var intent: Intent = Intent(context, MedicineUpdateActivity::class.java)
+            var intent: Intent = Intent(context, MedicineReadActivity::class.java)
 
             intent.putExtra("mediId", mediList[holder.bindingAdapterPosition].mediId) // 아이템의 고유 ID 전달
             Log.i("id", mediList[holder.bindingAdapterPosition].mediId.toString())
