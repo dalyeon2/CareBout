@@ -1,14 +1,18 @@
 package com.example.carebout.view.medical.Todo
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityTodoUpdateBinding
+import com.example.carebout.view.medical.MedicalActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.DailyTodo
 import com.example.carebout.view.medical.db.TodoDao
@@ -29,14 +33,16 @@ class TodoUpdateActivity : AppCompatActivity() {
         db = AppDatabase.getInstance(applicationContext)!!
         todoDao = db.getTodoDao()
 
+
+
         var counter:Int = 0 // 증감할 숫자의 변수 지정
 
         val todoText: TextView = findViewById(R.id.TodoEditText)
         val numText: TextView = findViewById(R.id.numText)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
 
-        val updateBtn: Button = findViewById(R.id.updateBtn)
-        val deleteBtn: Button = findViewById(R.id.deleteBtn)
+//        val updateBtn: Button = findViewById(R.id.updateBtn)
+//        val deleteBtn: Button = findViewById(R.id.deleteBtn)
 
         val btnminus: Button = findViewById(R.id.button2)
         val btnplus: Button = findViewById(R.id.button3)
@@ -62,16 +68,44 @@ class TodoUpdateActivity : AppCompatActivity() {
             Log.i("in", uTitle.toString())
         }
 
-        updateBtn.setOnClickListener{
-            updateTodo()
+//        updateBtn.setOnClickListener{
+//            updateTodo()
+//        }
+//
+//        deleteBtn.setOnClickListener {
+//            deletTodo()
+//        }
+
+        // 뒤로가기 버튼 클릭시
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
         }
 
-        deleteBtn.setOnClickListener {
+        // 저장 클릭리스너
+        binding.topBarOuter.CompleteBtn.setOnClickListener {
+            updateTodo()
+            setResult(Activity.RESULT_OK, intent)
+
+            finish()
+        }
+
+        // 삭제 클릭리스너
+        binding.topBarOuter.DeleteBtn.setOnClickListener {
             deletTodo()
+            setResult(Activity.RESULT_OK, intent)
+
+            finish()
         }
 
         btnplus.setOnClickListener {
-            counter++ //숫자는 1증가
+            if(counter < 5) {
+                counter++ //숫자는 1증가
+            }else{
+                Toast.makeText(
+                    this, "최대 5회까지 가능합니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             numText.text= counter.toString()
         }
 
@@ -136,6 +170,12 @@ class TodoUpdateActivity : AppCompatActivity() {
 
 
     private fun moveToAnotherPage() {
+        val intent = Intent(applicationContext, MedicalActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun moveToMainPage() {
         val intent = Intent(applicationContext, TodoReadActivity::class.java)
         startActivity(intent)
         finish()

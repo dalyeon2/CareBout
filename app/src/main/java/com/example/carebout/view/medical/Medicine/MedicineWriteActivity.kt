@@ -1,12 +1,15 @@
 package com.example.carebout.view.medical.Medicine
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.Button
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
@@ -15,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityMedicineWriteBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Medicine
 import com.example.carebout.view.medical.db.MedicineDao
@@ -27,6 +32,10 @@ class MedicineWriteActivity : AppCompatActivity() {
     lateinit var db: AppDatabase
     lateinit var medicineDao: MedicineDao
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+    private var save: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,12 +45,34 @@ class MedicineWriteActivity : AppCompatActivity() {
         db = AppDatabase.getInstance(applicationContext)!!
         medicineDao = db.getMedicineDao()
 
+        binding.topBarOuter.activityTitle.text = "약 처방"
+
+        // 뒤로가기 버튼 클릭시
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
+
+        // 저장 클릭리스너
+        binding.topBarOuter.CompleteBtn.setOnClickListener {
+            insertMedi()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
+
         val editTextM: EditText = findViewById(R.id.editTextM)
         val editTextStartD: EditText = findViewById(R.id.editTextStartD)
         val editTextEndD: EditText = findViewById(R.id.editTextEndD)
         val checkBox: CheckBox = findViewById(R.id.checkBox)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
-        val btn1: Button = findViewById(R.id.button)
+//        val btn1: Button = findViewById(R.id.button)
 
         val NowTime = System.currentTimeMillis()
         val DF = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
@@ -64,9 +95,9 @@ class MedicineWriteActivity : AppCompatActivity() {
             }
         }
 
-        btn1.setOnClickListener {
-            insertMedi()
-        }
+//        btn1.setOnClickListener {
+//            insertMedi()
+//        }
         // 숫자 입력 시 대시 "-" 자동 추가
         setupDateEditText(binding.editTextStartD)
         setupDateEditText(binding.editTextEndD)
@@ -84,11 +115,12 @@ class MedicineWriteActivity : AppCompatActivity() {
 
         // Date validation
         if (!isValidDate(mediStartD) || (!mediEndD.isBlank() && !isValidDate(mediEndD))) {
-            Toast.makeText(
-                this,
-                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.")
+//            Toast.makeText(
+//                this,
+//                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
@@ -97,32 +129,55 @@ class MedicineWriteActivity : AppCompatActivity() {
 
         // mediStartD와 currentDate 비교
         if (mediStartD > currentDate) {
-            Toast.makeText(
-                this,
-                "복용 시작일에 미래 날짜는 입력할 수 없습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("미래 날짜를 복용 시작일에 입력할 수 없습니다.")
+//            Toast.makeText(
+//                this,
+//                "복용 시작일에 미래 날짜는 입력할 수 없습니다.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
-        val Medi = Medicine(null, mediTitle, mediStartD, mediEndD, medicheckBox, mediEtc)
+        val Medi = Medicine(null, petId, mediTitle, mediStartD, mediEndD, medicheckBox, mediEtc)
 
         if (mediTitle.isBlank() || mediStartD.isBlank()) {
-            Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
+            showCustomToast("필수 항목을 채워주세요.")
+            //Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
         } else {
             Thread {
                 medicineDao.insertMedi(Medi)
                 runOnUiThread {
-                    Toast.makeText(
-                        this, "추가되었습니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    save = 1
+                    showCustomToast("추가되었습니다.")
                     moveToAnotherPage()
                 }
             }.start()
         }
     }
+    private var currentToast: Toast? = null
+    private fun showCustomToast(message: String) {
+        currentToast?.cancel()
 
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout))
+
+        val text = layout.findViewById<TextView>(R.id.custom_toast_text)
+        text.text = message
+
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+
+//        val toastDurationInMilliSeconds: Long = 3000
+//        toast.duration =
+//            if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+
+        toast.setGravity(Gravity.BOTTOM, 0, 200)
+
+        currentToast = toast
+
+        toast.show()
+    }
     private fun moveToAnotherPage() {
         val intent = Intent(this, MedicineReadActivity::class.java)
         startActivity(intent)
@@ -131,6 +186,10 @@ class MedicineWriteActivity : AppCompatActivity() {
 
     // Date validation function
     private fun isValidDate(dateString: String): Boolean {
+        if (dateString.length != 10) {
+            return false
+        }
+
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         dateFormat.isLenient = false
         return try {
@@ -174,5 +233,4 @@ class MedicineWriteActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
         })
     }
-
 }

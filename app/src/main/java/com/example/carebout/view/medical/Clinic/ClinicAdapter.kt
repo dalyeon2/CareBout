@@ -38,25 +38,51 @@ class ClinicAdapter(private val context: Context)
 
         val clinicData = clinicList[position]
 
-        holder.tagText.text = clinicData.tag
-
         //데이터 변수에 담기
-        var uTag = clinicList[holder.bindingAdapterPosition].tag
         var uDate = clinicList[holder.bindingAdapterPosition].date
         var uHospital = clinicList[holder.bindingAdapterPosition].hospital
         var uEtc = clinicList[holder.bindingAdapterPosition].etc
 
+        var uTagB = clinicList[holder.bindingAdapterPosition].tag_blood //혈액
+        var uTagX = clinicList[holder.bindingAdapterPosition].tag_xray //X-ray
+        var uTagU = clinicList[holder.bindingAdapterPosition].tag_ultrasonic //초음파
+        var uTagC = clinicList[holder.bindingAdapterPosition].tag_ct //CT
+        var uTagM = clinicList[holder.bindingAdapterPosition].tag_mri //MRI
+        var uTagCheckup = clinicList[holder.bindingAdapterPosition].tag_checkup //정기
 
         //데이터 적용
-        holder.tagText.text = uTag
         holder.dateText.text = uDate
         holder.hospitalText.text = uHospital
         holder.etcText.text = uEtc
 
+        var data = ArrayList<String>()
 
-        holder.tagText.text = clinicData.tag
-        //holder
+        if (uTagB == true) {
+            data.add("혈액")
+        }
 
+        if (uTagX == true) {
+            data.add("X-ray")
+        }
+
+        if (uTagU == true) {
+            data.add("초음파")
+        }
+
+        if (uTagC == true) {
+            data.add("CT")
+        }
+
+        if (uTagM == true) {
+            data.add("MRI")
+        }
+
+        if (uTagCheckup == true) {
+            data.add("정기")
+        }
+
+        val tagText = data.joinToString(" ") { "#$it" }
+        holder.tagText.text = tagText
 
         holder.itemView.setOnClickListener {
 
@@ -67,11 +93,16 @@ class ClinicAdapter(private val context: Context)
             intent.putExtra("clinicId", clinicList[holder.bindingAdapterPosition].clinicId) // 아이템의 고유 ID 전달
             Log.i("id", clinicList[holder.bindingAdapterPosition].clinicId.toString())
             //값 담기
-            intent.putExtra("uTag", uTag)
             intent.putExtra("uDate", uDate)
             intent.putExtra("uHospital", uHospital)
             intent.putExtra("uEtc", uEtc)
 
+            intent.putExtra("uTagB", uTagB)
+            intent.putExtra("uTagX", uTagX)
+            intent.putExtra("uTagU", uTagU)
+            intent.putExtra("uTagC", uTagC)
+            intent.putExtra("uTagM", uTagM)
+            intent.putExtra("uTagCheckup", uTagCheckup)
 
             context.startActivity(intent)
         }

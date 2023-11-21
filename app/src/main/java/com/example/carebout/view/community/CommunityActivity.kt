@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.carebout.R
 import com.example.carebout.base.bottomTabClick
 import com.example.carebout.databinding.ActivityCommunityBinding
-import com.example.carebout.view.IntroActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -212,6 +213,11 @@ class CommunityActivity : AppCompatActivity() {
         val space = resources.getDimensionPixelSize(R.dimen.space_between_items) // 원하는 간격 값으로 설정
         binding.recyclerView.addItemDecoration(SpaceItemDecoration(space))
 
+        // 현재 클릭 중인 탭 tint. 지우지 말아주세요!
+        binding.bottomTapBarOuter.diaryImage.imageTintList = ColorStateList.valueOf(Color.parseColor("#6EC677"))
+        binding.bottomTapBarOuter.diaryText.setTextColor(Color.parseColor("#6EC677"))
+
+        // 하단 탭바
         bottomTabClick(binding.bottomTapBarOuter, this)
     }
 
@@ -219,19 +225,6 @@ class CommunityActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putStringArrayList("contents", ArrayList(contents))
         outState.putParcelableArrayList("imageUris", ArrayList(imageUris))
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.title) {
-            "logout" -> {
-                val intent = Intent(this, IntroActivity::class.java)
-                startActivity(intent)
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun getCurrentDate(): String {

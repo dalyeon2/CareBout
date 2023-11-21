@@ -1,21 +1,23 @@
 package com.example.carebout.view.calendar
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.carebout.R
 import com.example.carebout.base.bottomTabClick
 import com.example.carebout.databinding.ActivityCalendarBinding
+import com.example.carebout.view.calendar.decorator.EventDecorator
 import com.example.carebout.view.calendar.decorator.SaturdayDecorator
 import com.example.carebout.view.calendar.decorator.SundayDecorator
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.util.*
 
 class CalendarActivity : AppCompatActivity() {
@@ -24,8 +26,11 @@ class CalendarActivity : AppCompatActivity() {
     lateinit var binding: ActivityCalendarBinding
     lateinit var calendarView: MaterialCalendarView
     lateinit var listView: ListView
+    val datesWithEvents = mutableSetOf<CalendarDay>()
+    lateinit var eventDecorator: EventDecorator
     val data = mutableMapOf<CalendarDay, MutableList<String>>()
     val adapter: ArrayAdapter<String> by lazy { ArrayAdapter(this, android.R.layout.simple_list_item_1) }
+    private lateinit var viewModel: CalendarViewModel
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +41,19 @@ class CalendarActivity : AppCompatActivity() {
         listView = findViewById(R.id.list)
         listView.adapter = adapter
 
+        viewModel = ViewModelProvider(this).get(CalendarViewModel::class.java)
+
         calendarView = findViewById(R.id.calendarView)
+
+        val currentDate = CalendarDay.today()
+
+        calendarView.selectedDate = currentDate
 
         calendarView.addDecorator(SundayDecorator()) // 일요일은 빨간색
         calendarView.addDecorator(SaturdayDecorator()) // 토요일은 파란색
-
-        val button = findViewById<Button>(R.id.addplan)
+        eventDecorator = EventDecorator(this)
+        calendarView.addDecorator(eventDecorator)
+        val button = findViewById<FloatingActionButton>(R.id.addplan)
         button.setOnClickListener {
             showAddEventDialog()
         }
@@ -54,9 +66,45 @@ class CalendarActivity : AppCompatActivity() {
             val selectedItem = adapter.getItem(position) // 클릭한 항목 가져오기
             showAlertDialog(selectedItem)
         }
+        listView.setOnItemLongClickListener { parent, view, position, id ->
+            val selectedItem = adapter.getItem(position) // 길게 클릭한 항목 가져오기
+            showEditDialog(selectedItem, position)
+            true // 이벤트 처리를 완료했음을 알림
+        }
+
+        // 현재 클릭 중인 탭 tint. 지우지 말아주세요!
+        binding.bottomTapBarOuter.calendarImage.imageTintList = ColorStateList.valueOf(Color.parseColor("#6EC677"))
+        binding.bottomTapBarOuter.calendarText.setTextColor(Color.parseColor("#6EC677"))
+
         //탭 클릭시 화면 전환을 위한 함수입니다. 지우지 말아주세요!
         bottomTabClick(binding.bottomTapBarOuter, this)
+    }
+    private fun showEditDialog(itemText: String?, position: Int) {
+        val input = EditText(this)
+        input.setText(itemText)
+        input.gravity = Gravity.CENTER
 
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setTitle("항목 수정")
+            .setView(input)
+            .setPositiveButton("확인") { dialog, which ->
+                val editedText = input.text.toString()
+                if (editedText.isNotEmpty()) {
+                    // 수정 작업 수행
+                    adapter.remove(itemText) // 원래 항목 삭제
+                    adapter.insert(editedText, position) // 수정된 항목 추가
+                    adapter.notifyDataSetChanged() // ListView 업데이트
+
+                    Toast.makeText(this, "수정되었습니다!", Toast.LENGTH_SHORT).show()
+                }
+                dialog.dismiss() // AlertDialog 닫기
+            }
+            .setNegativeButton("취소") { dialog, which ->
+                dialog.dismiss() // AlertDialog 닫기
+            }
+            .create()
+            .show()
     }
     private fun showAlertDialog(itemText: String?) {
         val builder = AlertDialog.Builder(this)
@@ -70,6 +118,7 @@ class CalendarActivity : AppCompatActivity() {
                 data[selectedDate] = events // 항목을 제거한 데이터로 업데이트
                 adapter.remove(itemText) // ListView에서 해당 항목 삭제
                 adapter.notifyDataSetChanged() // ListView 업데이트
+                Toast.makeText(this, "삭제되었습니다!", Toast.LENGTH_SHORT).show()
                 dialog.dismiss() // AlertDialog 닫기
             }
             .setNegativeButton("취소") { dialog, which ->
@@ -78,7 +127,7 @@ class CalendarActivity : AppCompatActivity() {
             .create()
             .show()
     }
-    private fun updateListView(selectedDate: CalendarDay) {
+    fun updateListView(selectedDate: CalendarDay) {
         val events = data[selectedDate] ?: mutableListOf()
         adapter.clear()
         adapter.addAll(events)
@@ -99,12 +148,19 @@ class CalendarActivity : AppCompatActivity() {
                 events.add(eventText) // 해당 날짜에 이벤트 추가
                 data[selectedDate] = events
                 adapter.clear()
+
+                // datesWithEvents를 업데이트하고 해당 날짜가 포함되어 있는지 확인
+                datesWithEvents.add(selectedDate)
+
                 data.entries.forEach { entry ->
-                    if (calendarView.selectedDate == entry.key) {
-                        adapter.addAll(entry.value)
-                    }
+                    adapter.addAll(entry.value)
                 }
                 adapter.notifyDataSetChanged() // ListView 업데이트
+                updateListView(calendarView.selectedDate)
+                // EventDecorator를 업데이트된 datesWithEvents로 설정
+                eventDecorator.setDatesWithEvents(datesWithEvents)
+                calendarView.invalidateDecorators()
+
                 Toast.makeText(this, "저장되었습니다!", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("취소") { _, _ ->

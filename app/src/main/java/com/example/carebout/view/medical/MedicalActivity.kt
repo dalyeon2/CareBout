@@ -2,7 +2,10 @@ package com.example.carebout.view.medical
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
@@ -10,6 +13,8 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.carebout.R
 import com.example.carebout.base.bottomTabClick
 import com.example.carebout.databinding.ActivityMedicalBinding
@@ -23,8 +28,6 @@ import com.example.carebout.view.medical.Todo.TodoReadActivity
 import com.example.carebout.view.medical.Todo.TodoWriteActivity
 import com.example.carebout.view.medical.db.AppDatabase
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 
 class MedicalActivity : AppCompatActivity() {
@@ -34,6 +37,27 @@ class MedicalActivity : AppCompatActivity() {
     private var isFabOpen = false
     lateinit var binding: ActivityMedicalBinding
     private lateinit var db: AppDatabase
+
+    private lateinit var fab: FloatingActionButton
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+
+    override fun onResume() {
+        super.onResume()
+        updateData()
+    }
+
+    private fun updateData() {
+
+        //val application = application as PidApplication
+        petId = MyPid.getPid() //application.petId
+
+        if(petId == 0) {
+            fab.visibility = View.GONE
+        }else {
+            fab.visibility = View.VISIBLE
+        }
+    }
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,8 +104,25 @@ class MedicalActivity : AppCompatActivity() {
         val clinicListbtn: Button = findViewById(R.id.clinicListButton)
         val inocListbtn: Button = findViewById(R.id.inocListButton)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab = findViewById(R.id.fab)
         val backB: FrameLayout = findViewById(R.id.popup_menu_container)
+
+        //val application = application as PidApplication
+        petId = MyPid.getPid() //application.petId
+
+        updateData()
+
+        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+
+        viewModel.mpid.observe(this, Observer { mpid ->
+            // mpid가 변경될 때마다 호출되는 콜백
+            petId = MyPid.getPid()
+            Log.i("petId_tab1", petId.toString())
+
+            //MyPid.setPid(petId)
+            //application.petId = mpid
+            updateData()
+        })
 
         fab.setOnClickListener{
             toggleFab()
@@ -110,7 +151,11 @@ class MedicalActivity : AppCompatActivity() {
             val intent = Intent(this, ClinicReadActivity::class.java)
             startActivity(intent)
         }
-    
+
+        // 현재 클릭 중인 탭 tint. 지우지 말아주세용
+        binding.bottomTapBarOuter.medicalImage.imageTintList = ColorStateList.valueOf(Color.parseColor("#6EC677"))
+        binding.bottomTapBarOuter.medicalText.setTextColor(Color.parseColor("#6EC677"))
+
         // 하단탭 클릭시 intent를 하기 위한 함수
         bottomTabClick(binding.bottomTapBarOuter, this)
     }
@@ -162,18 +207,22 @@ class MedicalActivity : AppCompatActivity() {
         when (view.id) {
             R.id.menu_item_1 -> {
                 val intent = Intent(this, ClinicWriteActivity::class.java)
+                toggleFab() // 메뉴 팝업 창을 닫습니다.
                 startActivity(intent)
             }
             R.id.menu_item_2 -> {
                 val intent = Intent(this, MedicineWriteActivity::class.java)
+                toggleFab() // 메뉴 팝업 창을 닫습니다.
                 startActivity(intent)
             }
             R.id.menu_item_3 -> {
                 val intent = Intent(this, InoculationWriteActivity::class.java)
+                toggleFab() // 메뉴 팝업 창을 닫습니다.
                 startActivity(intent)
             }
             R.id.menu_item_4 -> {
                 val intent = Intent(this, TodoWriteActivity::class.java)
+                toggleFab() // 메뉴 팝업 창을 닫습니다.
                 startActivity(intent)
             }
         }

@@ -16,14 +16,35 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/dailycare_background"
             android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="18dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="RadioButton" />
+
+            </RadioGroup>
 
             <RelativeLayout
                 android:id="@+id/dailycareBG"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="13dp"
-                android:background="@drawable/tab_radius">
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="18dp"
+                android:background="@drawable/tab_radius"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/dailycareMainText"
@@ -32,11 +53,35 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="13dp"
                     android:text="데일리 케어"
-                    android:textSize="20sp" />
+                    android:textColor="#5A5A5A"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/dailycareMenu"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="10dp"
+                    app:srcCompat="@drawable/ic_pencil"
+                    app:tint="@color/black" />
+
+                <!--구분선-->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/dailycareMainText"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="#D5D5D5" />
 
                 <LinearLayout
                     android:id="@+id/dailycareFrame"
@@ -48,6 +93,16 @@
                     android:layout_marginTop="0dp"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/dailycareNull"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30dp"
+                        android:gravity="center"
+                        android:text="&quot;데일리 케어를 작성해주세요.&quot;"
+                        android:textSize="16dp"
+                        android:visibility="visible" />
+
                 </LinearLayout>
 
             </RelativeLayout>
@@ -55,34 +110,83 @@
             <RelativeLayout
                 android:id="@+id/relativeLayout6"
                 android:layout_width="match_parent"
-                android:layout_height="140dp">
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:id="@+id/mediing"
-                    android:layout_width="160dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="127dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="13dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="13dp"
-                    android:layout_marginBottom="13dp"
+                    android:layout_marginBottom="18dp"
                     android:layout_toEndOf="@+id/currentWeight"
-                    android:background="@drawable/tab_radius">
+                    android:background="@drawable/tab_radius"
+                    android:gravity="top"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/mediingMainText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="13dp"
+                        android:text="복용중인 약"
+                        android:textColor="#5A5A5A"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <!--구분선-->
+                    <View
+                        android:id="@+id/emptyView"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/mediingMainText"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="#D5D5D5" />
+
+                    <LinearLayout
+                        android:id="@+id/mediingFrame"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/emptyView"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/mediingNull"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:gravity="center"
+                            android:text="&quot;현재 복용약이 없습니다&quot;"
+                            android:textSize="16dp"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/currentWeight"
-                    android:layout_width="168dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="130dp"
+                    android:layout_height="127dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="13dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="13dp"
+                    android:layout_marginEnd="18dp"
+                    android:layout_marginBottom="18dp"
                     android:background="@drawable/tab_radius">
 
                 </RelativeLayout>
@@ -92,27 +196,29 @@
             <RelativeLayout
                 android:id="@+id/relativeLayout5"
                 android:layout_width="match_parent"
-                android:layout_height="447dp"
-                android:layout_marginLeft="13dp"
-                android:layout_marginRight="13dp"
-                android:background="#FFFFFF">
+                android:layout_height="448dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/tab_radius"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="0dp"
-                    app:tabBackground="@drawable/tabs_shape"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="35dp"
                     app:tabGravity="fill"
+                    app:tabIndicatorAnimationMode="linear"
                     app:tabIndicatorColor="#6EC677"
                     app:tabIndicatorGravity="bottom"
+                    app:tabIndicatorHeight="2.5dp"
                     app:tabMode="fixed"
-                    app:tabSelectedTextColor="#6EC677"
+                    app:tabSelectedTextColor="#000000"
                     app:tabTextColor="#80000000">
 
                     <com.google.android.material.tabs.TabItem
@@ -145,8 +251,7 @@
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="0dp"
                     android:layout_marginEnd="0dp"
-                    android:layout_marginBottom="0dp"
-                    android:background="#FFFFFF"></FrameLayout>
+                    android:layout_marginBottom="0dp"></FrameLayout>
             </RelativeLayout>
 
         </LinearLayout>

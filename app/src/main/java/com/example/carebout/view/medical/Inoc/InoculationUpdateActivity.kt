@@ -1,12 +1,17 @@
 package com.example.carebout.view.medical.Inoc
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -14,6 +19,9 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityInoculationUpdateBinding
+import com.example.carebout.view.home.db.PersonalInfoDao
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Inoculation
 import com.example.carebout.view.medical.db.InoculationDao
@@ -25,26 +33,70 @@ class InoculationUpdateActivity : AppCompatActivity() {
     lateinit var binding: ActivityInoculationUpdateBinding
     lateinit var db: AppDatabase
     lateinit var inocDao: InoculationDao
+    lateinit var personalInfoDao: PersonalInfoDao
     var id: Int = 0
+
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+    private var save: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInoculationUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.topBarOuter.activityTitle.text = "접종/구충"
+
+        // 뒤로가기 버튼 클릭시
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
+
+        // 저장 클릭리스너
+        binding.topBarOuter.CompleteBtn.setOnClickListener {
+            updateInoc()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+
+        // 삭제 클릭리스너
+        binding.topBarOuter.DeleteBtn.setOnClickListener {
+            deletInoc()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+
         db = AppDatabase.getInstance(applicationContext)!!
         inocDao = db.getInocDao()
+        personalInfoDao = db.personalInfoDao()
 
-        val tag1 : ToggleButton = findViewById(R.id.toggle1)
-        val tag2 : ToggleButton = findViewById(R.id.toggle2)
-        val editTextList: EditText = findViewById(R.id.editTextList)
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
+
+        updatePetTag()
+
         val editTextDate: EditText = findViewById(R.id.editTextDate)
         val editTextDue: EditText = findViewById(R.id.editTextDue)
         val editTextH: EditText = findViewById(R.id.editTextH)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
 
-        val updateBtn: Button = findViewById(R.id.updateBtn)
-        val deleteBtn: Button = findViewById(R.id.deleteBtn)
+//        val updateBtn: Button = findViewById(R.id.updateBtn)
+//        val deleteBtn: Button = findViewById(R.id.deleteBtn)
+
+        val tagDHPPL = binding.toggleButton1
+        val tagC = binding.toggleButton2
+        val tagKC = binding.toggleButton3
+        val tagCVRP = binding.toggleButton4
+        val tagFL = binding.toggleButton5
+        val tagFID = binding.toggleButton6
+        val tagR = binding.toggleButton7
+        val tagH = binding.toggleButton8
 
         // 수정 페이지로 전달된 아이템 정보를 가져옴
         val inocId = intent.getIntExtra("inocId", -1)
@@ -54,75 +106,146 @@ class InoculationUpdateActivity : AppCompatActivity() {
             // clinicId를 사용하여 데이터베이스에서 해당 아이템 정보를 가져와서 수정 페이지에서 사용할 수 있음
             // 수정 기능을 구현하는 코드 추가
             //넘어온 데이터 변수에 담기
-            var uTag: String? = intent.getStringExtra("uTag")
             var uDate: String? = intent.getStringExtra("uDate")
             var uDue: String? = intent.getStringExtra("uDue")
             var uHospital: String? = intent.getStringExtra("uHospital")
             var uEtc: String? = intent.getStringExtra("uEtc")
 
-            var uTag1: Boolean = intent.getBooleanExtra("uTag1", true)
-            var uTag2: Boolean = intent.getBooleanExtra("uTag2", false)
+            var uTagDHPPL: Boolean = intent.getBooleanExtra("uTagDHPPL", true)
+            var uTagC: Boolean = intent.getBooleanExtra("uTagC", false)
+            var uTagKC: Boolean = intent.getBooleanExtra("uTagKC", false)
+            var uTagCVRP: Boolean = intent.getBooleanExtra("uTagCVRP", false)
+            var uTagFL: Boolean = intent.getBooleanExtra("uTagFL", false)
+            var uTagFID: Boolean = intent.getBooleanExtra("uTagFID", false)
+            var uTagR: Boolean = intent.getBooleanExtra("uTagR", false)
+            var uTagH: Boolean = intent.getBooleanExtra("uTagH", false)
 
             //화면에 값 적용
-            editTextList.setText(uTag)
             editTextDate.setText(uDate)
             editTextDue.setText(uDue)
             editTextH.setText(uHospital)
             editTextMultiLine.setText(uEtc)
 
-            tag1.isChecked = uTag1
-            tag2.isChecked = uTag2
+            tagDHPPL.isChecked = uTagDHPPL
+            tagC.isChecked = uTagC
+            tagKC.isChecked = uTagKC
+            tagCVRP.isChecked = uTagCVRP
+            tagFL.isChecked = uTagFL
+            tagFID.isChecked = uTagFID
+            tagR.isChecked = uTagR
+            tagH.isChecked = uTagH
 
-            Log.i("in", uTag.toString())
+//            Log.i("in tag1", "${uTagDHPPL} ${uTagC} ${uTagKC} ${uTagCVRP.toString()}")
+//            Log.i("in tag2", "${uTagFL} ${uTagFID} ${uTagR} ${uTagH.toString()}")
         }
 
-        tag1.setOnCheckedChangeListener { _, isChecked ->
+        tagDHPPL.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                if (tag2.isChecked) {
-                    tag2.isChecked = false
-                }
+                val otherTags = listOf(tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
             }
         }
 
-        tag2.setOnCheckedChangeListener { _, isChecked ->
+        tagC.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                if (tag1.isChecked) {
-                    tag1.isChecked = false
-                }
+                val otherTags = listOf(tagDHPPL, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
             }
         }
 
-        updateBtn.setOnClickListener{
-            updateInoc()
+        tagKC.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagCVRP, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+            }
         }
 
-        deleteBtn.setOnClickListener {
-            deletInoc()
+        tagCVRP.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagFL, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+            }
         }
+
+        tagFL.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFID, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+            }
+        }
+
+        tagFID.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagR, tagH)
+                otherTags.forEach { it.isChecked = false }
+            }
+        }
+
+        tagR.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagH)
+                otherTags.forEach { it.isChecked = false }
+            }
+        }
+
+        tagH.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val otherTags = listOf(tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR)
+                otherTags.forEach { it.isChecked = false }
+            }
+        }
+
+//        updateBtn.setOnClickListener{
+//            updateInoc()
+//        }
+//
+//        deleteBtn.setOnClickListener {
+//            deletInoc()
+//        }
 
         // 숫자 입력 시 대시 "-" 자동 추가
         setupDateEditText(binding.editTextDate)
         setupDateEditText(binding.editTextDue)
     }
 
+    private fun updatePetTag() {
+        val tagDHPPL = binding.toggleButton1
+        val tagCVRP = binding.toggleButton4
+
+        val petList = personalInfoDao.getInfoById(petId)
+
+        if (petList!!.animal == "dog") {
+            tagCVRP.visibility = View.GONE
+            tagDHPPL.visibility = View.VISIBLE
+        } else {
+            tagCVRP.visibility = View.VISIBLE
+            tagDHPPL.visibility = View.GONE
+        }
+    }
 
     private fun updateInoc() {
-        val inocTag = binding.editTextList.text.toString()
         val inocDate = binding.editTextDate.text.toString()
         val inocDue = binding.editTextDue.text.toString()
         val inocH = binding.editTextH.text.toString()
         val inocEtc = binding.editTextMultiLine.text.toString()
 
-        val tag1 = binding.toggle1.isChecked
-        val tag2 = binding.toggle2.isChecked
+        val tagDHPPL = binding.toggleButton1.isChecked
+        val tagC = binding.toggleButton2.isChecked
+        val tagKC = binding.toggleButton3.isChecked
+        val tagCVRP = binding.toggleButton4.isChecked
+        val tagFL = binding.toggleButton5.isChecked
+        val tagFID = binding.toggleButton6.isChecked
+        val tagR = binding.toggleButton7.isChecked
+        val tagH = binding.toggleButton8.isChecked
 
         // Date validation
         if (!isValidDate(inocDate) || (!inocDue.isBlank() && !isValidDate(inocDue))) {
-            Toast.makeText(
-                this,
-                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.")
+//            Toast.makeText(
+//                this,
+//                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
@@ -131,26 +254,30 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
         // inocDate와 currentDate 비교
         if (inocDate > currentDate) {
-            Toast.makeText(
-                this,
-                "접종/구충 날짜에 미래 날짜는 입력할 수 없습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("미래 날짜를 접종/구충일에 입력할 수 없습니다.")
+//            Toast.makeText(
+//                this,
+//                "접종/구충 날짜에 미래 날짜는 입력할 수 없습니다.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
-        val Inoc = Inoculation(id, tag1, tag2, inocTag, inocDate, inocDue, inocH, inocEtc)
+        val Inoc = Inoculation(id, petId, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocDate, inocDue, inocH, inocEtc)
 
-        if (!tag1 && !tag2 || inocDate.isBlank()) {
-            Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
+        if ((!tagDHPPL && !tagC && !tagKC && !tagCVRP && !tagFL && !tagFID && !tagR && !tagH) || inocDate.isBlank()) {
+            showCustomToast("필수 항목을 채워주세요.")
+//            Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
         } else {
             Thread {
                 inocDao.updateInoculation(Inoc)
                 runOnUiThread {
-                    Toast.makeText(
-                        this, "수정되었습니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        this, "수정되었습니다.",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                    save = 1
+                    showCustomToast("수정되었습니다.")
                     moveToAnotherPage()
                 }
             }.start()
@@ -159,17 +286,42 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
     private fun deletInoc() {
         Thread {
-            val inocToDelete = inocDao.getInoculationById(id)
+            val inocToDelete = inocDao.getInoculationById(id, petId)
             if (inocToDelete != null) {
                 inocDao.deleteInoculation(inocToDelete)
                 runOnUiThread {
-                    Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    save = 1
+                    showCustomToast("삭제되었습니다.")
+                    //Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                     moveToAnotherPage()
                 }
             }
         }.start()
     }
+    private var currentToast: Toast? = null
+    private fun showCustomToast(message: String) {
+        currentToast?.cancel()
 
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout))
+
+        val text = layout.findViewById<TextView>(R.id.custom_toast_text)
+        text.text = message
+
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+
+//        val toastDurationInMilliSeconds: Long = 3000
+//        toast.duration =
+//            if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+
+        toast.setGravity(Gravity.BOTTOM, 0, 200)
+
+        currentToast = toast
+
+        toast.show()
+    }
     private fun moveToAnotherPage() {
         val intent = Intent(this, InoculationReadActivity::class.java)
         startActivity(intent)
@@ -178,6 +330,10 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
     // Date validation function
     private fun isValidDate(dateString: String): Boolean {
+        if (dateString.length != 10) {
+            return false
+        }
+
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         dateFormat.isLenient = false
         return try {

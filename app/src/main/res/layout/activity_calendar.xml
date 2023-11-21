@@ -8,53 +8,6 @@
     android:orientation="vertical"
     tools:context=".view.calendar.CalendarActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/custom_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        tools:ignore="MissingConstraints">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/superbold"
-            android:text="CARE 'BOUT"
-            android:textColor="#000000"
-            android:textSize="25dp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <ImageButton
-            android:id="@+id/setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginLeft="10dp"
-            android:adjustViewBounds="true"
-            android:backgroundTint="#FFFFFF"
-            android:rotationX="0"
-            android:src="@drawable/setting"
-            tools:layout_editor_absoluteX="126dp"
-            tools:layout_editor_absoluteY="5dp" />
-
-        <ImageButton
-            android:id="@+id/humaninfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:adjustViewBounds="true"
-            android:backgroundTint="#FFFFFF"
-            android:rotationX="0"
-            android:src="@drawable/iconoir_user"
-            tools:layout_editor_absoluteX="126dp"
-            tools:layout_editor_absoluteY="5dp" />
-
-    </androidx.appcompat.widget.Toolbar>
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
@@ -123,12 +76,15 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/square_shape2"
+        android:layout_width="306dp"
+        android:layout_height="189dp"
+        android:background="@drawable/corner_shape"
         android:gravity="left"
         android:layout_marginTop="20dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+        app:layout_constraintTop_toBottomOf="@+id/calendarView"/>
 
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -141,31 +97,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="custom_toolbar"
+        android:layout_width="351dp"
+        android:layout_height="354dp"
+        android:layout_marginTop="75dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:mcv_selectionColor="#6EC677"
         tools:ignore="MissingConstraints"
         android:elevation="2dp"/>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addplan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="36dp"
-        android:backgroundTint="#6EC677"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-        app:icon="@drawable/ic_pencil"
-        app:iconSize="30dp"
-        app:iconTint="@color/bgWhite"
-        app:layout_anchorGravity="bottom|right"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="605dp"
+        android:backgroundTint="@color/main_color"
+        android:contentDescription="Add Plan"
+        android:tint="@color/white"
+        android:visibility="visible"
+        app:elevation="6dp"
+        app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/bottomTapBarOuter"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="MissingConstraints" />
+        app:srcCompat="@drawable/ic_add" />
 
     <include
         android:id="@id/bottomTapBarOuter"
         layout="@layout/bottom_tap"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         android:layout_gravity="bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="16dp" />

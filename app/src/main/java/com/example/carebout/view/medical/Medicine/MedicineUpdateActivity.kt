@@ -1,12 +1,15 @@
 package com.example.carebout.view.medical.Medicine
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.Button
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
@@ -15,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityMedicineUpdateBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Medicine
 import com.example.carebout.view.medical.db.MedicineDao
@@ -28,14 +33,27 @@ class MedicineUpdateActivity : AppCompatActivity() {
     lateinit var mediDao: MedicineDao
     var id: Int = 0
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+    private var save: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMedicineUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.topBarOuter.activityTitle.text = "약 처방"
+
         db = AppDatabase.getInstance(applicationContext)!!
         mediDao = db.getMedicineDao()
+
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
 
         val mediText: TextView = findViewById(R.id.editTextM)
         val editTextStartD: TextView = findViewById(R.id.editTextStartD)
@@ -43,8 +61,8 @@ class MedicineUpdateActivity : AppCompatActivity() {
         val checkBox: CheckBox = findViewById(R.id.checkBox)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
 
-        val updateBtn: Button = findViewById(R.id.updateBtn)
-        val deleteBtn: Button = findViewById(R.id.deleteBtn)
+//        val updateBtn: Button = findViewById(R.id.updateBtn)
+//        val deleteBtn: Button = findViewById(R.id.deleteBtn)
 
         // 수정 페이지로 전달된 아이템 정보를 가져옴
         val mediId = intent.getIntExtra("mediId", -1)
@@ -95,13 +113,34 @@ class MedicineUpdateActivity : AppCompatActivity() {
             }
         }
 
-        updateBtn.setOnClickListener{
-            updateMedi()
+        // 뒤로가기 버튼 클릭시
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
         }
 
-        deleteBtn.setOnClickListener {
-            deletMedi()
+        // 저장 클릭리스너
+        binding.topBarOuter.CompleteBtn.setOnClickListener {
+            updateMedi()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
         }
+
+        // 삭제 클릭리스너
+        binding.topBarOuter.DeleteBtn.setOnClickListener {
+            deletMedi()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+
+//        updateBtn.setOnClickListener{
+//            updateMedi()
+//        }
+//
+//        deleteBtn.setOnClickListener {
+//            deletMedi()
+//        }
 
         // 숫자 입력 시 대시 "-" 자동 추가
         setupDateEditText(binding.editTextStartD)
@@ -121,11 +160,12 @@ class MedicineUpdateActivity : AppCompatActivity() {
 
         // Date validation
         if (!isValidDate(mediStart) || (!mediEnd.isBlank() && !isValidDate(mediEnd))) {
-            Toast.makeText(
-                this,
-                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.")
+//            Toast.makeText(
+//                this,
+//                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
@@ -134,33 +174,34 @@ class MedicineUpdateActivity : AppCompatActivity() {
 
         // mediStart와 currentDate 비교
         if (mediStart > currentDate) {
-            Toast.makeText(
-                this,
-                "복용 시작일에 미래 날짜는 입력할 수 없습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("미래 날짜를 복용 시작일에 입력할 수 없습니다.")
+//            Toast.makeText(
+//                this,
+//                "복용 시작일에 미래 날짜는 입력할 수 없습니다.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
-        val Medi = Medicine(id, mediTitle, mediStart, mediEnd, medicheckBox, mediEtc)
-
-        //데이터 수정
-        //db?.getTodoDao()?.updateTodo(Todo)
+        val Medi = Medicine(id, petId, mediTitle, mediStart, mediEnd, medicheckBox, mediEtc)
 
         if(mediTitle.isBlank() || mediStart.isBlank()) {
-            Toast.makeText(
-                this, "항목을 채워주세요",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this, "항목을 채워주세요",
+//                Toast.LENGTH_SHORT
+//            ).show()
+            showCustomToast("필수 항목을 채워주세요.")
         } else {
             Thread {
                 mediDao.updateMedi(Medi)
                 Log.i("id", Medi.toString())
                 runOnUiThread { //아래 작업은 UI 스레드에서 실행해주어야 합니다.
-                    Toast.makeText(
-                        this, "수정되었습니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        this, "수정되었습니다.",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                    save = 1
+                    showCustomToast("수정되었습니다.")
                     moveToAnotherPage()
                 }
             }.start()
@@ -174,18 +215,43 @@ class MedicineUpdateActivity : AppCompatActivity() {
         // 삭제 기능 구현
         // 해당 ID에 해당하는 할 일 데이터를 삭제하도록 todoDao를 사용합니다.
         Thread {
-            val mediToDelete = mediDao.getMediById(id)
+            val mediToDelete = mediDao.getMediById(id, petId)
             if (mediToDelete != null) {
                 mediDao.deleteMedi(mediToDelete)
                 runOnUiThread {
-                    Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    save = 1
+                    showCustomToast("삭제되었습니다.")
+                    //Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                     moveToAnotherPage()
                 }
             }
         }.start()
     }
 
+    private var currentToast: Toast? = null
+    private fun showCustomToast(message: String) {
+        currentToast?.cancel()
 
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout))
+
+        val text = layout.findViewById<TextView>(R.id.custom_toast_text)
+        text.text = message
+
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+
+//        val toastDurationInMilliSeconds: Long = 3000
+//        toast.duration =
+//            if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+
+        toast.setGravity(Gravity.BOTTOM, 0, 200)
+
+        currentToast = toast
+
+        toast.show()
+    }
     private fun moveToAnotherPage() {
         val intent = Intent(applicationContext, MedicineReadActivity::class.java)
         startActivity(intent)
@@ -193,6 +259,10 @@ class MedicineUpdateActivity : AppCompatActivity() {
     }
     // Date validation function
     private fun isValidDate(dateString: String): Boolean {
+        if (dateString.length != 10) {
+            return false
+        }
+
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         dateFormat.isLenient = false
         return try {
@@ -236,5 +306,4 @@ class MedicineUpdateActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
         })
     }
-
 }

@@ -34,8 +34,6 @@ class InoculationAdapter(private val context: Context)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.inoc_recyclerview, parent, false)
-        //
-        //.todo_list, parent, false)
 
         return MyViewHolder(view)
     }
@@ -45,42 +43,44 @@ class InoculationAdapter(private val context: Context)
 
         val inocData = inocList[position]
 
-        holder.tagText.text = inocData.tag
-
         //데이터 변수에 담기
-        var uTag = inocList[holder.bindingAdapterPosition].tag
         var uDate = inocList[holder.bindingAdapterPosition].date
         var uDue = inocList[holder.bindingAdapterPosition].due
         var uHospital = inocList[holder.bindingAdapterPosition].hospital
         var uEtc = inocList[holder.bindingAdapterPosition].etc
 
-        var uTag1 = inocList[holder.bindingAdapterPosition].tag1
-        var uTag2 = inocList[holder.bindingAdapterPosition].tag2
-
-
+        var uTagDHPPL = inocList[holder.bindingAdapterPosition].tag_DHPPL
+        var uTagC = inocList[holder.bindingAdapterPosition].tag_Corona
+        var uTagKC = inocList[holder.bindingAdapterPosition].tag_KC
+        var uTagCVRP = inocList[holder.bindingAdapterPosition].tag_CVRP
+        var uTagFL = inocList[holder.bindingAdapterPosition].tag_FL
+        var uTagFID = inocList[holder.bindingAdapterPosition].tag_FID
+        var uTagR = inocList[holder.bindingAdapterPosition].tag_Rabies
+        var uTagH = inocList[holder.bindingAdapterPosition].tag_Heartworm
 
         //데이터 적용
-        holder.tagText.text = uTag
         holder.dateText.text = uDate
         holder.dueText.text = uDue
         holder.hospitalText.text = uHospital
         holder.etcText.text = uEtc
 
-
-        holder.tagText.text = inocData.tag
-
-        if (uTag1 == true) {
-            holder.tagText.text = "기초"
-        } else {
+        if (uTagDHPPL == true) {
+            holder.tagText.text = "DHPPL"
+        } else if (uTagC == true) {
+            holder.tagText.text = "코로나"
+        } else if (uTagKC == true) {
+            holder.tagText.text = "켄넬코프"
+        } else if (uTagCVRP == true) {
+            holder.tagText.text = "CVRP"
+        } else if (uTagFL == true) {
+            holder.tagText.text = "백혈병"
+        } else if (uTagFID == true) {
+            holder.tagText.text = "복막염"
+        } else if (uTagR == true) {
+            holder.tagText.text = "광견병"
+        } else if (uTagH == true) {
+            holder.tagText.text = "심장사상충"
         }
-
-        if (uTag2 == true) {
-            holder.tagText.text = "정기"
-        } else {
-        }
-
-        //holder
-
 
         holder.itemView.setOnClickListener {
 
@@ -91,15 +91,22 @@ class InoculationAdapter(private val context: Context)
             intent.putExtra("inocId", inocList[holder.bindingAdapterPosition].inocId) // 아이템의 고유 ID 전달
             Log.i("id", inocList[holder.bindingAdapterPosition].inocId.toString())
             //값 담기
-            intent.putExtra("uTag", uTag)
             intent.putExtra("uDate", uDate)
             intent.putExtra("uDue", uDue)
             intent.putExtra("uHospital", uHospital)
             intent.putExtra("uEtc", uEtc)
 
-            intent.putExtra("uTag1", uTag1)
-            intent.putExtra("uTag2", uTag2)
+            intent.putExtra("uTagDHPPL", uTagDHPPL)
+            intent.putExtra("uTagC", uTagC)
+            intent.putExtra("uTagKC", uTagKC)
+            intent.putExtra("uTagCVRP", uTagCVRP)
+            intent.putExtra("uTagFL", uTagFL)
+            intent.putExtra("uTagFID", uTagFID)
+            intent.putExtra("uTagR", uTagR)
+            intent.putExtra("uTagH", uTagH)
 
+//            Log.i("adpter in tag1", "${uTagDHPPL} ${uTagC} ${uTagKC} ${uTagCVRP.toString()}")
+//            Log.i("adpter in tag2", "${uTagFL} ${uTagFID} ${uTagR} ${uTagH.toString()}")
 
             context.startActivity(intent)
         }
