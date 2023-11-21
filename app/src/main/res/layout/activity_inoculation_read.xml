@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.medical.Inoc.InoculationReadActivity"
-    android:id="@+id/parent_layout">
+    android:id="@+id/parent_layout"
+    android:background="#D8FFFFFF">
 
     <include
         android:id="@+id/topBarOuter"

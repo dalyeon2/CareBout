@@ -5,7 +5,8 @@
     android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.medical.Todo.TodoReadActivity">
+    tools:context=".view.medical.Todo.TodoReadActivity"
+    android:background="#D8FFFFFF">
 
     <include
         android:id="@+id/topBarOuter"

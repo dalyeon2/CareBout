@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.medical.Medicine.MedicineUpdateActivity">
-
+    tools:context=".view.medical.Medicine.MedicineUpdateActivity"
+    android:background="@color/white">
 
     <include
         android:id="@+id/topBarOuter"
@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:background="#0AD0D0D0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topBarOuter">
@@ -39,16 +40,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-
+                    android:textSize="16dp"
                     android:text="약 이름"
-                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/editTextM"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
+                    android:paddingHorizontal="10dp"
                     android:ems="10"
                     android:hint="약 이름 작성"
                     android:inputType="text" />
@@ -58,16 +60,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-
                     android:text="복용 시작일"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/editTextStartD"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
+                    android:paddingHorizontal="10dp"
                     android:ems="10"
                     android:hint="복용 시작일 작성"
                     android:inputType="date" />
@@ -77,48 +80,46 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-
                     android:text="복용 종료일"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/editTextEndD"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
+                    android:paddingHorizontal="10dp"
                     android:ems="10"
                     android:hint="복용 종료일 작성"
-                    android:inputType="date"
-
-                    />
-
+                    android:inputType="date"/>
 
                 <CheckBox
                     android:id="@+id/checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:text="현재 복용 중"
-                    android:textSize="16sp"
-
-                    />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_acc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-
+                    android:layout_marginTop="20dp"
                     android:text="메모"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/editTextMultiLine"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="72dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
+                    android:paddingTop="10dp"
+                    android:paddingHorizontal="10dp"
                     android:ems="10"
                     android:gravity="start|top"
                     android:hint="메모"
