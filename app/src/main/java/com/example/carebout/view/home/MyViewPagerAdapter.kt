@@ -31,7 +31,7 @@ class MyViewPagerAdapter(private val context: Context, private val profileList: 
                 pet.setImageResource(R.drawable.temp_cat)
             }else if(item == "dog"){
                 pet.setImageResource(R.drawable.temp_dog)
-            } else
+            }else
                 pet.setImageURI(ImageUtil().get(context, item))
         }
     }
