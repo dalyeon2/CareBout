@@ -227,7 +227,6 @@ class HomeActivity : AppCompatActivity() {
         return inoculationDS
     }
 
-
     private fun getProfileList(): ArrayList<String> {
         val profileList = arrayListOf<String>()
 
@@ -315,38 +314,41 @@ class HomeActivity : AppCompatActivity() {
         }
         // 예 버튼
         cdBinding.btnYes.setOnClickListener {
+            // 몸무게 삭제
             val weightList = weightDao.getWeightById(nowPid)
-
             for (w in weightList) {
                 val delW = Weight(w.pid, w.weight, w.date)
                 delW.weightId = w.weightId
                 weightDao.deleteInfo(delW)
             }
 
-            //해당 반려동물의 의료 내용도 삭제
+            // 검사 내역 삭제
             val clin = db.getClinicDao().getClinicByPid(nowPid)
             if (clin != null) {
                 db.getClinicDao().deletePidClinic(nowPid)
             }
 
+            // 접종 및 구충 내역 삭제
             val inoc = db.getInocDao().getInoculationByPid(nowPid)
             if (inoc != null) {
                 db.getInocDao().deletePidInoc(nowPid)
             }
 
+            // medi 삭제
             val medi = db.getMedicineDao().getMediByPid(nowPid)
             if (medi != null) {
                 db.getMedicineDao().deletePidMedi(nowPid)
             }
 
+            // 반려동물 삭제
             val delP = db.personalInfoDao().getInfoById(nowPid)!!
             delP.pid = nowPid
             db.personalInfoDao().deleteInfo(delP)
-
             vpAdapter.removeItem(nowPosition)
 
             dialog.dismiss()
-
+            
+            // 삭제 후 반려동물이 하나도 없다면 EmptyActivity로
             if(db.personalInfoDao().getAllInfo().isEmpty()) {
                 val intent = Intent(this, EmptyActivity::class.java)
                 startActivity(intent)
