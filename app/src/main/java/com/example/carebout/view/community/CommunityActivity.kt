@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.carebout.base.bottomTabClick
 import com.example.carebout.databinding.ActivityCommunityBinding
-import com.example.carebout.view.IntroActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -225,19 +224,6 @@ class CommunityActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putStringArrayList("contents", ArrayList(contents))
         outState.putParcelableArrayList("imageUris", ArrayList(imageUris))
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.title) {
-            "logout" -> {
-                val intent = Intent(this, IntroActivity::class.java)
-                startActivity(intent)
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun getCurrentDate(): String {
