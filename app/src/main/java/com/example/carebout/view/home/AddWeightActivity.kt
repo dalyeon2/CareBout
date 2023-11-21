@@ -1,11 +1,14 @@
 package com.example.carebout.view.home
 
 import MyAdapter
+import android.app.AlertDialog
 import android.app.DatePickerDialog
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Dialog
 import android.os.Bundle
 import android.view.View.INVISIBLE
+import android.view.Window
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
@@ -38,17 +41,30 @@ class AddWeightActivity : AppCompatActivity() {
         binding.topBarOuter.CompleteBtn.visibility = INVISIBLE
 
 
-        val dataList: MutableList<Pair<Float, String>> = getWeightDataSet(nowPid)
-        dataList.sortBy { it.second }
+
+
+
 
         recyclerView = findViewById(R.id.weightRecycler)
-        wAdapter = MyAdapter(this, dataList)
+        wAdapter = MyAdapter(this,weight.getWeightById(nowPid).toMutableList()){
+            //getWeightDataSet(nowPid)){
 
-        val layoutManager = LinearLayoutManager(this).apply {
-            stackFromEnd = true
-            reverseLayout = true
+            //val builder: AlertDialog.Builder = Builder(this)
+            AlertDialog
+                .Builder(this)
+                .setMessage("삭제")
+                .setPositiveButton("예"){ _, _ ->
+                    weight.deleteInfo(it)
+//                    wAdapter.removeItem()
+                }
+                .create()
+                .show()
         }
-        recyclerView.layoutManager = layoutManager
+
+        recyclerView.layoutManager = LinearLayoutManager(
+            this@AddWeightActivity, RecyclerView.VERTICAL, true).apply {
+                stackFromEnd = true
+        }
         recyclerView.adapter = wAdapter
 
         // 날짜 입력 editText 클릭 시 캘린더 뜨도록
@@ -60,7 +76,8 @@ class AddWeightActivity : AppCompatActivity() {
             this@AddWeightActivity.let { it ->
                 DatePickerDialog(it, { _, year, month, day ->
                     run {
-                        binding.editD.setText(year.toString() + "-" + (month + 1).toString() + "-" + day.toString())
+                        binding.editD.setText(String.format("%04d-%02d-%02d", year, month + 1, day)
+                        )
                     }
                 }, year, month, day)
             }?.show()
@@ -79,13 +96,18 @@ class AddWeightActivity : AppCompatActivity() {
             if (!isValid(w, d))
                 return@setOnClickListener
 
-            weight.insertInfo(Weight(
+            val weightId = weight.insertInfo(Weight(
                 nowPid,
                 w.text.toString().toFloat(),
                 d.text.toString()
             ))
 
-            wAdapter.addItem(Pair(w.text.toString().toFloat(), d.text.toString()))
+            wAdapter.addItem(Weight(
+                nowPid,
+                w.text.toString().toFloat(),
+                d.text.toString()
+            ).also { it.weightId = weightId.toInt() }
+            )
 
             w.setText("")
             d.setText("")
@@ -98,6 +120,8 @@ class AddWeightActivity : AppCompatActivity() {
         for (w in weight.getWeightById(pid)) {
            weightDS.add(Pair(w.weight, w.date))
         }
+
+        weightDS.sortBy { it.second }
 
         return weightDS
     }
