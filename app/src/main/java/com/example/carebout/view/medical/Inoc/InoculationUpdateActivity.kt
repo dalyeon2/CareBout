@@ -310,6 +310,10 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
     // Date validation function
     private fun isValidDate(dateString: String): Boolean {
+        if (dateString.length != 10) {
+            return false
+        }
+
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         dateFormat.isLenient = false
         return try {
