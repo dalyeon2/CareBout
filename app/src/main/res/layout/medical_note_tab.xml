@@ -16,9 +16,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/dailycare_background"
+            android:layout_marginHorizontal="20dp"
+            android:background="#0AD0D0D0"
             android:orientation="vertical">
 
             <RadioGroup
@@ -33,7 +32,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="RadioButton" />
+                    android:text="RadioButton"
+                    android:fontFamily="@font/noto"/>
 
             </RadioGroup>
 
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:layout_marginBottom="18dp"
-                android:background="@drawable/tab_radius"
+                android:background="@drawable/square_shape2"
                 android:padding="5dp">
 
                 <TextView
@@ -53,7 +53,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="13dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="13dp"
                     android:text="데일리 케어"
@@ -79,7 +79,7 @@
                     android:layout_height="1dp"
                     android:layout_below="@id/dailycareMainText"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
                     android:background="#D5D5D5" />
 
@@ -146,7 +146,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@id/mediingMainText"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginEnd="10dp"
                         android:background="#D5D5D5" />
 
@@ -169,7 +169,7 @@
                             android:id="@+id/mediingNull"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="10dp"
                             android:gravity="center"
                             android:text="&quot;현재 복용약이 없습니다&quot;"
                             android:textSize="16dp"
@@ -185,7 +185,7 @@
                     android:layout_height="127dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginEnd="18dp"
+                    android:layout_marginEnd="12dp"
                     android:layout_marginBottom="18dp"
                     android:background="@drawable/tab_radius">
 
@@ -219,7 +219,8 @@
                     app:tabIndicatorHeight="2.5dp"
                     app:tabMode="fixed"
                     app:tabSelectedTextColor="#000000"
-                    app:tabTextColor="#80000000">
+                    app:tabTextColor="#80000000"
+                    app:tabTextAppearance="@style/tabTextSizeBold">
 
                     <com.google.android.material.tabs.TabItem
                         android:id="@+id/tab1"

@@ -71,7 +71,7 @@
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="370dp"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -87,7 +87,7 @@
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
         android:background="@drawable/square_shape2"
-        android:layout_width="370dp"
+        android:layout_width="360dp"
         android:layout_height="354dp"
         android:layout_marginTop="75dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -96,7 +96,7 @@ class CalendarActivity : AppCompatActivity() {
                     adapter.insert(editedText, position) // 수정된 항목 추가
                     adapter.notifyDataSetChanged() // ListView 업데이트
 
-                    Toast.makeText(this, "수정되었습니다!", Toast.LENGTH_SHORT).show()
+                    showCustomToast("수정되었습니다.")
                 }
                 dialog.dismiss() // AlertDialog 닫기
             }
@@ -118,7 +118,7 @@ class CalendarActivity : AppCompatActivity() {
                 data[selectedDate] = events // 항목을 제거한 데이터로 업데이트
                 adapter.remove(itemText) // ListView에서 해당 항목 삭제
                 adapter.notifyDataSetChanged() // ListView 업데이트
-                Toast.makeText(this, "삭제되었습니다!", Toast.LENGTH_SHORT).show()
+                showCustomToast("일정이 삭제되었습니다.")
                 dialog.dismiss() // AlertDialog 닫기
             }
             .setNegativeButton("취소") { dialog, which ->
@@ -161,12 +161,37 @@ class CalendarActivity : AppCompatActivity() {
                 eventDecorator.setDatesWithEvents(datesWithEvents)
                 calendarView.invalidateDecorators()
 
-                Toast.makeText(this, "저장되었습니다!", Toast.LENGTH_SHORT).show()
+                showCustomToast("저장되었습니다.")
             }
             .setNegativeButton("취소") { _, _ ->
-                Toast.makeText(this, "취소했습니다!", Toast.LENGTH_SHORT).show()
+                showCustomToast("취소되었습니다.")
             }
             .create()
             .show()
+    }
+
+    private var currentToast: Toast? = null
+    private fun showCustomToast(message: String) {
+        currentToast?.cancel()
+
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout))
+
+        val text = layout.findViewById<TextView>(R.id.custom_toast_text)
+        text.text = message
+
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_LONG
+        toast.view = layout
+
+        val toastDurationInMilliSeconds: Long = 3000
+        toast.duration =
+            if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+
+        toast.setGravity(Gravity.BOTTOM, 0, 200)
+
+        currentToast = toast
+
+        toast.show()
     }
 }
