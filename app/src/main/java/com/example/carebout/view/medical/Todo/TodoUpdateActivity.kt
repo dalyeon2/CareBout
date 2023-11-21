@@ -30,11 +30,10 @@ class TodoUpdateActivity : AppCompatActivity() {
         binding = ActivityTodoUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar7)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         db = AppDatabase.getInstance(applicationContext)!!
         todoDao = db.getTodoDao()
+
+
 
         var counter:Int = 0 // 증감할 숫자의 변수 지정
 
@@ -76,6 +75,27 @@ class TodoUpdateActivity : AppCompatActivity() {
 //        deleteBtn.setOnClickListener {
 //            deletTodo()
 //        }
+
+        // 뒤로가기 버튼 클릭시
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
+
+        // 저장 클릭리스너
+        binding.topBarOuter.CompleteBtn.setOnClickListener {
+            updateTodo()
+            setResult(Activity.RESULT_OK, intent)
+
+            finish()
+        }
+
+        // 삭제 클릭리스너
+        binding.topBarOuter.DeleteBtn.setOnClickListener {
+            deletTodo()
+            setResult(Activity.RESULT_OK, intent)
+
+            finish()
+        }
 
         btnplus.setOnClickListener {
             if(counter < 5) {
@@ -159,35 +179,5 @@ class TodoUpdateActivity : AppCompatActivity() {
         val intent = Intent(applicationContext, TodoReadActivity::class.java)
         startActivity(intent)
         finish()
-    }
-
-    override fun onCreateOptionsMenu (menu: Menu?): Boolean {
-        menuInflater.inflate (R.menu.menu_story, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
-
-        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
-            finish()
-            true
-        }
-
-        R.id.menu_edit -> {
-            updateTodo()
-
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-            true
-        }
-
-        R.id.menu_remove -> {
-            deletTodo()
-
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-            true
-        }
-        else -> true
     }
 }
