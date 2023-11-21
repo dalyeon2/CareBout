@@ -1,111 +1,54 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <androidx.gridlayout.widget.GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:alignmentMode="alignBounds"
-        app:columnCount="4"
-        app:orientation="horizontal" >
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="20dp">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="center_horizontal"
-            android:text="&#8226;"
-            android:textAlignment="center"
-            android:textColor="@color/main_color"
-            android:textSize="20sp"
-            app:layout_columnWeight="0.5"
-            app:layout_gravity="center_vertical" />
-
+        <!--이름-->
         <TextView
             android:id="@+id/title_text"
-            android:layout_width="0dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="할 일"
+            android:textSize="16sp"
             android:textColor="#000"
-            android:textSize="14sp"
-            app:layout_columnWeight="1.5"
-            app:layout_gravity="center_vertical" />
+            android:gravity="center"/>
 
+        <!--상태 메시지-->
         <TextView
             android:id="@+id/count_text"
-            android:layout_width="0dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
+            android:layout_marginLeft="20dp"
             android:text="횟수"
+            android:textSize="16sp"
             android:textColor="#444"
-            android:textSize="14sp"
-            app:layout_columnWeight="0.5"
-            app:layout_gravity="center_vertical" />
+            android:maxLines="1"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/etc_text"
-            android:layout_width="0dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="비고"
+            android:textSize="16sp"
             android:textColor="#444"
-            android:textSize="14sp"
-            app:layout_columnWeight="3.5"
-            app:layout_gravity="center_vertical" />
-
-    </androidx.gridlayout.widget.GridLayout>
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:gravity="center_vertical"-->
-<!--        android:padding="20dp">-->
-
-<!--        &lt;!&ndash;이름&ndash;&gt;-->
-<!--        <TextView-->
-<!--            android:id="@+id/title_text"-->
-<!--            android:layout_width="70dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="5dp"-->
-<!--            android:text="할 일"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#000"-->
-<!--            android:gravity="center"/>-->
-
-<!--        &lt;!&ndash;상태 메시지&ndash;&gt;-->
-<!--        <TextView-->
-<!--            android:id="@+id/count_text"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:text="횟수"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#444"-->
-<!--            android:maxLines="1"-->
-<!--            android:gravity="center"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/etc_text"-->
-<!--            android:layout_width="170dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:text="비고"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#444"-->
-<!--            android:gravity="left"/>-->
-<!--    </LinearLayout>-->
+            android:gravity="left"/>
+    </LinearLayout>
 
     <!--구분선-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginHorizontal="10dp"
-        android:background="#D7D7D7"/>
+        android:background="#777777"/>
 
 </LinearLayout>
