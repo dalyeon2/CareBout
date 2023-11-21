@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.CheckBox
@@ -34,6 +35,7 @@ class MedicineUpdateActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MedicalViewModel
     private var petId: Int = 0
+    private var save: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,11 +140,12 @@ class MedicineUpdateActivity : AppCompatActivity() {
 
         // Date validation
         if (!isValidDate(mediStart) || (!mediEnd.isBlank() && !isValidDate(mediEnd))) {
-            Toast.makeText(
-                this,
-                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.")
+//            Toast.makeText(
+//                this,
+//                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
@@ -151,33 +154,34 @@ class MedicineUpdateActivity : AppCompatActivity() {
 
         // mediStart와 currentDate 비교
         if (mediStart > currentDate) {
-            Toast.makeText(
-                this,
-                "복용 시작일에 미래 날짜는 입력할 수 없습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("미래 날짜를 복용 시작일에 입력할 수 없습니다.")
+//            Toast.makeText(
+//                this,
+//                "복용 시작일에 미래 날짜는 입력할 수 없습니다.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
         val Medi = Medicine(id, petId, mediTitle, mediStart, mediEnd, medicheckBox, mediEtc)
 
-        //데이터 수정
-        //db?.getTodoDao()?.updateTodo(Todo)
-
         if(mediTitle.isBlank() || mediStart.isBlank()) {
-            Toast.makeText(
-                this, "항목을 채워주세요",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this, "항목을 채워주세요",
+//                Toast.LENGTH_SHORT
+//            ).show()
+            showCustomToast("필수 항목을 채워주세요.")
         } else {
             Thread {
                 mediDao.updateMedi(Medi)
                 Log.i("id", Medi.toString())
                 runOnUiThread { //아래 작업은 UI 스레드에서 실행해주어야 합니다.
-                    Toast.makeText(
-                        this, "수정되었습니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        this, "수정되었습니다.",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                    save = 1
+                    showCustomToast("수정되었습니다.")
                     moveToAnotherPage()
                 }
             }.start()
@@ -195,14 +199,39 @@ class MedicineUpdateActivity : AppCompatActivity() {
             if (mediToDelete != null) {
                 mediDao.deleteMedi(mediToDelete)
                 runOnUiThread {
-                    Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    save = 1
+                    showCustomToast("삭제되었습니다.")
+                    //Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                     moveToAnotherPage()
                 }
             }
         }.start()
     }
 
+    private var currentToast: Toast? = null
+    private fun showCustomToast(message: String) {
+        currentToast?.cancel()
 
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout))
+
+        val text = layout.findViewById<TextView>(R.id.custom_toast_text)
+        text.text = message
+
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+
+//        val toastDurationInMilliSeconds: Long = 3000
+//        toast.duration =
+//            if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+
+        toast.setGravity(Gravity.BOTTOM, 0, 200)
+
+        currentToast = toast
+
+        toast.show()
+    }
     private fun moveToAnotherPage() {
         val intent = Intent(applicationContext, MedicineReadActivity::class.java)
         startActivity(intent)
@@ -269,16 +298,20 @@ class MedicineUpdateActivity : AppCompatActivity() {
         R.id.menu_edit -> {
             updateMedi()
 
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+            if(save != 0){
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
             true
         }
 
         R.id.menu_remove -> {
             deletMedi()
 
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+            if(save != 0){
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
             true
         }
         else -> true
