@@ -1,5 +1,6 @@
 package com.example.carebout.view.community
 
+import SpaceItemDecoration
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
@@ -13,6 +14,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.carebout.R
 import com.example.carebout.base.bottomTabClick
 import com.example.carebout.databinding.ActivityCommunityBinding
 import com.example.carebout.view.IntroActivity
@@ -207,9 +209,8 @@ class CommunityActivity : AppCompatActivity() {
 
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(
-            DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
-        )
+        val space = resources.getDimensionPixelSize(R.dimen.space_between_items) // 원하는 간격 값으로 설정
+        binding.recyclerView.addItemDecoration(SpaceItemDecoration(space))
 
         bottomTabClick(binding.bottomTapBarOuter, this)
     }
