@@ -40,11 +40,23 @@ class MedicineWriteActivity : AppCompatActivity() {
         binding = ActivityMedicineWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar3)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         db = AppDatabase.getInstance(applicationContext)!!
         medicineDao = db.getMedicineDao()
+
+        binding.topBarOuter.activityTitle.text = "약 처방"
+
+        // 뒤로가기 버튼 클릭시
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
+
+        // 저장 클릭리스너
+        binding.topBarOuter.CompleteBtn.setOnClickListener {
+            insertMedi()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
 
 //        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
 //        petId = viewModel.getSelectedPetId().value
@@ -190,28 +202,6 @@ class MedicineWriteActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {}
         })
-    }
-
-    override fun onCreateOptionsMenu (menu: Menu?): Boolean {
-        menuInflater.inflate (R.menu.menu_add, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
-
-        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
-            finish()
-            true
-        }
-
-        R.id.menu_add_save -> {
-            insertMedi()
-
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-            true
-        }
-        else -> true
     }
 
 }

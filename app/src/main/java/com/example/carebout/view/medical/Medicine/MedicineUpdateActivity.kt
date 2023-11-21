@@ -41,8 +41,7 @@ class MedicineUpdateActivity : AppCompatActivity() {
         binding = ActivityMedicineUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar8)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.topBarOuter.activityTitle.text = "약 처방"
 
         db = AppDatabase.getInstance(applicationContext)!!
         mediDao = db.getMedicineDao()
@@ -110,6 +109,27 @@ class MedicineUpdateActivity : AppCompatActivity() {
                 editTextEndD.isFocusableInTouchMode = true
                 editTextEndD.isFocusable = true
             }
+        }
+
+        // 뒤로가기 버튼 클릭시
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
+
+        // 저장 클릭리스너
+        binding.topBarOuter.CompleteBtn.setOnClickListener {
+            updateMedi()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+
+        // 삭제 클릭리스너
+        binding.topBarOuter.DeleteBtn.setOnClickListener {
+            deletMedi()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
         }
 
 //        updateBtn.setOnClickListener{
@@ -252,35 +272,5 @@ class MedicineUpdateActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {}
         })
-    }
-
-    override fun onCreateOptionsMenu (menu: Menu?): Boolean {
-        menuInflater.inflate (R.menu.menu_story, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
-
-        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
-            finish()
-            true
-        }
-
-        R.id.menu_edit -> {
-            updateMedi()
-
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-            true
-        }
-
-        R.id.menu_remove -> {
-            deletMedi()
-
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-            true
-        }
-        else -> true
     }
 }

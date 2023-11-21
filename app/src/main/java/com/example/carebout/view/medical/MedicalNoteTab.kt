@@ -149,8 +149,7 @@ class MedicalNoteTab : Fragment() {
             // 라디오 버튼 동적 생성
             for (pet in petList) {
                 val radioButton = RadioButton(requireContext())
-                val sex = if (pet.sex == "male") "♂ " else "♀ "
-                radioButton.text = pet.name + sex
+                radioButton.text = pet.name
                 radioButton.tag = pet.pid  // pid 태그에 저장
                 radioButton.buttonDrawable = getResources().getDrawable(R.drawable.medical_radiobtn_check)
                 radioButton.setPadding(0, 5, 20, 5)

@@ -6,14 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".view.medical.Clinic.ClinicUpdateActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar6"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+    <include
+        android:id="@+id/topBarOuter"
+        layout="@layout/medical_dailycare_update_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +23,7 @@
         android:layout_marginRight="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar6">
+        app:layout_constraintTop_toBottomOf="@+id/topBarOuter">
 
         <ScrollView
             android:layout_width="match_parent"

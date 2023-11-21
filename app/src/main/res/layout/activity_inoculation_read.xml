@@ -8,24 +8,20 @@
     tools:context=".view.medical.Inoc.InoculationReadActivity"
     android:id="@+id/parent_layout">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/inoToolbar"
+    <include
+        android:id="@+id/topBarOuter"
+        layout="@layout/medical_dailycare_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <HorizontalScrollView
         android:id="@+id/tag_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/inoToolbar"
+        android:layout_below="@+id/topBarOuter"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="0dp"
         android:layout_marginRight="30dp"

@@ -30,8 +30,25 @@ class TodoWriteActivity : AppCompatActivity() {
         binding = ActivityTodoWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar2)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // 뒤로가기 버튼 클릭시
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
+
+        // 저장 클릭리스너
+        binding.topBarOuter.CompleteBtn.setOnClickListener {
+            val todoId = intent.getIntExtra("todoId", -1)
+
+            if (todoId != -1){
+                Log.i("btn", todoId.toString())
+                updateTodo()
+            } else {
+                insertTodo()
+            }
+            setResult(Activity.RESULT_OK, intent)
+
+            finish()
+        }
 
         //setContentView(R.layout.activity_todo_write)
 
@@ -189,34 +206,6 @@ class TodoWriteActivity : AppCompatActivity() {
             }.start()
         }
 
-    }
-
-    override fun onCreateOptionsMenu (menu: Menu?): Boolean {
-        menuInflater.inflate (R.menu.menu_add, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
-
-        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
-            finish()
-            true
-        }
-
-        R.id.menu_add_save -> {
-            val todoId = intent.getIntExtra("todoId", -1)
-
-            if (todoId != -1){
-                Log.i("btn", todoId.toString())
-                updateTodo()
-            } else {
-                insertTodo()
-            }
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-            true
-        }
-        else -> true
     }
 
 }

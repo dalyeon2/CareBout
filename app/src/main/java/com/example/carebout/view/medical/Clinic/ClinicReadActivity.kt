@@ -45,8 +45,11 @@ class ClinicReadActivity : AppCompatActivity() {
         binding = ActivityClinicReadBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar12)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.topBarOuter.activityTitle.text = "진료기록"
+
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
 
         //db 인스턴스를 가져오고 db작업을 할 수 있는 dao를 가져옵니다.
         db = AppDatabase.getInstance(this)!!
@@ -267,19 +270,4 @@ class ClinicReadActivity : AppCompatActivity() {
             adapter.setClinicList(ArrayList())
         }
     }
-    override fun onCreateOptionsMenu (menu: Menu?): Boolean {
-        menuInflater.inflate (R.menu.dropdown_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
-
-        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
-            finish()
-            true
-        }
-
-        else -> true
-    }
-
 }

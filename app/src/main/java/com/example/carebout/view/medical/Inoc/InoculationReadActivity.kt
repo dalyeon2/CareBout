@@ -55,8 +55,11 @@ class InoculationReadActivity : AppCompatActivity() {
         inocDao = db.getInocDao()
         personalInfoDao = db.personalInfoDao()
 
-        setSupportActionBar(binding.inoToolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.topBarOuter.activityTitle.text = "접종/구충"
+
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
 
 //        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
 //        petId = viewModel.getSelectedPetId().value
@@ -341,20 +344,5 @@ class InoculationReadActivity : AppCompatActivity() {
         } else {
             adapter.setInoculationList(ArrayList())
         }
-    }
-
-    override fun onCreateOptionsMenu (menu: Menu?): Boolean {
-        menuInflater.inflate (R.menu.dropdown_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected (item: MenuItem): Boolean = when (item.itemId) {
-
-        android.R.id.home -> { // 뒤로가기 버튼을 누를 때
-            finish()
-            true
-        }
-
-        else -> true
     }
 }
