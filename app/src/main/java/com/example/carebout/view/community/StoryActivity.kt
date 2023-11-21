@@ -2,6 +2,7 @@ package com.example.carebout.view.community
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -12,6 +13,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityStoryBinding
 import com.bumptech.glide.Glide
@@ -90,12 +92,13 @@ class StoryActivity : AppCompatActivity() {
     private fun showDeleteCustomDialog() {
         val dialogBinding = CustomDialogDeleteBinding.inflate(layoutInflater)
 
-        val dialog = AlertDialog.Builder(this)
-            .setView(dialogBinding.root)
-            .create()
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(dialogBinding.root)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        dialogBinding.dialogTitle.text = "정말 삭제하시겠습니까?"
-        dialogBinding.dialogMessage.text = "삭제한 글은 복원할 수 없어요"
+        dialogBinding.dialogTitle.text = "일기를 정말 삭제하시겠습니까?"
+        dialogBinding.dialogMessage.text = "삭제한 글은 복원할 수 없어요!"
 
         dialogBinding.btnCancel.setOnClickListener {
             dialog.dismiss()

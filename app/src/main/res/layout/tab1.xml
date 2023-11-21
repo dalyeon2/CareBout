@@ -31,7 +31,7 @@
             android:textColor="@color/medi_tab"
             android:textOff="복용중"
             android:textOn="복용중"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <!--        <ToggleButton-->
         <!--            android:id="@+id/junggiGumjin"-->

@@ -3,6 +3,7 @@ package com.example.carebout.view.community
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.ContentValues
 import android.content.Intent
 import android.database.DatabaseUtils
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import android.view.View
+import android.view.Window
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -226,9 +228,10 @@ class AddActivity: AppCompatActivity() {
     private fun showCustomDialog() {
         val dialogBinding = CustomDialogLayoutBinding.inflate(layoutInflater)
 
-        val dialog = AlertDialog.Builder(this)
-            .setView(dialogBinding.root)
-            .create()
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(dialogBinding.root)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         dialogBinding.dialogTitle.text = "일기 쓰기를 그만두시겠습니까?"
         dialogBinding.dialogMessage.text = "작성한 내용은 저장되지 않아요!"

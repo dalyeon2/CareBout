@@ -42,7 +42,7 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="DHPPL"
                     android:textOn="DHPPL"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <ToggleButton
                     android:id="@+id/toggleButton4"
@@ -55,20 +55,20 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="CVRP"
                     android:textOn="CVRP"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <ToggleButton
                     android:id="@+id/toggleButton8"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="85dp"
-                    android:layout_height="35dp"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/togglebtn_check"
                     android:text="심장사상충"
                     android:textColor="@color/medi_tab"
                     android:textOff="심장사상충"
                     android:textOn="심장사상충"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <ToggleButton
                     android:id="@+id/toggleButton7"
@@ -81,7 +81,7 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="광견병"
                     android:textOn="광견병"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <ToggleButton
                     android:id="@+id/toggleButton2"
@@ -94,7 +94,7 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="코로나"
                     android:textOn="코로나"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <ToggleButton
                     android:id="@+id/toggleButton3"
@@ -107,7 +107,7 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="켄넬코프"
                     android:textOn="켄넬코프"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <ToggleButton
                     android:id="@+id/toggleButton5"
@@ -120,7 +120,7 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="백혈병"
                     android:textOn="백혈병"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <ToggleButton
                     android:id="@+id/toggleButton6"
@@ -133,7 +133,7 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="FID"
                     android:textOn="FID"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
         </HorizontalScrollView>
