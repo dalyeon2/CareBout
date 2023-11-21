@@ -14,7 +14,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="18dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_back" />
 
@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:layout_weight="5"
         android:text="반려동물 등록"
-        android:textSize="18dp"
+        android:textSize="20dp"
         android:textColor="@color/black"
         android:gravity="center"
         android:background="@color/transparent"/>
@@ -38,9 +38,9 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="18dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
-            android:tint="#6EC677"
+            android:tint="@color/main_color"
             android:src="@drawable/ic_checked"/>
 
     </FrameLayout>

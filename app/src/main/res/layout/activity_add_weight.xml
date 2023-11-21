@@ -78,7 +78,7 @@
                 android:id="@+id/weightListTitle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@id/editArea">
 
                 <TextView
@@ -87,7 +87,7 @@
                     android:layout_weight="3"
                     android:gravity="center"
                     android:text="몸무게"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:background="@drawable/under_line"/>
 
                 <View
@@ -101,7 +101,7 @@
                     android:layout_weight="8"
                     android:gravity="center"
                     android:text="측정일"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:background="@drawable/under_line"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -110,7 +110,6 @@
                 android:id="@+id/weightRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="20dp"
                 app:layout_constraintTop_toBottomOf="@id/weightListTitle"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
