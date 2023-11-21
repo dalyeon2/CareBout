@@ -1,4 +1,5 @@
 import android.content.Context
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -6,11 +7,12 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
+import com.example.carebout.view.home.db.Weight
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class MyAdapter(private val context: Context, private val dataList: MutableList<Pair<Float, String>>) :
+class MyAdapter(private val context: Context, private val dataList: MutableList<Weight>, private val listener: (Weight)->Unit) :
     RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,6 +22,10 @@ class MyAdapter(private val context: Context, private val dataList: MutableList<
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindData(dataList[position])
+        holder.itemView.setOnLongClickListener {
+            listener(dataList[position])
+            true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -32,21 +38,22 @@ class MyAdapter(private val context: Context, private val dataList: MutableList<
         private val dTitle: TextView = itemView.findViewById(R.id.dTitle)
         private val dItem: EditText = itemView.findViewById(R.id.dItem)
 
-        fun bindData(item: Pair<Float, String>) {
+        fun bindData(item: Weight) {
             wTitle.text = "몸무게"
             dTitle.text = "측정일"
-            wItem.setText(item.first.toString())
-            dItem.setText(item.second)
+            wItem.setText(item.weight.toString())
+            dItem.setText(item.date)
         }
-    }
 
-    fun addItem(item: Pair<Float, String>) {
+    }
+    fun addItem(item: Weight) {
         dataList.add(item)
         notifyItemInserted(dataList.size-1)
     }
 
-    fun removeItem(position: Int){
-        dataList.removeAt(position)
-        notifyItemRemoved(position)
+    fun removeItem(item: Weight){
+        val index =dataList.indexOf(item)
+        dataList.removeAt(index)
+        notifyItemRemoved(index)
     }
 }

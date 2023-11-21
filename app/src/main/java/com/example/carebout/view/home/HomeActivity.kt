@@ -142,7 +142,7 @@ class HomeActivity : AppCompatActivity() {
         cAdapter = RecyclerAdapter(getClinicDataSet())
         binding.checkRecycler.layoutManager = LinearLayoutManager(
             this@HomeActivity, RecyclerView.HORIZONTAL, false).apply {
-                this.stackFromEnd = true
+                stackFromEnd = true
         }
         binding.checkRecycler.adapter = cAdapter
     }
@@ -151,7 +151,7 @@ class HomeActivity : AppCompatActivity() {
         iAdapter = RecyclerAdapter(getInoculationDataSet())
         binding.inoculationRecycler.layoutManager = LinearLayoutManager(
             this@HomeActivity, RecyclerView.HORIZONTAL, false).apply {
-                this.stackFromEnd = true
+                stackFromEnd = true
         }
         binding.inoculationRecycler.adapter = iAdapter
     }
