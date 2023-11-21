@@ -21,7 +21,9 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar3">
@@ -42,17 +44,18 @@
                     android:layout_marginTop="30dp"
 
                     android:text="약 이름"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/editTextM"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="약 이름 작성"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/text_startD"
@@ -61,17 +64,18 @@
                     android:layout_marginTop="30dp"
 
                     android:text="복용 시작일"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/editTextStartD"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:hint="2023-03-03"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/text_endD"
@@ -80,27 +84,27 @@
                     android:layout_marginTop="30dp"
 
                     android:text="복용 종료일"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/editTextEndD"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
-                    android:hint="2023-06-06"
+                    android:hint="복용 종료일 작성"
                     android:inputType="date"
 
-                    />
+                    android:textSize="14sp" />
 
 
                 <CheckBox
                     android:id="@+id/checkBox"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="48dp"
                     android:text="현재 복용 중"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
 
                     />
 
@@ -110,8 +114,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
 
-                    android:text="비고"
-                    android:textSize="16sp"
+                    android:text="메모"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -122,8 +126,9 @@
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:hint="비고"
-                    android:inputType="textMultiLine" />
+                    android:hint="메모"
+                    android:inputType="textMultiLine"
+                    android:textSize="14sp" />
             </LinearLayout>
         </ScrollView>
 

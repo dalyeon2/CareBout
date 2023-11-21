@@ -22,3 +22,4 @@ data class Weight(
 ){
 
     @PrimaryKey(autoGenerate = true) var weightId: Int = 0   // id
+}

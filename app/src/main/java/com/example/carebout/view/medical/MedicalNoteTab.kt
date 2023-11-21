@@ -151,6 +151,8 @@ class MedicalNoteTab : Fragment() {
                 val radioButton = RadioButton(requireContext())
                 radioButton.text = pet.name
                 radioButton.tag = pet.pid  // pid 태그에 저장
+                radioButton.background = getResources().getDrawable(R.drawable.togglebtn_check)
+                radioButton.setTextColor(getResources().getColor(R.color.medi_tab))
                 petRadioGroup.addView(radioButton)
                 Log.i("pid_animal", pet.animal)
 
