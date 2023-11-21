@@ -9,7 +9,7 @@ import androidx.room.Update
 @Dao
 interface WeightDao {
     @Insert
-    fun insertInfo(weight: Weight)
+    fun insertInfo(weight: Weight): Long
 
     @Delete
     fun deleteInfo(weight: Weight)
