@@ -6,7 +6,7 @@
     <dimen name="imgSize">150dp</dimen>
 
     <dimen name="viewPagerMargin">-100dp</dimen>
-    <dimen name="viewPagerWidth">250dp</dimen
+    <dimen name="viewPagerWidth">250dp</dimen>
 
     <dimen name="space_between_items">10dp</dimen>
 </resources>
