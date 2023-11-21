@@ -71,7 +71,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
-                    android:hint="2023-03-03"
+                    android:hint="복용 시작일 작성"
                     android:inputType="date" />
 
                 <TextView
@@ -90,7 +90,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
-                    android:hint="2023-06-06"
+                    android:hint="복용 종료일 작성"
                     android:inputType="date"
 
                     />
@@ -111,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
 
-                    android:text="비고"
+                    android:text="메모"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -123,7 +123,7 @@
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:hint="비고"
+                    android:hint="메모"
                     android:inputType="textMultiLine" />
             </LinearLayout>
         </ScrollView>
