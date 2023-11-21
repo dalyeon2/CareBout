@@ -119,6 +119,7 @@
       android:layout_marginRight="20dp"
       android:background="#262626" />-->
 
+
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recyclerView"
       android:layout_width="match_parent"

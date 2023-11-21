@@ -173,6 +173,7 @@
         android:layout_marginRight="20dp"
         android:background="#262626" />-->
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -182,6 +183,7 @@
         android:layout_marginRight="30dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/insert_btn"
