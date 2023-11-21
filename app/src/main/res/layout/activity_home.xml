@@ -58,7 +58,7 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/profileViewPager"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="300dp"
                 android:clipToPadding="false"
                 android:clipChildren="false"
                 app:layout_constraintTop_toBottomOf="@id/helloName"/>
@@ -137,7 +137,7 @@
                 android:layout_marginTop="70dp"
                 android:paddingHorizontal="5dp"
                 android:text="체중 그래프"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/weight" />
 
@@ -199,7 +199,7 @@
                 android:layout_marginTop="50dp"
                 android:paddingHorizontal="5dp"
                 android:text="검사 일지"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/wieghtGraphCardView" />
 
@@ -230,7 +230,7 @@
                 android:layout_marginTop="50dp"
                 android:paddingHorizontal="5dp"
                 android:text="접종 및 구충 일지"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/checkGraphCardView" />
 

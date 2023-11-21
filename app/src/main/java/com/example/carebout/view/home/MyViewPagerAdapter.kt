@@ -27,11 +27,15 @@ class MyViewPagerAdapter(private val context: Context, private val profileList: 
         val pet = itemView.findViewById<ImageView>(R.id.petImage)
 
         fun bindData(item: String) {
-            if (item == "cat") {
+            if (item == "cat")
                 pet.setImageResource(R.drawable.temp_cat)
-            }else if(item == "dog"){
+            else if(item == "dog")
                 pet.setImageResource(R.drawable.temp_dog)
-            }else
+            else if(item == "sample1")
+                pet.setImageResource(R.drawable.sample1)
+            else if(item == "sample2")
+                pet.setImageResource(R.drawable.sample2)
+            else
                 pet.setImageURI(ImageUtil().get(context, item))
         }
     }
