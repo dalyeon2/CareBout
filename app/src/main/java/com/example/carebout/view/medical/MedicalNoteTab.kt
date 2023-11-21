@@ -1,9 +1,11 @@
 package com.example.carebout.view.medical
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +57,31 @@ class MedicalNoteTab : Fragment() {
     fun subUnselectBorn() {
         dailycare.unSelectBorn()
     }
+    private var currentToast: Toast? = null
 
+    fun showCustomToast(context: Context, message: String) {
+        currentToast?.cancel()
+
+        val inflater = LayoutInflater.from(context)
+        val layout = inflater.inflate(R.layout.custom_toast, null)
+
+        val text = layout.findViewById<TextView>(R.id.custom_toast_text)
+        text.text = message
+
+        val toast = Toast(context)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+
+        val toastDurationInMilliSeconds: Long = 3000
+        toast.duration =
+            if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+
+        toast.setGravity(Gravity.BOTTOM, 0, 200)
+
+        currentToast = toast
+
+        toast.show()
+    }
     override fun onResume() {
         super.onResume()
 
@@ -75,6 +101,7 @@ class MedicalNoteTab : Fragment() {
         //val selectedPetId = application.petId
         val p = MyPid.getPid()
         Log.i("updateFragments", p.toString())
+        petId = p
 
         // 각 탭에 petId 값을 전달
         currentWeight.updatePetId(p)
@@ -203,7 +230,15 @@ class MedicalNoteTab : Fragment() {
 //        val application = requireActivity().application as PidApplication
 //        petId = application.petId
 
-        petId = MyPid.getPid()
+        val petList = personalInfoDao.getAllInfo()
+
+        // 펫 목록이 비어있지 않을 때
+        if (petList.isEmpty()) {
+            petId = 0
+        } else {
+            petId = MyPid.getPid()
+        }
+
         Log.i("petId_medical", petId.toString())
 
         var p_view = petId
@@ -270,19 +305,21 @@ class MedicalNoteTab : Fragment() {
             }
         } else {
             dailycareMenu.setOnClickListener{
-                Toast.makeText(
-                    requireContext(),
-                    "반려동물을 먼저 등록해주세요",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showCustomToast(requireContext(), "반려동물을 먼저 등록해주세요.")
+//                Toast.makeText(
+//                    requireContext(),
+//                    "반려동물을 먼저 등록해주세요",
+//                    Toast.LENGTH_SHORT
+//                ).show()
             }
 
             medi.setOnClickListener{
-                Toast.makeText(
-                    requireContext(),
-                    "반려동물을 먼저 등록해주세요",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showCustomToast(requireContext(), "반려동물을 먼저 등록해주세요.")
+//                Toast.makeText(
+//                    requireContext(),
+//                    "반려동물을 먼저 등록해주세요",
+//                    Toast.LENGTH_SHORT
+//                ).show()
             }
         }
 

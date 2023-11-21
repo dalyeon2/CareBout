@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.CheckBox
@@ -33,6 +34,7 @@ class MedicineWriteActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MedicalViewModel
     private var petId: Int = 0
+    private var save: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,11 +103,12 @@ class MedicineWriteActivity : AppCompatActivity() {
 
         // Date validation
         if (!isValidDate(mediStartD) || (!mediEndD.isBlank() && !isValidDate(mediEndD))) {
-            Toast.makeText(
-                this,
-                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.")
+//            Toast.makeText(
+//                this,
+//                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
@@ -114,32 +117,55 @@ class MedicineWriteActivity : AppCompatActivity() {
 
         // mediStartD와 currentDate 비교
         if (mediStartD > currentDate) {
-            Toast.makeText(
-                this,
-                "복용 시작일에 미래 날짜는 입력할 수 없습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("미래 날짜를 복용 시작일에 입력할 수 없습니다.")
+//            Toast.makeText(
+//                this,
+//                "복용 시작일에 미래 날짜는 입력할 수 없습니다.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
         val Medi = Medicine(null, petId, mediTitle, mediStartD, mediEndD, medicheckBox, mediEtc)
 
         if (mediTitle.isBlank() || mediStartD.isBlank()) {
-            Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
+            showCustomToast("필수 항목을 채워주세요.")
+            //Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
         } else {
             Thread {
                 medicineDao.insertMedi(Medi)
                 runOnUiThread {
-                    Toast.makeText(
-                        this, "추가되었습니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    save = 1
+                    showCustomToast("추가되었습니다.")
                     moveToAnotherPage()
                 }
             }.start()
         }
     }
+    private var currentToast: Toast? = null
+    private fun showCustomToast(message: String) {
+        currentToast?.cancel()
 
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout))
+
+        val text = layout.findViewById<TextView>(R.id.custom_toast_text)
+        text.text = message
+
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+
+//        val toastDurationInMilliSeconds: Long = 3000
+//        toast.duration =
+//            if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+
+        toast.setGravity(Gravity.BOTTOM, 0, 200)
+
+        currentToast = toast
+
+        toast.show()
+    }
     private fun moveToAnotherPage() {
         val intent = Intent(this, MedicineReadActivity::class.java)
         startActivity(intent)
@@ -148,6 +174,10 @@ class MedicineWriteActivity : AppCompatActivity() {
 
     // Date validation function
     private fun isValidDate(dateString: String): Boolean {
+        if (dateString.length != 10) {
+            return false
+        }
+
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         dateFormat.isLenient = false
         return try {
@@ -207,8 +237,10 @@ class MedicineWriteActivity : AppCompatActivity() {
         R.id.menu_add_save -> {
             insertMedi()
 
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+            if(save != 0){
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
             true
         }
         else -> true
