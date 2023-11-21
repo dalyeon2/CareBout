@@ -89,7 +89,7 @@ class InoculationAdapter2(private val context: Context)
 
             Log.i("size", inocList.size.toString())
 
-            var intent: Intent = Intent(context, InoculationUpdateActivity::class.java)
+            var intent: Intent = Intent(context, InoculationReadActivity::class.java)
 
             intent.putExtra("inocId", inocList[holder.bindingAdapterPosition].inocId) // 아이템의 고유 ID 전달
             Log.i("id", inocList[holder.bindingAdapterPosition].inocId.toString())
