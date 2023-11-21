@@ -44,7 +44,7 @@
             android:text="검진 항목"
             android:textColor="#000"
             android:textSize="14sp"
-            app:layout_columnWeight="3.5"
+            app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:text="검진 날짜"
             android:textColor="#000"
             android:textSize="14sp"
-            app:layout_columnWeight="3.5"
+            app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
 
@@ -93,7 +93,7 @@
             android:text="병원 이름"
             android:textColor="#000"
             android:textSize="14sp"
-            app:layout_columnWeight="3.5"
+            app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
 
@@ -118,7 +118,7 @@
             android:text="비고"
             android:textColor="#000"
             android:textSize="14sp"
-            app:layout_columnWeight="3.5"
+            app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
     </androidx.gridlayout.widget.GridLayout>

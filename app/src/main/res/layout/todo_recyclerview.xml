@@ -43,7 +43,7 @@
             android:text="할 일"
             android:textColor="#000"
             android:textSize="14sp"
-            app:layout_columnWeight="3.5"
+            app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:text="횟수"
             android:textColor="#444"
             android:textSize="14sp"
-            app:layout_columnWeight="3.5"
+            app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
         <TextView
@@ -92,7 +92,7 @@
             android:text="비고"
             android:textColor="#444"
             android:textSize="14sp"
-            app:layout_columnWeight="3.5"
+            app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
     </androidx.gridlayout.widget.GridLayout>
