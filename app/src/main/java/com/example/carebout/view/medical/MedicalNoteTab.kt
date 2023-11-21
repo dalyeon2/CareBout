@@ -232,7 +232,7 @@ class MedicalNoteTab : Fragment() {
 
         val petList = personalInfoDao.getAllInfo()
 
-        // 펫 목록이 비어있지 않을 때
+        // 펫 목록이 비어있을 때
         if (petList.isEmpty()) {
             petId = 0
         } else {
