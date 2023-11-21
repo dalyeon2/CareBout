@@ -42,7 +42,7 @@
         android:background="@drawable/togglebtn_check"
         android:text="복용중"
         android:textOff="복용중"
-
+        android:textColor="@color/medi_tab"
         android:textOn="복용중" />
 
 

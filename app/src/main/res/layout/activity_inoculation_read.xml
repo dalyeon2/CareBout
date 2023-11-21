@@ -46,6 +46,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="DHPPL"
+                android:textColor="@color/medi_tab"
                 android:textOff="DHPPL"
                 android:textOn="DHPPL" />
 
@@ -56,6 +57,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="CVRP"
+                android:textColor="@color/medi_tab"
                 android:textOff="CVRP"
                 android:textOn="CVRP" />
 
@@ -66,6 +68,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="심장사상충"
+                android:textColor="@color/medi_tab"
                 android:textOff="심장사상충"
                 android:textOn="심장사상충" />
 
@@ -76,6 +79,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="광견병"
+                android:textColor="@color/medi_tab"
                 android:textOff="광견병"
                 android:textOn="광견병" />
 
@@ -86,6 +90,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="코로나"
+                android:textColor="@color/medi_tab"
                 android:textOff="코로나"
                 android:textOn="코로나" />
 
@@ -96,6 +101,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="켄넬코프"
+                android:textColor="@color/medi_tab"
                 android:textOff="켄넬코프"
                 android:textOn="켄넬코프" />
 
@@ -106,6 +112,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="백혈병"
+                android:textColor="@color/medi_tab"
                 android:textOff="백혈병"
                 android:textOn="백혈병" />
 
@@ -116,6 +123,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="FID"
+                android:textColor="@color/medi_tab"
                 android:textOff="FID"
                 android:textOn="FID" />
 

@@ -70,6 +70,7 @@
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="정기"
+                                android:textColor="@color/medi_tab"
                                 android:textOff="정기"
                                 android:textOn="정기" />
 
@@ -80,6 +81,7 @@
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="혈액"
+                                android:textColor="@color/medi_tab"
                                 android:textOff="혈액"
                                 android:textOn="혈액" />
 
@@ -91,6 +93,7 @@
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="X-ray"
+                                android:textColor="@color/medi_tab"
                                 android:textOff="X-ray"
                                 android:textOn="X-ray" />
 
@@ -102,6 +105,7 @@
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="초음파"
+                                android:textColor="@color/medi_tab"
                                 android:textOff="초음파"
                                 android:textOn="초음파" />
 
@@ -112,6 +116,7 @@
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="CT"
+                                android:textColor="@color/medi_tab"
                                 android:textOff="CT"
                                 android:textOn="CT" />
 
@@ -123,6 +128,7 @@
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="MRI"
+                                android:textColor="@color/medi_tab"
                                 android:textOff="MRI"
                                 android:textOn="MRI" />
 
