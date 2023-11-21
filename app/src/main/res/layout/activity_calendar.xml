@@ -72,7 +72,7 @@
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="180dp"
         android:layout_marginHorizontal="20dp"
         android:background="@drawable/square_shape2"
         android:gravity="left"
@@ -87,15 +87,19 @@
         android:id="@+id/calendarView"
         android:background="@drawable/square_shape2"
         android:layout_width="match_parent"
-        android:layout_height="354dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="75dp"
         android:layout_marginHorizontal="20dp"
+        android:paddingTop="10dp"
+        android:paddingHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:mcv_selectionColor="#6EC677"
-        tools:ignore="MissingConstraints"
-        android:elevation="2dp"/>
+        app:mcv_headerTextAppearance="@style/CalendarViewYear"
+        app:mcv_weekDayTextAppearance="@style/CalendarViewWeek"
+        app:mcv_dateTextAppearance="@style/CalendarViewDate"
+        tools:ignore="MissingConstraints"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addplan"
