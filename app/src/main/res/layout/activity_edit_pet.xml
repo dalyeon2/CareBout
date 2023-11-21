@@ -26,7 +26,7 @@
             android:id="@+id/addPetContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="30dp"
             android:paddingBottom="50dp">
 
             <androidx.cardview.widget.CardView

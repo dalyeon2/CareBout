@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -37,6 +38,7 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MedicalViewModel
     private var petId: Int = 0
+    private var save: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -238,11 +240,12 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
         // Date validation
         if (!isValidDate(inocDate) || (!inocDue.isBlank() && !isValidDate(inocDue))) {
-            Toast.makeText(
-                this,
-                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.")
+//            Toast.makeText(
+//                this,
+//                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
@@ -251,26 +254,30 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
         // inocDate와 currentDate 비교
         if (inocDate > currentDate) {
-            Toast.makeText(
-                this,
-                "접종/구충 날짜에 미래 날짜는 입력할 수 없습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("미래 날짜를 접종/구충일에 입력할 수 없습니다.")
+//            Toast.makeText(
+//                this,
+//                "접종/구충 날짜에 미래 날짜는 입력할 수 없습니다.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
         val Inoc = Inoculation(id, petId, tagDHPPL, tagC, tagKC, tagCVRP, tagFL, tagFID, tagR, tagH, inocDate, inocDue, inocH, inocEtc)
 
         if ((!tagDHPPL && !tagC && !tagKC && !tagCVRP && !tagFL && !tagFID && !tagR && !tagH) || inocDate.isBlank()) {
-            Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
+            showCustomToast("필수 항목을 채워주세요.")
+//            Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
         } else {
             Thread {
                 inocDao.updateInoculation(Inoc)
                 runOnUiThread {
-                    Toast.makeText(
-                        this, "수정되었습니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        this, "수정되었습니다.",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                    save = 1
+                    showCustomToast("수정되었습니다.")
                     moveToAnotherPage()
                 }
             }.start()
@@ -283,13 +290,38 @@ class InoculationUpdateActivity : AppCompatActivity() {
             if (inocToDelete != null) {
                 inocDao.deleteInoculation(inocToDelete)
                 runOnUiThread {
-                    Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    save = 1
+                    showCustomToast("삭제되었습니다.")
+                    //Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                     moveToAnotherPage()
                 }
             }
         }.start()
     }
+    private var currentToast: Toast? = null
+    private fun showCustomToast(message: String) {
+        currentToast?.cancel()
 
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout))
+
+        val text = layout.findViewById<TextView>(R.id.custom_toast_text)
+        text.text = message
+
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+
+//        val toastDurationInMilliSeconds: Long = 3000
+//        toast.duration =
+//            if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+
+        toast.setGravity(Gravity.BOTTOM, 0, 200)
+
+        currentToast = toast
+
+        toast.show()
+    }
     private fun moveToAnotherPage() {
         val intent = Intent(this, InoculationReadActivity::class.java)
         startActivity(intent)
@@ -298,6 +330,10 @@ class InoculationUpdateActivity : AppCompatActivity() {
 
     // Date validation function
     private fun isValidDate(dateString: String): Boolean {
+        if (dateString.length != 10) {
+            return false
+        }
+
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         dateFormat.isLenient = false
         return try {

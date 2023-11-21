@@ -1,7 +1,5 @@
 package com.example.carebout.view.home
 
-import MyAdapter
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
@@ -13,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityAddWeightBinding
+import com.example.carebout.databinding.CustomDialogBinding
 import com.example.carebout.view.home.db.Weight
 import com.example.carebout.view.home.db.WeightDao
 import com.example.carebout.view.medical.db.AppDatabase
@@ -22,57 +21,64 @@ class AddWeightActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddWeightBinding
 
-    private lateinit var weight: WeightDao
+    private lateinit var weightDao: WeightDao
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var wAdapter: MyAdapter
+    private lateinit var dialog: Dialog
+    private lateinit var wAdapter: WeightRecyclerAdapter
+    private lateinit var wRecycler: RecyclerView
+
+    private var nowPid: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddWeightBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        weight = AppDatabase.getInstance(this)!!.weightDao()
-        val nowPid = intent.getIntExtra("pid", 0)
+        weightDao = AppDatabase.getInstance(this)!!.weightDao()
+        nowPid = intent.getIntExtra("pid", 0)
 
         // 상단바 타이틀
         binding.topBarOuter.activityTitle.text = "체중 기록"
         // 상단바 우측 버튼 사용 안함
         binding.topBarOuter.CompleteBtn.visibility = INVISIBLE
 
+        wRecycler = binding.weightRecycler
+        wAdapter = WeightRecyclerAdapter(this, getWeightDataSet().toMutableList() ){
+            val cdBinding = CustomDialogBinding.inflate(layoutInflater)
+            val deleteW = it
 
+            dialog = Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(cdBinding.root)
+            dialog.window?.setBackgroundDrawableResource(R.color.transparent)
 
+            // 아니오 버튼
+            cdBinding.btnNo.setOnClickListener {
+                dialog.dismiss()
+            }
+            // 예 버튼
+            cdBinding.btnYes.setOnClickListener {
+                // 몸무게 삭제
+                weightDao.deleteInfo(deleteW)
+                wAdapter.removeItem(deleteW)
 
+                dialog.dismiss()
+            }
 
-
-        recyclerView = findViewById(R.id.weightRecycler)
-        wAdapter = MyAdapter(this,weight.getWeightById(nowPid).toMutableList()){
-            //getWeightDataSet(nowPid)){
-
-            //val builder: AlertDialog.Builder = Builder(this)
-            AlertDialog
-                .Builder(this)
-                .setMessage("삭제")
-                .setPositiveButton("예"){ _, _ ->
-                    weight.deleteInfo(it)
-//                    wAdapter.removeItem()
-                }
-                .create()
-                .show()
+            dialog.show()
         }
-
-        recyclerView.layoutManager = LinearLayoutManager(
+        binding.weightRecycler.layoutManager = LinearLayoutManager(
             this@AddWeightActivity, RecyclerView.VERTICAL, true).apply {
                 stackFromEnd = true
         }
-        recyclerView.adapter = wAdapter
+        binding.weightRecycler.adapter = wAdapter
 
         // 날짜 입력 editText 클릭 시 캘린더 뜨도록
         binding.editD.setOnClickListener {
-            var calendar = Calendar.getInstance()
-            var year = calendar.get(Calendar.YEAR)
-            var month = calendar.get(Calendar.MONTH)
-            var day = calendar.get(Calendar.DAY_OF_MONTH)
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
             this@AddWeightActivity.let { it ->
                 DatePickerDialog(it, { _, year, month, day ->
                     run {
@@ -80,7 +86,7 @@ class AddWeightActivity : AppCompatActivity() {
                         )
                     }
                 }, year, month, day)
-            }?.show()
+            }.show()
         }
 
         // 뒤로가기 버튼
@@ -96,32 +102,28 @@ class AddWeightActivity : AppCompatActivity() {
             if (!isValid(w, d))
                 return@setOnClickListener
 
-            val weightId = weight.insertInfo(Weight(
+            val insertW = Weight(
                 nowPid,
                 w.text.toString().toFloat(),
                 d.text.toString()
-            ))
-
-            wAdapter.addItem(Weight(
-                nowPid,
-                w.text.toString().toFloat(),
-                d.text.toString()
-            ).also { it.weightId = weightId.toInt() }
             )
+            val weightId = weightDao.insertInfo(insertW)
 
-            w.setText("")
-            d.setText("")
+            wAdapter.addItem(insertW)
+
+            w.text.clear()
+            d.text.clear()
         }
     }
 
-    private fun getWeightDataSet(pid: Int): MutableList<Pair<Float, String>> {
-        val weightDS = mutableListOf<Pair<Float,String>>()
+    private fun getWeightDataSet(): MutableList<Weight> {
+        val weightDS = mutableListOf<Weight>()
 
-        for (w in weight.getWeightById(pid)) {
-           weightDS.add(Pair(w.weight, w.date))
+        for (w in weightDao.getWeightById(nowPid)) {
+           weightDS.add(w)
         }
 
-        weightDS.sortBy { it.second }
+        weightDS.sortBy { it.date }
 
         return weightDS
     }
@@ -139,4 +141,5 @@ class AddWeightActivity : AppCompatActivity() {
 
         return false
     }
+
 }

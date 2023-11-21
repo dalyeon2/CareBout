@@ -50,7 +50,8 @@ class EditPetActivity : AppCompatActivity() {
             this@EditPetActivity.let { it ->
                 DatePickerDialog(it, { _, year, month, day ->
                     run {
-                        binding.editBirth.setText(year.toString() + "-" + (month + 1).toString() + "-" + day.toString())
+                        binding.editBirth.setText(String.format("%04d-%02d-%02d", year, month + 1, day)
+                        )
                     }
                 }, year, month, day)
             }?.show()

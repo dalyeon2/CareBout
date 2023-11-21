@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cdCardView"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     app:cardCornerRadius="10dp">
@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:text="아니오"
             android:textSize="14dp"
-            android:background="@color/transparent"/>
+            android:background="?android:attr/selectableItemBackground"/>
 
         <Button
             android:id="@+id/btnYes"
@@ -48,7 +48,7 @@
             android:textSize="14dp"
             android:textStyle="bold"
             android:textColor="#ff0000"
-            android:background="@color/transparent"/>
+            android:background="?android:attr/selectableItemBackground"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
