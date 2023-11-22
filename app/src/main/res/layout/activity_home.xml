@@ -106,7 +106,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0년 11개월"
-                    android:fontFamily="@font/medium"
                     android:textSize="15dp"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -115,7 +114,6 @@
                 android:id="@+id/breed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="코리안 숏헤어"
                 android:textSize="16dp"
                 android:textAlignment="center"
@@ -126,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="5.1kg"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:fontFamily="@font/bold"
                 android:textAlignment="center"
                 app:layout_constraintTop_toBottomOf="@id/breed"/>
