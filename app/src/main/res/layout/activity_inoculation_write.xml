@@ -67,90 +67,98 @@
                             <ToggleButton
                                 android:id="@+id/toggleButton1"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="DHPPL"
                                 android:textColor="@color/medi_tab"
                                 android:textOff="DHPPL"
-                                android:textOn="DHPPL" />
+                                android:textOn="DHPPL"
+                                android:textSize="16dp" />
 
                             <ToggleButton
                                 android:id="@+id/toggleButton4"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="CVRP"
                                 android:textColor="@color/medi_tab"
                                 android:textOff="CVRP"
-                                android:textOn="CVRP" />
+                                android:textOn="CVRP"
+                                android:textSize="16dp" />
 
                             <ToggleButton
                                 android:id="@+id/toggleButton8"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="심장사상충"
                                 android:textColor="@color/medi_tab"
                                 android:textOff="심장사상충"
-                                android:textOn="심장사상충" />
+                                android:textOn="심장사상충"
+                                android:textSize="16dp" />
 
                             <ToggleButton
                                 android:id="@+id/toggleButton7"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="광견병"
                                 android:textColor="@color/medi_tab"
                                 android:textOff="광견병"
-                                android:textOn="광견병" />
+                                android:textOn="광견병"
+                                android:textSize="16dp" />
 
                             <ToggleButton
                                 android:id="@+id/toggleButton2"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="코로나"
                                 android:textColor="@color/medi_tab"
                                 android:textOff="코로나"
-                                android:textOn="코로나" />
+                                android:textOn="코로나"
+                                android:textSize="16dp" />
 
                             <ToggleButton
                                 android:id="@+id/toggleButton3"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="켄넬코프"
                                 android:textColor="@color/medi_tab"
                                 android:textOff="켄넬코프"
-                                android:textOn="켄넬코프" />
+                                android:textOn="켄넬코프"
+                                android:textSize="16dp" />
 
                             <ToggleButton
                                 android:id="@+id/toggleButton5"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="백혈병"
                                 android:textColor="@color/medi_tab"
                                 android:textOff="백혈병"
-                                android:textOn="백혈병" />
+                                android:textOn="백혈병"
+                                android:textSize="16dp" />
 
                             <ToggleButton
                                 android:id="@+id/toggleButton6"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/togglebtn_check"
                                 android:text="FID"
                                 android:textColor="@color/medi_tab"
                                 android:textOff="FID"
-                                android:textOn="FID" />
+                                android:textOn="FID"
+                                android:textSize="16dp" />
 
                         </LinearLayout>
                     </HorizontalScrollView>

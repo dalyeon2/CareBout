@@ -15,7 +15,6 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:gravity="center_horizontal"
             android:text="&#8226;"
             android:textAlignment="center"
@@ -31,7 +30,7 @@
             android:gravity="right|top"
             android:text="데일리케어"
             android:textColor="#444"
-            android:textSize="14sp"
+            android:textSize="16dp"
             app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
 
@@ -42,7 +41,7 @@
             android:layout_marginLeft="5dp"
             android:text="할 일"
             android:textColor="#000"
-            android:textSize="14sp"
+            android:textSize="16dp"
             app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
@@ -54,7 +53,7 @@
             android:gravity="right|top"
             android:text="횟수"
             android:textColor="#444"
-            android:textSize="14sp"
+            android:textSize="16dp"
             app:layout_column="1"
             app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
@@ -66,8 +65,8 @@
             android:layout_marginLeft="5dp"
             android:gravity="left"
             android:text="횟수"
-            android:textColor="#444"
-            android:textSize="14sp"
+            android:textColor="#000"
+            android:textSize="16dp"
             app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
@@ -79,7 +78,7 @@
             android:gravity="right|top"
             android:text="메모"
             android:textColor="#444"
-            android:textSize="14sp"
+            android:textSize="16dp"
             app:layout_column="1"
             app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
@@ -90,8 +89,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="비고"
-            android:textColor="#444"
-            android:textSize="14sp"
+            android:textColor="#000"
+            android:textSize="16dp"
             app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 

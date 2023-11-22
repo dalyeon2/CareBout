@@ -38,71 +38,77 @@
             <ToggleButton
                 android:id="@+id/toggleButton6"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="정기"
                 android:textColor="@color/medi_tab"
                 android:textOff="정기"
-                android:textOn="정기" />
+                android:textOn="정기"
+                android:textSize="16dp" />
 
             <ToggleButton
                 android:id="@+id/toggleButton1"
                 android:layout_width="80dp"
-                android:layout_height="48dp"
+                android:layout_height="40dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="혈액"
                 android:textColor="@color/medi_tab"
                 android:textOff="혈액"
-                android:textOn="혈액" />
+                android:textOn="혈액"
+                android:textSize="16dp" />
 
 
             <ToggleButton
                 android:id="@+id/toggleButton2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="X-ray"
                 android:textColor="@color/medi_tab"
                 android:textOff="X-ray"
-                android:textOn="X-ray" />
+                android:textOn="X-ray"
+                android:textSize="16dp" />
 
 
             <ToggleButton
                 android:id="@+id/toggleButton3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="초음파"
                 android:textColor="@color/medi_tab"
                 android:textOff="초음파"
-                android:textOn="초음파" />
+                android:textOn="초음파"
+                android:textSize="16dp" />
 
             <ToggleButton
                 android:id="@+id/toggleButton4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="CT"
                 android:textColor="@color/medi_tab"
                 android:textOff="CT"
-                android:textOn="CT" />
+                android:textOn="CT"
+                android:textSize="16dp" />
 
 
             <ToggleButton
                 android:id="@+id/toggleButton5"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/togglebtn_check"
                 android:text="MRI"
                 android:textColor="@color/medi_tab"
                 android:textOff="MRI"
-                android:textOn="MRI" />
+                android:textOn="MRI"
+                android:textSize="16dp" />
 
         </LinearLayout>
     </HorizontalScrollView>
