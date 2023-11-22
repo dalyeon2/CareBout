@@ -49,9 +49,10 @@ class ClinicWriteActivity : AppCompatActivity() {
         // 저장 클릭리스너
         binding.topBarOuter.CompleteBtn.setOnClickListener {
             insertClinic()
-
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+            if(save != 0){
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
         }
 
         db = AppDatabase.getInstance(applicationContext)!!
@@ -176,7 +177,7 @@ class ClinicWriteActivity : AppCompatActivity() {
     private fun moveToAnotherPage() {
         val intent = Intent(this, ClinicReadActivity::class.java)
         startActivity(intent)
-        finish()
+        //finish()
     }
 
     // Date validation function

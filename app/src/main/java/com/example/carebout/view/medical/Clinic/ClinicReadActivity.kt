@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityClinicReadBinding
+import com.example.carebout.view.medical.MedicalActivity
 import com.example.carebout.view.medical.MedicalViewModel
 import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
@@ -48,6 +49,8 @@ class ClinicReadActivity : AppCompatActivity() {
         binding.topBarOuter.activityTitle.text = "진료기록"
 
         binding.topBarOuter.backToActivity.setOnClickListener {
+            val intent = Intent(applicationContext, MedicalActivity::class.java)
+            startActivity(intent)
             finish()
         }
 

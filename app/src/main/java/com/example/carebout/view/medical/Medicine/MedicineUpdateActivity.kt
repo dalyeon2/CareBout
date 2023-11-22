@@ -121,17 +121,19 @@ class MedicineUpdateActivity : AppCompatActivity() {
         // 저장 클릭리스너
         binding.topBarOuter.CompleteBtn.setOnClickListener {
             updateMedi()
-
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+            if(save != 0){
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
         }
 
         // 삭제 클릭리스너
         binding.topBarOuter.DeleteBtn.setOnClickListener {
             deletMedi()
-
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+            if(save != 0){
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
         }
 
 //        updateBtn.setOnClickListener{

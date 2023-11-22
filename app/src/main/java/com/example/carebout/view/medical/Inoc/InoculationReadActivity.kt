@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityInoculationReadBinding
 import com.example.carebout.view.home.db.PersonalInfoDao
+import com.example.carebout.view.medical.MedicalActivity
 import com.example.carebout.view.medical.MedicalViewModel
 import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
@@ -58,6 +59,8 @@ class InoculationReadActivity : AppCompatActivity() {
         binding.topBarOuter.activityTitle.text = "접종/구충"
 
         binding.topBarOuter.backToActivity.setOnClickListener {
+            val intent = Intent(applicationContext, MedicalActivity::class.java)
+            startActivity(intent)
             finish()
         }
 
