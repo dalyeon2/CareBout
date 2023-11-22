@@ -19,12 +19,11 @@
         android:id="@+id/feedAmount"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="5dp"
         android:gravity="center"
         android:text="종이컵 n/n"
         android:textAlignment="center"
         android:textColor="#5A5A5A"
-        android:textSize="18dp"
+        android:textSize="14dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/dogImage"
         app:layout_constraintTop_toTopOf="parent" />

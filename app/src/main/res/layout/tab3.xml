@@ -66,7 +66,7 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="정기"
                     android:textOn="정기"
-                    android:textSize="14dp" />
+                    android:textSize="12dp" />
 
                 <ToggleButton
                     android:id="@+id/toggleButton1"
@@ -79,7 +79,7 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="혈액"
                     android:textOn="혈액"
-                    android:textSize="14dp" />
+                    android:textSize="12dp" />
 
 
                 <ToggleButton
@@ -93,7 +93,7 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="X-ray"
                     android:textOn="X-ray"
-                    android:textSize="14dp" />
+                    android:textSize="12dp" />
 
 
                 <ToggleButton
@@ -107,7 +107,7 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="초음파"
                     android:textOn="초음파"
-                    android:textSize="14dp" />
+                    android:textSize="12dp" />
 
                 <ToggleButton
                     android:id="@+id/toggleButton4"
@@ -120,7 +120,7 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="CT"
                     android:textOn="CT"
-                    android:textSize="14dp" />
+                    android:textSize="12dp" />
 
 
                 <ToggleButton
@@ -134,7 +134,7 @@
                     android:textColor="@color/medi_tab"
                     android:textOff="MRI"
                     android:textOn="MRI"
-                    android:textSize="14dp" />
+                    android:textSize="12dp" />
 
             </LinearLayout>
         </HorizontalScrollView>

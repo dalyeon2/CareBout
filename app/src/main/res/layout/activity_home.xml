@@ -136,8 +136,9 @@
                 android:layout_marginTop="20dp"
                 android:paddingHorizontal="5dp"
                 android:text="체중 그래프"
-                android:textSize="18dp"
-                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:fontFamily="@font/medium"
+                android:textColor="@color/textColor"
                 app:layout_constraintTop_toBottomOf="@id/weight" />
 
             <com.google.android.material.card.MaterialCardView
@@ -199,8 +200,9 @@
                 android:layout_marginTop="20dp"
                 android:paddingHorizontal="5dp"
                 android:text="검사 일지"
-                android:textSize="18dp"
-                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:fontFamily="@font/medium"
+                android:textColor="@color/textColor"
                 app:layout_constraintTop_toBottomOf="@id/wieghtGraphCardView" />
 
             <com.google.android.material.card.MaterialCardView
@@ -231,8 +233,9 @@
                 android:layout_marginTop="20dp"
                 android:paddingHorizontal="5dp"
                 android:text="접종 및 구충 일지"
-                android:textSize="18dp"
-                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:fontFamily="@font/medium"
+                android:textColor="@color/textColor"
                 app:layout_constraintTop_toBottomOf="@id/checkGraphCardView" />
 
             <com.google.android.material.card.MaterialCardView
