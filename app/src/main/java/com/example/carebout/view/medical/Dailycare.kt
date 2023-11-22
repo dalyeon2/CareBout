@@ -34,7 +34,7 @@ class Dailycare : Fragment() {
     var dailycareText = Array<String>(10, {"-"}) // 데일리케어 타이틀
     var dailycareNumber = Array<Int>(10, {0}) // 타이틀을 몇 번 해야하는지
     val st = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT)
-    val stBtn = LinearLayout.LayoutParams(100, 100)
+    val stBtn = LinearLayout.LayoutParams(80, 80)
     val views: Array<ToggleButton?> = Array(50,  {null})
     var bornCount = 0
 

@@ -106,7 +106,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0년 11개월"
-                    android:fontFamily="@font/medium"
                     android:textSize="15dp"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -115,7 +114,6 @@
                 android:id="@+id/breed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="코리안 숏헤어"
                 android:textSize="16dp"
                 android:textAlignment="center"
@@ -126,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="5.1kg"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:fontFamily="@font/bold"
                 android:textAlignment="center"
                 app:layout_constraintTop_toBottomOf="@id/breed"/>
@@ -138,8 +136,9 @@
                 android:layout_marginTop="20dp"
                 android:paddingHorizontal="5dp"
                 android:text="체중 그래프"
-                android:textSize="18dp"
-                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:fontFamily="@font/medium"
+                android:textColor="@color/textColor"
                 app:layout_constraintTop_toBottomOf="@id/weight" />
 
             <com.google.android.material.card.MaterialCardView
@@ -201,8 +200,9 @@
                 android:layout_marginTop="20dp"
                 android:paddingHorizontal="5dp"
                 android:text="검사 일지"
-                android:textSize="18dp"
-                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:fontFamily="@font/medium"
+                android:textColor="@color/textColor"
                 app:layout_constraintTop_toBottomOf="@id/wieghtGraphCardView" />
 
             <com.google.android.material.card.MaterialCardView
@@ -233,8 +233,9 @@
                 android:layout_marginTop="20dp"
                 android:paddingHorizontal="5dp"
                 android:text="접종 및 구충 일지"
-                android:textSize="18dp"
-                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:fontFamily="@font/medium"
+                android:textColor="@color/textColor"
                 app:layout_constraintTop_toBottomOf="@id/checkGraphCardView" />
 
             <com.google.android.material.card.MaterialCardView
@@ -311,6 +312,8 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
+            android:textSize="13dp"
+            android:textColor="@color/textColor"
             android:gravity="center_vertical"
             android:text="반려동물 등록" />
 
@@ -323,6 +326,8 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
+            android:textSize="13dp"
+            android:textColor="@color/textColor"
             android:gravity="center_vertical"
             android:text="정보 수정" />
 
@@ -335,6 +340,8 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
+            android:textSize="13dp"
+            android:textColor="@color/textColor"
             android:gravity="center_vertical"
             android:text="체중 기록" />
 
@@ -347,6 +354,8 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
+            android:textSize="13dp"
+            android:textColor="@color/textColor"
             android:gravity="center_vertical"
             android:text="반려동물 삭제" />
 

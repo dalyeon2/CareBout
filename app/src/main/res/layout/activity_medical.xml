@@ -5,7 +5,7 @@
     android:id="@+id/bgLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/white"
     tools:context=".view.medical.MedicalActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -70,7 +70,8 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomTapBarOuter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBar">
+        app:layout_constraintTop_toBottomOf="@+id/appBar"
+        android:background="@color/bgColor">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -144,6 +145,8 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
+            android:textSize="13dp"
+            android:textColor="@color/textColor"
             android:text="\uD83E\uDE7A🩺 진료 내역" />
 
         <TextView
@@ -155,6 +158,8 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
+            android:textSize="13dp"
+            android:textColor="@color/textColor"
             android:text="\uD83D\uDC89💉 접종/구충 내역" />
 
         <TextView
@@ -166,6 +171,8 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
+            android:textSize="13dp"
+            android:textColor="@color/textColor"
             android:text="\uD83D\uDC8A💊 약처방" />
 
         <TextView
@@ -177,6 +184,8 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
+            android:textSize="13dp"
+            android:textColor="@color/textColor"
             android:text="\uD83D\uDCC3📃 데일리 케어" />
 
     </LinearLayout>

@@ -180,7 +180,7 @@ class MedicalNoteTab : Fragment() {
                 radioButton.tag = pet.pid  // pid 태그에 저장
                 radioButton.buttonDrawable = getResources().getDrawable(R.drawable.medical_radiobtn_check)
                 radioButton.setPadding(0, 5, 20, 5)
-                radioButton.textSize = 18.0f
+                radioButton.textSize = 20.0f
                 petRadioGroup.addView(radioButton)
                 Log.i("pid_animal", pet.animal)
 

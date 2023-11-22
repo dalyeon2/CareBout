@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#00D0D0D0">
+        android:background="@color/bgColor">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"

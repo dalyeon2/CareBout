@@ -31,7 +31,7 @@
             android:gravity="right|top"
             android:text="검진 항목"
             android:textColor="#444"
-            android:textSize="16dp"
+            android:textSize="14dp"
             app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
 
@@ -42,7 +42,7 @@
             android:layout_marginLeft="5dp"
             android:text="검진 항목"
             android:textColor="#000"
-            android:textSize="16dp"
+            android:textSize="14dp"
             app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
@@ -54,7 +54,7 @@
             android:gravity="right|top"
             android:text="검진 날짜"
             android:textColor="#444"
-            android:textSize="16dp"
+            android:textSize="14dp"
             app:layout_column="1"
             app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
@@ -66,7 +66,7 @@
             android:layout_marginLeft="5dp"
             android:text="검진 날짜"
             android:textColor="#000"
-            android:textSize="16dp"
+            android:textSize="14dp"
             app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
@@ -79,7 +79,7 @@
             android:gravity="right|top"
             android:text="병원 이름"
             android:textColor="#444"
-            android:textSize="16dp"
+            android:textSize="14dp"
             app:layout_column="1"
             app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
@@ -91,7 +91,7 @@
             android:layout_marginLeft="5dp"
             android:text="병원 이름"
             android:textColor="#000"
-            android:textSize="16dp"
+            android:textSize="14dp"
             app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
@@ -104,7 +104,7 @@
             android:gravity="right|top"
             android:text="메모"
             android:textColor="#444"
-            android:textSize="16dp"
+            android:textSize="14dp"
             app:layout_column="1"
             app:layout_columnWeight="1"
             app:layout_gravity="fill_vertical" />
@@ -116,7 +116,7 @@
             android:layout_marginLeft="20dp"
             android:text="비고"
             android:textColor="#000"
-            android:textSize="16dp"
+            android:textSize="14dp"
             app:layout_columnWeight="3"
             app:layout_gravity="center_vertical" />
 
