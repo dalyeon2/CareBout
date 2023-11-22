@@ -34,14 +34,14 @@
     <ToggleButton
         android:id="@+id/toggle"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/togglebtn_check"
         android:text="복용중"
         android:textColor="@color/medi_tab"
         android:textOff="복용중"
         android:textOn="복용중"
-        android:textSize="16dp" />
+        android:textSize="13dp" />
 
 
   </LinearLayout>
