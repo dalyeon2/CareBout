@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".view.home.AddPetActivity">
+
+    <include layout="@layout/top_bar"
+        android:id="@+id/topBarOuter"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ScrollView
+        android:id="@+id/addPetContainerScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/topBarOuter"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/addPetContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="30dp"
+            android:paddingBottom="50dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/addProfileImageCardView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="50dp"
+                android:background="#6EC677"
+                app:cardCornerRadius="200dp"
+                app:layout_constraintTop_toTopOf="@id/addPetContainer"
+                app:layout_constraintStart_toStartOf="@id/addPetContainer"
+                app:layout_constraintEnd_toEndOf="@id/addPetContainer">
+
+                <ImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/add_image"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/nameTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:paddingHorizontal="5dp"
+                android:text="이름"
+                app:layout_constraintTop_toBottomOf="@id/addProfileImageCardView"/>
+
+            <EditText
+                android:id="@+id/editName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:paddingHorizontal="10dp"
+                android:background="@drawable/edittext_rounded_corner_rectangle"
+                app:layout_constraintTop_toBottomOf="@id/nameTitle"/>
+
+            <TextView
+                android:id="@+id/birthTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:paddingHorizontal="5dp"
+                android:text="생년월일"
+                app:layout_constraintTop_toBottomOf="@id/editName" />
+
+            <EditText
+                android:id="@+id/editBirth"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:paddingHorizontal="10dp"
+                android:background="@drawable/edittext_rounded_corner_rectangle"
+                android:focusableInTouchMode="false"
+                app:layout_constraintTop_toBottomOf="@id/birthTitle"/>
+
+            <TextView
+                android:id="@+id/weightTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:paddingHorizontal="5dp"
+                android:text="체중"
+                app:layout_constraintTop_toBottomOf="@id/editBirth" />
+
+            <EditText
+                android:id="@+id/editWeight"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:paddingHorizontal="10dp"
+                android:background="@drawable/edittext_rounded_corner_rectangle"
+                android:digits="0123456789."
+                app:layout_constraintTop_toBottomOf="@id/weightTitle"/>
+
+            <TextView
+                android:id="@+id/sexTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:paddingHorizontal="5dp"
+                android:text="성별"
+                app:layout_constraintTop_toBottomOf="@id/editWeight" />
+
+            <RadioGroup
+                android:id="@+id/sexRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/sexTitle">
+
+                <RadioButton
+                    android:id="@+id/maleRadio"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp"
+                    android:button="@null"
+                    android:text="남"
+                    android:textColor="@drawable/add_pet_radio_text"
+                    android:textAlignment="center"
+                    android:checked="true"
+                    android:background="@drawable/add_pet_radio_button"/>
+
+                <RadioButton
+                    android:id="@+id/femaleRadio"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:button="@null"
+                    android:text="여"
+                    android:textColor="@drawable/add_pet_radio_text"
+                    android:textAlignment="center"
+                    android:background="@drawable/add_pet_radio_button"/>
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/animalTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:paddingHorizontal="5dp"
+                android:text="동물 분류"
+                app:layout_constraintTop_toBottomOf="@id/sexRadioGroup" />
+
+            <RadioGroup
+                android:id="@+id/animalRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/animalTitle">
+
+                <RadioButton
+                    android:id="@+id/dogRadio"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp"
+                    android:button="@null"
+                    android:text="강아지"
+                    android:textColor="@drawable/add_pet_radio_text"
+                    android:textAlignment="center"
+                    android:checked="true"
+                    android:background="@drawable/add_pet_radio_button"/>
+
+                <RadioButton
+                    android:id="@+id/catRadio"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:button="@null"
+                    android:text="고양이"
+                    android:textColor="@drawable/add_pet_radio_text"
+                    android:textAlignment="center"
+                    android:background="@drawable/add_pet_radio_button"/>
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/breedTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:paddingHorizontal="5dp"
+                android:text="품종"
+                app:layout_constraintTop_toBottomOf="@id/animalRadioGroup" />
+
+            <EditText
+                android:id="@+id/editBreed"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="50dp"
+                android:paddingHorizontal="10dp"
+                android:background="@drawable/edittext_rounded_corner_rectangle"
+                app:layout_constraintTop_toBottomOf="@id/breedTitle"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

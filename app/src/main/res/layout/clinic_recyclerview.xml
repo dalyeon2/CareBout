@@ -1,128 +1,132 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:gravity="center_vertical"-->
-<!--        android:padding="20dp">-->
-
-<!--        &lt;!&ndash;이름&ndash;&gt;-->
-<!--        <TextView-->
-<!--            android:id="@+id/tag_text"-->
-<!--            android:layout_width="70dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="5dp"-->
-<!--            android:text="태그"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#000"-->
-<!--            android:gravity="center"/>-->
-
-<!--        &lt;!&ndash;상태 메시지&ndash;&gt;-->
-<!--        <TextView-->
-<!--            android:id="@+id/date_text"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:text="검진일"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#444"-->
-<!--            android:maxLines="1"-->
-<!--            android:gravity="center"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/hospital_text"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:text="병원"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#444"-->
-<!--            android:maxLines="1"-->
-<!--            android:gravity="center"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/etc_text"-->
-<!--            android:layout_width="170dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:text="비고"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#444"-->
-<!--            android:gravity="left"/>-->
-<!--    </LinearLayout>-->
-
-    <TableLayout
-        android:id="@+id/sheetTableLay"
+    <androidx.gridlayout.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        android:stretchColumns="*">
+        app:alignmentMode="alignBounds"
+        app:columnCount="3"
+        app:orientation="horizontal">
 
-        <TableRow
-            android:id="@+id/sheetTableRow"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="&#8226;"
+            android:textAlignment="center"
+            android:textColor="@color/main_color"
+            android:textSize="20sp"
+            app:layout_gravity="center_vertical" />
 
-            <TextView
-                android:id="@+id/tag_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="검진 항목"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="right|top"
+            android:text="검진 항목"
+            android:textColor="#444"
+            android:textSize="16dp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="center_vertical" />
 
-            <TextView
-                android:id="@+id/date_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="검진 날짜"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tag_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="검진 항목"
+            android:textColor="#000"
+            android:textSize="16dp"
+            app:layout_columnWeight="3"
+            app:layout_gravity="center_vertical" />
 
-            <TextView
-                android:id="@+id/hospital_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="병원 이름"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="right|top"
+            android:text="검진 날짜"
+            android:textColor="#444"
+            android:textSize="16dp"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_gravity="center_vertical" />
 
-            <TextView
-                android:id="@+id/etc_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="비고"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </TableRow>
-    </TableLayout>
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="검진 날짜"
+            android:textColor="#000"
+            android:textSize="16dp"
+            app:layout_columnWeight="3"
+            app:layout_gravity="center_vertical" />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="right|top"
+            android:text="병원 이름"
+            android:textColor="#444"
+            android:textSize="16dp"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/hospital_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="병원 이름"
+            android:textColor="#000"
+            android:textSize="16dp"
+            app:layout_columnWeight="3"
+            app:layout_gravity="center_vertical" />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="right|top"
+            android:text="메모"
+            android:textColor="#444"
+            android:textSize="16dp"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_vertical" />
+
+        <TextView
+            android:id="@+id/etc_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="비고"
+            android:textColor="#000"
+            android:textSize="16dp"
+            app:layout_columnWeight="3"
+            app:layout_gravity="center_vertical" />
+
+    </androidx.gridlayout.widget.GridLayout>
 
     <!--구분선-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginHorizontal="10dp"
-        android:background="#777777"/>
+        android:background="#d7d7d7"/>
 
 </LinearLayout>

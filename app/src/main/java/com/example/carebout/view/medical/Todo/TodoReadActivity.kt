@@ -2,6 +2,8 @@ package com.example.carebout.view.medical.Todo
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +29,11 @@ class TodoReadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTodoReadBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 뒤로가기 버튼 클릭시
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
 
         //db 인스턴스를 가져오고 db작업을 할 수 있는 dao를 가져옵니다.
         db = AppDatabase.getInstance(this)!!
@@ -89,5 +96,7 @@ class TodoReadActivity : AppCompatActivity() {
             adapter.setTodoList(ArrayList())
         }
     }
+
+
 
 }

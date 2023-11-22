@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,82 +23,110 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/dateClick"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="2023년 11월 10일"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="14dp" />
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
 
-            <TextView
-                android:id="@+id/day"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="금요일"
-                android:textColor="#828282"
-                android:textSize="13dp" />
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="2023년 11월 10일"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="금요일"
+                    android:textColor="#828282"
+                    android:textSize="13dp" />
+
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_gravity="center"
                 android:src="@drawable/dog_head" />
 
         </LinearLayout>
 
-        <LinearLayout
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="480dp"
-            android:layout_margin="20dp"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/userImageView"
-                android:layout_width="match_parent"
-                android:layout_height="230dp"
-                android:layout_marginBottom="20dp"
-                android:src="@drawable/square_shape"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/add_editView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null"
-                android:gravity="top"
-                android:hint="오늘 하루는 어땠나요?"
-                android:inputType="textMultiLine"
-                android:textColorHint="#959AA3"
-                android:textSize="14dp" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/userImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/square_shape"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/add_editView"
+                    android:layout_width="match_parent"
+                    android:layout_height="480dp"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="오늘 하루는 어땠나요?"
+                    android:inputType="textMultiLine"
+                    android:textColorHint="#959AA3"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_gravity="bottom"
         android:background="@color/white">
+
+        <View
+            android:id="@+id/topDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#80C5C5C5"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/bottomIcon"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginTop="13dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp"
             android:src="@drawable/ic_pic"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topDivider"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

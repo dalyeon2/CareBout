@@ -20,6 +20,9 @@ interface TodoDao {
     @Delete
     fun deleteTodo(todo: DailyTodo)
 
+    @Query("DELETE FROM table_todo")
+    fun deleteAllTodos()
+
     @Query("SELECT * FROM table_todo WHERE todoId = :id")
     fun getTodoById(id: Int): DailyTodo?
 

@@ -1,8 +1,11 @@
 package com.example.carebout.view.medical.Todo
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -30,14 +33,16 @@ class TodoUpdateActivity : AppCompatActivity() {
         db = AppDatabase.getInstance(applicationContext)!!
         todoDao = db.getTodoDao()
 
+
+
         var counter:Int = 0 // 증감할 숫자의 변수 지정
 
         val todoText: TextView = findViewById(R.id.TodoEditText)
         val numText: TextView = findViewById(R.id.numText)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
 
-        val updateBtn: Button = findViewById(R.id.updateBtn)
-        val deleteBtn: Button = findViewById(R.id.deleteBtn)
+//        val updateBtn: Button = findViewById(R.id.updateBtn)
+//        val deleteBtn: Button = findViewById(R.id.deleteBtn)
 
         val btnminus: Button = findViewById(R.id.button2)
         val btnplus: Button = findViewById(R.id.button3)
@@ -63,12 +68,33 @@ class TodoUpdateActivity : AppCompatActivity() {
             Log.i("in", uTitle.toString())
         }
 
-        updateBtn.setOnClickListener{
-            updateTodo()
+//        updateBtn.setOnClickListener{
+//            updateTodo()
+//        }
+//
+//        deleteBtn.setOnClickListener {
+//            deletTodo()
+//        }
+
+        // 뒤로가기 버튼 클릭시
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
         }
 
-        deleteBtn.setOnClickListener {
+        // 저장 클릭리스너
+        binding.topBarOuter.CompleteBtn.setOnClickListener {
+            updateTodo()
+            setResult(Activity.RESULT_OK, intent)
+
+            finish()
+        }
+
+        // 삭제 클릭리스너
+        binding.topBarOuter.DeleteBtn.setOnClickListener {
             deletTodo()
+            setResult(Activity.RESULT_OK, intent)
+
+            finish()
         }
 
         btnplus.setOnClickListener {

@@ -1,23 +1,33 @@
 package com.example.carebout.view.community
 
-import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Rect
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import com.bumptech.glide.request.transition.Transition
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
 import com.example.carebout.databinding.ItemRecyclerviewBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.text.ParseException
 
 //항목 뷰를 가지는 역할
 class MyViewHolder(val binding: ItemRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root)
 
 //항목 구성자: 어댑터
-class MyAdapter(val contents: MutableList<String>?):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MyAdapter(
+    val contents: MutableList<String>?,
+    val imageUris: MutableList<Uri>?,
+    val dates: MutableList<String?>,
+    val day: MutableList<String?>
+    ):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     //항목 개수를 판단하기 위해 자동 호출
     override fun getItemCount(): Int {
         return contents?.size ?: 0
@@ -54,62 +64,67 @@ class MyAdapter(val contents: MutableList<String>?):RecyclerView.Adapter<Recycle
     //각 항목을 구성하기 위해 호출
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding = (holder as MyViewHolder).binding
+
         //뷰에 데이터 출력
         binding.itemData.text = contents!![position]
 
-        // 현재 날짜와 요일 설정
-        val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("MM월 dd일", Locale.getDefault())
-        val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault()).apply {
-            val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
-            applyPattern("${koreanDays[Calendar.DAY_OF_WEEK - 1]}")
+        // 이미지를 추가했을 때만 보이도록 처리
+        val itemImageUri = imageUris?.getOrNull(position)
+        if (itemImageUri != null && itemImageUri != Uri.EMPTY) {
+            binding.itemImage.visibility = View.VISIBLE
+
+            Glide.with(holder.itemView.context).clear(binding.itemImage)
+
+            // 이미지 로딩
+            val requestOptions = RequestOptions()
+                .fitCenter() // 이미지를 중앙에 맞게 조절
+
+            Glide.with(holder.itemView)
+                .asBitmap()
+                .load(itemImageUri)
+                .apply(requestOptions)
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        // Bitmap이 준비되면 ImageView에 설정
+                        binding.itemImage.setImageBitmap(resource)
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // 이미지가 로드 해제되면 할 작업이 있다면 여기에 추가
+                    }
+                })
+        } else {
+            binding.itemImage.visibility = View.GONE
+            binding.itemImage.setImageBitmap(null)
         }
 
-        val formattedDate = dateFormat.format(currentDate)
-        val formattedDay = dayFormat.format(currentDate)
+        // 날짜 데이터
+        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
 
-        binding.date.text = formattedDate
-        binding.day.text = formattedDay
-    }
-}
+        val itemDate = dates.getOrNull(position)
+        binding.date.text = itemDate?.let {
+            try {
+                val parsedDate = dateFormat.parse(it)
+                val newDateFormat = SimpleDateFormat("MM'월' dd'일'", Locale.getDefault())
+                newDateFormat.format(parsedDate)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+                ""
+            }
+        } ?: run {
+            val currentDate = Calendar.getInstance().time
+            val newDateFormat = SimpleDateFormat("MM'월' dd'일'", Locale.getDefault())
+            newDateFormat.format(currentDate)
+        }
 
-//리사이클러 뷰 꾸미기
-class MyDecoration(val context: Context) : RecyclerView.ItemDecoration() {
-    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        super.onDraw(c, parent, state)
-    }
-
-    //모든 항목이 출력된 후 호출
-    override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        super.onDrawOver(c, parent, state)
-        /*
-        //뷰 크기 계산
-        val width = parent.width
-        val height = parent.height
-        //이미지 크기 계산
-        val img: Drawable? = ResourcesCompat.getDrawable(context.resources, R.drawable.kbo, null)
-        val drWidth = img?.intrinsicWidth
-        val drHeight = img?.intrinsicHeight
-        //이미지가 그려질 위치 계산
-        val left = width / 2 - drWidth?.div(2) as Int
-        val top = height / 2 - drHeight?.div(2) as Int
-        //이미지 출력
-        c.drawBitmap(
-            BitmapFactory.decodeResource(context.resources, R.drawable.kbo),
-            left.toFloat(), top.toFloat(), null
-        )
-         */
-    }
-
-    //각 항목을 꾸미기 위해 호출
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        super.getItemOffsets(outRect, view, parent, state)
-
-        ViewCompat.setElevation(view, 20.0f)
+        val itemDay = day.getOrNull(position)
+        binding.day.text = when (itemDay) {
+            "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" -> itemDay
+            else -> {
+                val currentDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+                val koreanDays = arrayOf("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일")
+                koreanDays.getOrNull(currentDayOfWeek - 1) ?: "표시되지 않음"
+            }
+        }
     }
 }

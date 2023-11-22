@@ -2,12 +2,26 @@ package com.example.carebout.view.medical.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.example.carebout.view.home.db.PersonalInfo
 
-@Entity(tableName = "table_inoculation")
+@Entity(
+    tableName = "table_inoculation",
+    foreignKeys = [
+        ForeignKey(
+            entity = PersonalInfo::class,
+            parentColumns = ["pid"],
+            childColumns = ["pid"]
+        )
+    ]
+)
 data class Inoculation (
     @PrimaryKey(autoGenerate = true)
     var inocId: Int?,
+
+    @ColumnInfo(name = "pid")
+    var pid: Int?, // PersonalInfo의 외래 키
 
     @ColumnInfo(name = "tag_DHPPL")
     var tag_DHPPL: Boolean?,
@@ -34,9 +48,6 @@ data class Inoculation (
 
     @ColumnInfo(name = "tag_Heartworm")
     var tag_Heartworm: Boolean?,
-
-    @ColumnInfo(name = "tag")
-    var tag: String?,
 
     @ColumnInfo(name = "date")
     var date: String?,

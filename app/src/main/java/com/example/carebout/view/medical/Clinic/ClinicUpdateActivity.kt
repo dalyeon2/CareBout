@@ -1,18 +1,23 @@
 package com.example.carebout.view.medical.Clinic
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.Button
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityClinicUpdateBinding
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Clinic
 import com.example.carebout.view.medical.db.ClinicDao
@@ -26,21 +31,54 @@ class ClinicUpdateActivity : AppCompatActivity() {
     lateinit var clinicDao: ClinicDao
     var id: Int = 0
 
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
+    private var save: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityClinicUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.topBarOuter.activityTitle.text = "진료기록"
+
+        // 뒤로가기 버튼 클릭시
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
+
+        // 저장 클릭리스너
+        binding.topBarOuter.CompleteBtn.setOnClickListener {
+            updateClinic()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+
+        // 삭제 클릭리스너
+        binding.topBarOuter.DeleteBtn.setOnClickListener {
+            deletClinic()
+
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+
         db = AppDatabase.getInstance(applicationContext)!!
         clinicDao = db.getClinicDao()
 
-        val editTextList: EditText = findViewById(R.id.editTextList)
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
+
         val editTextDate: EditText = findViewById(R.id.editTextDate)
         val editTextH: EditText = findViewById(R.id.editTextH)
         val editTextMultiLine: TextView = findViewById(R.id.editTextMultiLine)
 
-        val updateBtn: Button = findViewById(R.id.updateBtn)
-        val deleteBtn: Button = findViewById(R.id.deleteBtn)
+//        val updateBtn: Button = findViewById(R.id.updateBtn)
+//        val deleteBtn: Button = findViewById(R.id.deleteBtn)
 
         // 수정 페이지로 전달된 아이템 정보를 가져옴
         val clinicId = intent.getIntExtra("clinicId", -1)
@@ -50,7 +88,6 @@ class ClinicUpdateActivity : AppCompatActivity() {
             // clinicId를 사용하여 데이터베이스에서 해당 아이템 정보를 가져와서 수정 페이지에서 사용할 수 있음
             // 수정 기능을 구현하는 코드 추가
             //넘어온 데이터 변수에 담기
-            var uTag: String? = intent.getStringExtra("uTag")
             var uDate: String? = intent.getStringExtra("uDate")
             var uHospital: String? = intent.getStringExtra("uHospital")
             var uEtc: String? = intent.getStringExtra("uEtc")
@@ -63,7 +100,6 @@ class ClinicUpdateActivity : AppCompatActivity() {
             var uTagCheckup: Boolean = intent.getBooleanExtra("uTagCheckup", false)
 
             //화면에 값 적용
-            editTextList.setText(uTag)
             editTextDate.setText(uDate)
             editTextH.setText(uHospital)
             editTextMultiLine.setText(uEtc)
@@ -74,17 +110,15 @@ class ClinicUpdateActivity : AppCompatActivity() {
             binding.toggleButton4.isChecked = uTagC
             binding.toggleButton5.isChecked = uTagM
             binding.toggleButton6.isChecked = uTagCheckup
-
-            Log.i("in", uTag.toString())
         }
 
-        updateBtn.setOnClickListener{
-            updateClinic()
-        }
-
-        deleteBtn.setOnClickListener {
-            deletClinic()
-        }
+//        updateBtn.setOnClickListener{
+//            updateClinic()
+//        }
+//
+//        deleteBtn.setOnClickListener {
+//            deletClinic()
+//        }
 
         // 숫자 입력 시 대시 "-" 자동 추가
         setupDateEditText(binding.editTextDate)
@@ -93,7 +127,6 @@ class ClinicUpdateActivity : AppCompatActivity() {
 
     private fun updateClinic() {
 
-        val clinicTag = binding.editTextList.text.toString()
         val clinicDate = binding.editTextDate.text.toString() // 할일 제목
         val clinicH = binding.editTextH.text.toString()
         val clinicEtc = binding.editTextMultiLine.text.toString()
@@ -107,11 +140,12 @@ class ClinicUpdateActivity : AppCompatActivity() {
 
         // Date validation
         if (!isValidDate(clinicDate)) {
-            Toast.makeText(
-                this,
-                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.")
+//            Toast.makeText(
+//                this,
+//                "유효하지 않은 날짜 형식입니다. 항목을 다시 확인해주세요.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
@@ -120,27 +154,27 @@ class ClinicUpdateActivity : AppCompatActivity() {
 
         // clinicDate와 currentDate 비교
         if (clinicDate > currentDate) {
-            Toast.makeText(
-                this,
-                "검진일에 미래 날짜는 입력할 수 없습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast("미래 날짜를 검진일에 입력할 수 없습니다.")
+//            Toast.makeText(
+//                this,
+//                "검진일에 미래 날짜는 입력할 수 없습니다.",
+//                Toast.LENGTH_SHORT
+//            ).show()
             return
         }
 
-        val Clinic = Clinic(id, tag1, tag2, tag3, tag4, tag5, tag6, clinicTag, clinicDate, clinicH, clinicEtc)
+        val Clinic = Clinic(id, petId, tag1, tag2, tag3, tag4, tag5, tag6, clinicDate, clinicH, clinicEtc)
 
         if ((!tag1 && !tag2 && !tag3 && !tag4 && !tag5 && !tag6) || clinicDate.isBlank()) {
-            Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
+            showCustomToast("필수 항목을 채워주세요.")
+//            Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
         } else {
             Thread {
                 clinicDao.updateClinic(Clinic)
                 Log.i("id", Clinic.toString())
                 runOnUiThread {
-                    Toast.makeText(
-                        this, "수정되었습니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    save = 1
+                    showCustomToast("수정되었습니다.")
                     moveToAnotherPage()
                 }
             }.start()
@@ -149,17 +183,42 @@ class ClinicUpdateActivity : AppCompatActivity() {
 
     private fun deletClinic() {
         Thread {
-            val clinicToDelete = clinicDao.getClinicById(id)
+            val clinicToDelete = clinicDao.getClinicById(id, petId)
             if (clinicToDelete != null) {
                 clinicDao.deleteClinic(clinicToDelete)
                 runOnUiThread {
-                    Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    save = 1
+                    showCustomToast("삭제되었습니다.")
+                    //Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                     moveToAnotherPage()
                 }
             }
         }.start()
     }
+    private var currentToast: Toast? = null
+    private fun showCustomToast(message: String) {
+        currentToast?.cancel()
 
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout))
+
+        val text = layout.findViewById<TextView>(R.id.custom_toast_text)
+        text.text = message
+
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+
+//        val toastDurationInMilliSeconds: Long = 3000
+//        toast.duration =
+//            if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+
+        toast.setGravity(Gravity.BOTTOM, 0, 200)
+
+        currentToast = toast
+
+        toast.show()
+    }
     private fun moveToAnotherPage() {
         val intent = Intent(applicationContext, ClinicReadActivity::class.java)
         startActivity(intent)
@@ -168,6 +227,10 @@ class ClinicUpdateActivity : AppCompatActivity() {
 
     // Date validation function
     private fun isValidDate(dateString: String): Boolean {
+        if (dateString.length != 10) {
+            return false
+        }
+
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         dateFormat.isLenient = false
         return try {

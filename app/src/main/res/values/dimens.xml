@@ -7,4 +7,6 @@
 
     <dimen name="viewPagerMargin">-100dp</dimen>
     <dimen name="viewPagerWidth">250dp</dimen>
+
+    <dimen name="space_between_items">15dp</dimen>
 </resources>

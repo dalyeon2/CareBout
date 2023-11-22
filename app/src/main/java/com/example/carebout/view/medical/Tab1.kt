@@ -3,22 +3,18 @@ package com.example.carebout.view.medical
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
-import com.example.carebout.view.medical.Medicine.MedicineAdapter
 import com.example.carebout.view.medical.Medicine.MedicineAdapter2
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Medicine
@@ -31,6 +27,9 @@ class Tab1 : Fragment() {
     private var mediList: ArrayList<Medicine> = ArrayList<Medicine>()
     private lateinit var adapter2: MedicineAdapter2
     private lateinit var checkTag: ToggleButton
+
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -52,8 +51,25 @@ class Tab1 : Fragment() {
         adapter2 = MedicineAdapter2(requireContext())
         recyclerView.adapter = adapter2
 
+
+
+        //val application = requireActivity().application as PidApplication
+        petId = MyPid.getPid() //application.petId
+        Log.i("petId_tab1_out", petId.toString())
+
+        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+        viewModel.mpid.observe(viewLifecycleOwner, Observer { mpid ->
+            // mpid가 변경될 때마다 호출되는 콜백
+            petId = MyPid.getPid()
+            Log.i("petId_tab1_in", petId.toString())
+
+            //MyPid.setPid(petId)
+            //application.petId = mpid
+            getMedicineList()
+        })
+
         // LiveData를 관찰하여 데이터 변경에 대응
-        medicineDao.getAllMedicine().observe(viewLifecycleOwner, Observer { medicineList ->
+        medicineDao.getAllMedicine(petId).observe(viewLifecycleOwner, Observer { medicineList ->
             // LiveData가 변경될 때마다 호출되는 콜백
             if (checkTag.isChecked) {
                 // 토글 버튼이 체크된 상태이면
@@ -79,20 +95,25 @@ class Tab1 : Fragment() {
 
     private fun getMedicineList() {
 
-        val mediList: ArrayList<Medicine> = db?.getMedicineDao()!!.getMediAll() as ArrayList<Medicine>
+        if(petId != 0){
+            val mediList: ArrayList<Medicine> = db?.getMedicineDao()!!.getMediDateAsc(petId) as ArrayList<Medicine>
 
-        if (mediList.isNotEmpty()) {
-            //데이터 적용
-            adapter2.setMediList(mediList)
+            if (mediList.isNotEmpty()) {
+                //데이터 적용
+                adapter2.setMediList(mediList)
 
+            } else {
+                adapter2.setMediList(ArrayList())
+            }
         } else {
-
+            adapter2.setMediList(ArrayList())
         }
+
     }
 
     private fun getMediCheckList() {
 
-        val mediCheckList: ArrayList<Medicine> = db?.getMedicineDao()!!.getMediWithCheck() as ArrayList<Medicine>
+        val mediCheckList: ArrayList<Medicine> = db?.getMedicineDao()!!.getMediWithCheck(petId) as ArrayList<Medicine>
 
         if (mediCheckList.isNotEmpty()) {
             //데이터 적용

@@ -8,6 +8,30 @@
     android:background="#FFFFFF"
     tools:context=".view.medical.MedicalActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/titleBarText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/black"
+            android:text="CARE 'BOUT"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -28,59 +52,14 @@
         app:srcCompat="@drawable/ic_add" />
 
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="12dp"
-        android:text="Care'Bout"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-<!--    다른 액티비티를 넘나들 수 있게 공통의 하단탭바를 만들었습니다!   -->
+    <!--    다른 액티비티를 넘나들 수 있게 공통의 하단탭바를 만들었습니다!   -->
     <include
         android:id="@+id/bottomTapBarOuter"
         layout="@layout/bottom_tap"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         app:layout_constraintBottom_toBottomOf="@id/bgLayout" />
 
-<!--    <com.google.android.material.tabs.TabLayout-->
-<!--        android:id="@+id/mainTab"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
-
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="홈" />-->
-
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--            android:id="@+id/tabItem"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="반려일기" />-->
-
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--            android:id="@+id/medicalNoteTab"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="의료수첩" />-->
-
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="커뮤니티" />-->
-<!--    </com.google.android.material.tabs.TabLayout>-->
 
     <!-- 팝업 메뉴 레이아웃 -->
 
@@ -88,11 +67,10 @@
         android:id="@+id/mainFrame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomTapBarOuter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5">
+        app:layout_constraintTop_toBottomOf="@+id/appBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -144,11 +122,12 @@
 
     <LinearLayout
         android:id="@+id/popup_menu"
-        android:layout_width="123dp"
-        android:layout_height="218dp"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
         android:layout_gravity="center|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
+        android:layout_weight="1"
         android:background="@drawable/rounded_menu"
         android:elevation="8dp"
         android:orientation="vertical"
@@ -165,18 +144,7 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="\uD83E\uDE7A🩺 검진 내역" />
-
-        <TextView
-            android:id="@+id/menu_item_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="onMenuItemClick"
-            android:padding="16dp"
-            android:text="\uD83D\uDC8A💊 복용약" />
+            android:text="\uD83E\uDE7A🩺 진료 내역" />
 
         <TextView
             android:id="@+id/menu_item_3"
@@ -187,7 +155,18 @@
             android:focusable="true"
             android:onClick="onMenuItemClick"
             android:padding="16dp"
-            android:text="\uD83D\uDC89💉 접종 내역" />
+            android:text="\uD83D\uDC89💉 접종/구충 내역" />
+
+        <TextView
+            android:id="@+id/menu_item_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="onMenuItemClick"
+            android:padding="16dp"
+            android:text="\uD83D\uDC8A💊 약처방" />
 
         <TextView
             android:id="@+id/menu_item_4"

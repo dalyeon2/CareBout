@@ -2,5 +2,5 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <external-path
         name="myfiles"
-        path="Android/data/kr.ac.hallym.Project/files/Pictures" />
+        path="Android/data/com.example.carebout.view.community/files/Pictures" />
 </paths>

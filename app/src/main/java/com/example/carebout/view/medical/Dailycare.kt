@@ -1,6 +1,7 @@
 package com.example.carebout.view.medical
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,9 @@ import android.widget.ToggleButton
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.example.carebout.R
+import com.example.carebout.view.home.db.PersonalInfoDao
 import com.example.carebout.view.medical.db.AppDatabase
+import com.example.carebout.view.medical.db.DailyTodo
 import com.example.carebout.view.medical.db.TodoDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,17 +24,17 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 
-
 class Dailycare : Fragment() {
 
     private lateinit var db: AppDatabase
     private lateinit var todoDao: TodoDao
+    private lateinit var personalInfoDao: PersonalInfoDao
 
     var nthDaily: Int = 0; // 데일리케어 개수
     var dailycareText = Array<String>(10, {"-"}) // 데일리케어 타이틀
     var dailycareNumber = Array<Int>(10, {0}) // 타이틀을 몇 번 해야하는지
     val st = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT)
-    val stBtn = LinearLayout.LayoutParams(130, 130)
+    val stBtn = LinearLayout.LayoutParams(100, 100)
     val views: Array<ToggleButton?> = Array(50,  {null})
     var bornCount = 0
 
@@ -79,6 +82,7 @@ class Dailycare : Fragment() {
 
             btnView.addView(bornButton)
         }
+
         return btnView // 뷰 리턴
     }
 
@@ -95,16 +99,35 @@ class Dailycare : Fragment() {
         saveTime = crtTime // 마지막으로 누른 시간 = 지금 누른 시간
     }
 
+    fun makeDot() : View {
+        var dotView = TextView(this.context) // 빈 텍스트뷰 생성
+        dotView.text = "\u2022"
+        dotView.setTextColor(Color.parseColor("#6EC677"))
+        dotView.textSize = 20.0f
+        dotView.layoutParams = st
+
+        return  dotView
+    }
 
     // 데일리케어 타이틀의 텍스트뷰 생성
     fun setDailycare() : View {
         var dailycareTextView = TextView(this.context) // 빈 텍스트뷰 생성
-        dailycareTextView.text = "\n- " + dailycareText[nthDaily] // 텍스트 넣기
-        dailycareTextView.textSize = 18.0f
+        dailycareTextView.text = " " + dailycareText[nthDaily] // 텍스트 넣기
+        dailycareTextView.textSize = 15.0f
         dailycareTextView.layoutParams = st // 레이아웃 지정
         dailycareTextView.id = ViewCompat.generateViewId() // 아이디 랜덤으로 지정
 
         return dailycareTextView
+    }
+
+    fun makeSubLay() : View {
+        var subLay = LinearLayout(this.context)
+        subLay.orientation = LinearLayout.HORIZONTAL
+        subLay.addView(makeDot())
+        subLay.addView(setDailycare())
+        subLay.setPadding(0,30,0,0)
+
+        return subLay
     }
 
     // 데일리케어 정보를 insert
@@ -137,17 +160,24 @@ class Dailycare : Fragment() {
 
         db = AppDatabase.getInstance(requireContext())!!
         todoDao = db.getTodoDao()
+        personalInfoDao = db.personalInfoDao()
+        val allList = personalInfoDao.getAllInfo()
 
         // Room 데이터베이스에서 모든 Daily Care 정보를 가져옵니다.
         CoroutineScope(Dispatchers.IO).launch {
-            val allTodoList = todoDao.getTodoAll()
-            withContext(Dispatchers.Main) {
-                for (dailyTodo in allTodoList) {
-                    // 가져온 Daily Care 정보를 UI에 표시
-                    insertDailycare(dailyTodo.title ?: "", dailyTodo.count?.toInt() ?: 0)
-                    lay.addView(setDailycare())
-                    lay.addView(setBornIcon())
-                    nthDaily++
+            var allTodoList = todoDao.getTodoAll()
+                withContext(Dispatchers.Main) {
+                if(allList.isNotEmpty()){
+                    for (dailyTodo in allTodoList) {
+                        // 가져온 Daily Care 정보를 UI에 표시
+                        insertDailycare(dailyTodo.title ?: "", dailyTodo.count?.toInt() ?: 0)
+                        lay.addView(makeSubLay())
+                        lay.addView(setBornIcon())
+                        nthDaily++
+                    }
+                }else{
+                    lay.removeAllViews()
+                    todoDao.deleteAllTodos()
                 }
             }
         }

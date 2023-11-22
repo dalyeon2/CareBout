@@ -1,15 +1,22 @@
 package com.example.carebout.view.medical.Inoc
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carebout.R
 import com.example.carebout.databinding.ActivityInoculationReadBinding
+import com.example.carebout.view.home.db.PersonalInfoDao
+import com.example.carebout.view.medical.MedicalViewModel
+import com.example.carebout.view.medical.MyPid
 import com.example.carebout.view.medical.db.AppDatabase
 import com.example.carebout.view.medical.db.Inoculation
 import com.example.carebout.view.medical.db.InoculationDao
@@ -20,8 +27,13 @@ class InoculationReadActivity : AppCompatActivity() {
 
     private lateinit var db: AppDatabase
     private lateinit var inocDao: InoculationDao
+    private lateinit var personalInfoDao: PersonalInfoDao
+
     private var inocList: ArrayList<Inoculation> = ArrayList<Inoculation>()
     private lateinit var adapter: InoculationAdapter
+
+    private lateinit var viewModel: MedicalViewModel
+    private var petId: Int = 0
 
     override fun onResume() {
         super.onResume()
@@ -41,6 +53,22 @@ class InoculationReadActivity : AppCompatActivity() {
         //db 인스턴스를 가져오고 db작업을 할 수 있는 dao를 가져옵니다.
         db = AppDatabase.getInstance(this)!!
         inocDao = db.getInocDao()
+        personalInfoDao = db.personalInfoDao()
+
+        binding.topBarOuter.activityTitle.text = "접종/구충"
+
+        binding.topBarOuter.backToActivity.setOnClickListener {
+            finish()
+        }
+
+//        viewModel = ViewModelProvider(this, SingleViewModelFactory.getInstance())[MedicalViewModel::class.java]
+//        petId = viewModel.getSelectedPetId().value
+
+        petId = MyPid.getPid()
+            //(application as PidApplication).petId
+        Log.i("petId_app", petId.toString())
+
+        updatePetTag()
 
         val insertBtn: FloatingActionButton = findViewById(R.id.insert_btn)
 
@@ -184,24 +212,39 @@ class InoculationReadActivity : AppCompatActivity() {
         }
     }
 
+    private fun updatePetTag() {
+        val tagDHPPL = binding.toggleButton1
+        val tagCVRP = binding.toggleButton4
+
+        val petList = personalInfoDao.getInfoById(petId)
+
+        if (petList!!.animal == "dog") {
+            tagCVRP.visibility = View.GONE
+            tagDHPPL.visibility = View.VISIBLE
+        } else {
+            tagCVRP.visibility = View.VISIBLE
+            tagDHPPL.visibility = View.GONE
+        }
+    }
+
     //리스트 조회
     private fun getInocList() {
 
-        val inocList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocDateAsc() as ArrayList<Inoculation>
-            //.getInoculationAll() as ArrayList<Inoculation>
+        val inocList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocDateAsc(petId) as ArrayList<Inoculation>
+        //.getInoculationAll() as ArrayList<Inoculation>
 
         if (inocList.isNotEmpty()) {
             //데이터 적용
             adapter.setInoculationList(inocList)
 
         } else {
-
+            adapter.setInoculationList(ArrayList())
         }
     }
 
     private fun getInocTagDHPPLList() {
 
-        val inocTagDHPPLList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagDHPPL() as ArrayList<Inoculation>
+        val inocTagDHPPLList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagDHPPL(petId) as ArrayList<Inoculation>
 
         if (inocTagDHPPLList.isNotEmpty()) {
             //데이터 적용
@@ -214,7 +257,7 @@ class InoculationReadActivity : AppCompatActivity() {
 
     private fun getInocTagCList() {
 
-        val inocTagCList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagC() as ArrayList<Inoculation>
+        val inocTagCList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagC(petId) as ArrayList<Inoculation>
 
         if (inocTagCList.isNotEmpty()) {
             //데이터 적용
@@ -227,7 +270,7 @@ class InoculationReadActivity : AppCompatActivity() {
 
     private fun getInocTagKCList() {
 
-        val inocTagKCList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagKC() as ArrayList<Inoculation>
+        val inocTagKCList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagKC(petId) as ArrayList<Inoculation>
 
         if (inocTagKCList.isNotEmpty()) {
             //데이터 적용
@@ -240,7 +283,7 @@ class InoculationReadActivity : AppCompatActivity() {
 
     private fun getInocTagCVRPList() {
 
-        val inocTagCVRPList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagCVRP() as ArrayList<Inoculation>
+        val inocTagCVRPList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagCVRP(petId) as ArrayList<Inoculation>
 
         if (inocTagCVRPList.isNotEmpty()) {
             //데이터 적용
@@ -253,7 +296,7 @@ class InoculationReadActivity : AppCompatActivity() {
 
     private fun getInocTagFLList() {
 
-        val inocTagFLList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagFL() as ArrayList<Inoculation>
+        val inocTagFLList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagFL(petId) as ArrayList<Inoculation>
 
         if (inocTagFLList.isNotEmpty()) {
             //데이터 적용
@@ -266,7 +309,7 @@ class InoculationReadActivity : AppCompatActivity() {
 
     private fun getInocTagFIDList() {
 
-        val inocTagFIDList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagFID() as ArrayList<Inoculation>
+        val inocTagFIDList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagFID(petId) as ArrayList<Inoculation>
 
         if (inocTagFIDList.isNotEmpty()) {
             //데이터 적용
@@ -279,7 +322,7 @@ class InoculationReadActivity : AppCompatActivity() {
 
     private fun getInocTagRList() {
 
-        val inocTagRList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagR() as ArrayList<Inoculation>
+        val inocTagRList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagR(petId) as ArrayList<Inoculation>
 
         if (inocTagRList.isNotEmpty()) {
             //데이터 적용
@@ -292,7 +335,7 @@ class InoculationReadActivity : AppCompatActivity() {
 
     private fun getInocTagHList() {
 
-        val inocTagHList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagH() as ArrayList<Inoculation>
+        val inocTagHList: ArrayList<Inoculation> = db?.getInocDao()!!.getInocWithTagH(petId) as ArrayList<Inoculation>
 
         if (inocTagHList.isNotEmpty()) {
             //데이터 적용

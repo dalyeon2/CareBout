@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,12 +13,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CareBout"
         tools:targetApi="31">
+<!--        <activity
+            android:name=".view.home.EditWeightActivity"
+            android:exported="false" />-->
+        <activity
+            android:name=".view.home.EditPetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.home.EmptyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.home.AddWeightActivity"
+            android:exported="false" />
         <activity
             android:name=".view.home.AddPetActivity"
-            android:exported="false"/>
-<!--            android:theme="@style/CustomTopBar"-->
-<!--            android:parentActivityName=".view.home.HomeActivity"-->
-<!--            />-->
+            android:exported="false" /> <!-- android:theme="@style/CustomTopBar" -->
+        <!-- android:parentActivityName=".view.home.HomeActivity" -->
+        <!-- /> -->
         <activity
             android:name=".view.home.HomeActivity"
             android:exported="true"
@@ -42,13 +55,13 @@
             android:exported="false" />
         <activity
             android:name=".view.community.StoryActivity"
-            android:label=" "
-            android:exported="false"/>
+            android:exported="false"
+            android:label=" " />
         <activity
             android:name=".view.community.AddActivity"
+            android:exported="false"
             android:label=" "
-            android:windowSoftInputMode="adjustNothing"
-            android:exported="false"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.medical.Todo.TodoReadActivity"
             android:exported="false"
@@ -67,28 +80,36 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".view.medical.Todo.TodoWriteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Inoc.InoculationWriteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Medicine.MedicineWriteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Clinic.ClinicWriteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Todo.TodoUpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Inoc.InoculationUpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Medicine.MedicineUpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.medical.Clinic.ClinicUpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>
