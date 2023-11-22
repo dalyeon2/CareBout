@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDFDFD"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".view.calendar.CalendarActivity">
 
@@ -12,7 +12,7 @@
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FDFDFD"
+        android:background="@color/bgColor"
         android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout

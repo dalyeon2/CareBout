@@ -12,6 +12,7 @@
     <color name="bgWhite">#F6F6F6</color>
     <color name="bgGray">#A6A6A6</color>
     <color name="bgColor">#00D0D0D0</color> <!-- 배경을 흰색으로 두고 그 안쪽 컬러를 이렇게 뒀습니다 -->
+    <color name="bgColor2">#0ABAD2C5</color>
 
     <color name="gray">#FFEBEBEB</color>
     <color name="tab1">#FFF3FAF4</color>
