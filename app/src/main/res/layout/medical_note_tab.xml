@@ -218,9 +218,9 @@
                     app:tabIndicatorGravity="bottom"
                     app:tabIndicatorHeight="2.5dp"
                     app:tabMode="fixed"
-                    app:tabSelectedTextColor="#000000"
-                    app:tabTextColor="#80000000"
-                    app:tabTextAppearance="@style/tabTextSizeBold">
+                    app:tabSelectedTextColor="@color/main_color"
+                    app:tabTextAppearance="@style/tabTextSizeBold"
+                    app:tabTextColor="#80000000">
 
                     <com.google.android.material.tabs.TabItem
                         android:id="@+id/tab1"
