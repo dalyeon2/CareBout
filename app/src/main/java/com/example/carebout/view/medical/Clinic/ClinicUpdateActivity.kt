@@ -50,17 +50,19 @@ class ClinicUpdateActivity : AppCompatActivity() {
         // 저장 클릭리스너
         binding.topBarOuter.CompleteBtn.setOnClickListener {
             updateClinic()
-
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+            if(save != 0){
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
         }
 
         // 삭제 클릭리스너
         binding.topBarOuter.DeleteBtn.setOnClickListener {
             deletClinic()
-
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+            if(save != 0){
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
         }
 
         db = AppDatabase.getInstance(applicationContext)!!
