@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -23,6 +24,7 @@ class TodoUpdateActivity : AppCompatActivity() {
     lateinit var db : AppDatabase
     lateinit var todoDao: TodoDao
     var id: Int = 0
+    private var save: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,27 +86,31 @@ class TodoUpdateActivity : AppCompatActivity() {
         // 저장 클릭리스너
         binding.topBarOuter.CompleteBtn.setOnClickListener {
             updateTodo()
-            setResult(Activity.RESULT_OK, intent)
+            if(save != 0) {
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
 
-            finish()
         }
 
         // 삭제 클릭리스너
         binding.topBarOuter.DeleteBtn.setOnClickListener {
             deletTodo()
-            setResult(Activity.RESULT_OK, intent)
-
-            finish()
+            if(save != 0) {
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
         }
 
         btnplus.setOnClickListener {
             if(counter < 5) {
                 counter++ //숫자는 1증가
             }else{
-                Toast.makeText(
-                    this, "최대 5회까지 가능합니다.",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    this, "최대 5회까지 가능합니다.",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+                showCustomToast("최대 5회까지 가능합니다.")
             }
             numText.text= counter.toString()
         }
@@ -131,19 +137,22 @@ class TodoUpdateActivity : AppCompatActivity() {
         //db?.getTodoDao()?.updateTodo(Todo)
 
         if(todoTitle.isBlank() || todoCount.toInt() == 0) {
-            Toast.makeText(
-                this, "항목을 채워주세요",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this, "항목을 채워주세요",
+//                Toast.LENGTH_SHORT
+//            ).show()
+            showCustomToast("항목을 채워주세요.")
         } else {
             Thread {
+                save = 1
                 todoDao.updateTodo(Todo)
                 Log.i("id", Todo.toString())
                 runOnUiThread { //아래 작업은 UI 스레드에서 실행해주어야 합니다.
-                    Toast.makeText(
-                        this, "수정되었습니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        this, "수정되었습니다.",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                    showCustomToast("수정되었습니다.")
                     moveToAnotherPage()
                 }
             }.start()
@@ -159,16 +168,41 @@ class TodoUpdateActivity : AppCompatActivity() {
         Thread {
             val todoToDelete = todoDao.getTodoById(id)
             if (todoToDelete != null) {
+                save = 1
                 todoDao.deleteTodo(todoToDelete)
                 runOnUiThread {
-                    Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    showCustomToast("삭제되었습니다.")
                     moveToAnotherPage()
                 }
             }
         }.start()
     }
 
+    private var currentToast: Toast? = null
+    private fun showCustomToast(message: String) {
+        currentToast?.cancel()
 
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout))
+
+        val text = layout.findViewById<TextView>(R.id.custom_toast_text)
+        text.text = message
+
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+
+//        val toastDurationInMilliSeconds: Long = 3000
+//        toast.duration =
+//            if (toastDurationInMilliSeconds > Toast.LENGTH_LONG) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+
+        toast.setGravity(Gravity.BOTTOM, 0, 200)
+
+        currentToast = toast
+
+        toast.show()
+    }
     private fun moveToAnotherPage() {
         val intent = Intent(applicationContext, MedicalActivity::class.java)
         startActivity(intent)
