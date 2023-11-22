@@ -311,6 +311,8 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
+            android:textSize="13dp"
+            android:textColor="@color/textColor"
             android:gravity="center_vertical"
             android:text="반려동물 등록" />
 
@@ -323,6 +325,8 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
+            android:textSize="13dp"
+            android:textColor="@color/textColor"
             android:gravity="center_vertical"
             android:text="정보 수정" />
 
@@ -335,6 +339,8 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
+            android:textSize="13dp"
+            android:textColor="@color/textColor"
             android:gravity="center_vertical"
             android:text="체중 기록" />
 
@@ -347,6 +353,8 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
+            android:textSize="13dp"
+            android:textColor="@color/textColor"
             android:gravity="center_vertical"
             android:text="반려동물 삭제" />
 
