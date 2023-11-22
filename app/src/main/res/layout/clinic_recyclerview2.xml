@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:text="검진 날짜"
             android:textAlignment="viewStart"
+            android:textSize="14dp"
             android:textStyle="bold"
             app:layout_columnWeight="2"
             app:layout_gravity="center_vertical" />
@@ -42,6 +43,7 @@
             android:layout_height="wrap_content"
             android:text="병원 이름"
             android:textAlignment="viewEnd"
+            android:textSize="14dp"
             android:textStyle="bold"
             app:layout_columnWeight="2"
             app:layout_gravity="center_vertical" />
@@ -53,6 +55,7 @@
             android:layout_height="wrap_content"
             android:text="에서"
             android:textAlignment="center"
+            android:textSize="14dp"
             app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
 
@@ -63,6 +66,7 @@
             android:layout_height="wrap_content"
             android:text="검진 항목"
             android:textAlignment="center"
+            android:textSize="14dp"
             android:textStyle="bold"
             app:layout_columnWeight="2"
             app:layout_gravity="center_vertical" />
@@ -73,6 +77,7 @@
             android:layout_height="wrap_content"
             android:text="검진"
             android:textAlignment="center"
+            android:textSize="14dp"
             app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
 

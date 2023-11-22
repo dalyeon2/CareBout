@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:text="약 이름"
             android:textAlignment="viewStart"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:textStyle="bold"
             app:layout_columnWeight="2"
             app:layout_gravity="center_vertical" />
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="복용 시작일"
             android:textAlignment="center"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:textStyle="bold"
             app:layout_columnWeight="2"
             app:layout_gravity="center_vertical" />
@@ -103,6 +103,7 @@
             android:layout_height="wrap_content"
             android:text="부터"
             android:textAlignment="viewStart"
+            android:textSize="14dp"
             app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
 
@@ -112,7 +113,7 @@
             android:layout_height="wrap_content"
             android:text="복용 종료일"
             android:textAlignment="center"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:textStyle="bold"
             app:layout_columnWeight="2"
             app:layout_gravity="center_vertical" />

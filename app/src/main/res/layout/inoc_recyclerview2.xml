@@ -154,6 +154,7 @@
             android:layout_height="wrap_content"
             android:text="접종 항목"
             android:textAlignment="viewStart"
+            android:textSize="14dp"
             android:textStyle="bold"
             app:layout_columnWeight="2"
             app:layout_gravity="center_vertical" />
@@ -164,6 +165,7 @@
             android:layout_height="wrap_content"
             android:text="접종"
             android:textAlignment="center"
+            android:textSize="14dp"
             app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
 
@@ -173,6 +175,7 @@
             android:layout_height="wrap_content"
             android:text="접종 날짜"
             android:textAlignment="center"
+            android:textSize="14dp"
             android:textStyle="bold"
             app:layout_columnWeight="2"
             app:layout_gravity="center_vertical" />
@@ -183,6 +186,7 @@
             android:layout_height="wrap_content"
             android:text="예정"
             android:textAlignment="center"
+            android:textSize="14dp"
             app:layout_columnWeight="1"
             app:layout_gravity="center_vertical" />
 
@@ -192,6 +196,7 @@
             android:layout_height="wrap_content"
             android:text="예정일"
             android:textAlignment="center"
+            android:textSize="14dp"
             android:textStyle="bold"
             app:layout_columnWeight="2"
             app:layout_gravity="center_vertical" />
