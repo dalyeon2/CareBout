@@ -19,7 +19,6 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="5dp"
-            android:paddingTop="6dp"
             android:gravity="center_vertical"
             android:text="&#8226;"
             android:textAlignment="center"
